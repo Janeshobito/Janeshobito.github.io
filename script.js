@@ -1,8 +1,14 @@
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    document.querySelector(this.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth'
-    });
+// Animate progress bars and circles on scroll/view
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const bars = entry.target.querySelectorAll('.progress-bar, .circle-progress');
+      bars.forEach(bar => {
+        if (bar.style.width) bar.style.width = bar.style.width;
+        else bar.style.setProperty('--progress', bar.style.getPropertyValue('--progress'));
+      });
+    }
   });
 });
+
+document.querySelectorAll('.skills-card, .languages-section').forEach(el => observer.observe(el));
