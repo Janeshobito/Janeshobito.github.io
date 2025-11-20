@@ -8,62 +8,63 @@
 <style>
   :root{--a:#8b5cf6;--a2:#ec4899;--t:#e2e8f0;--g:#94a3b8;--bg:#0b0b1a;--card:#161625;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'Segoe UI',sans-serif;background:#000;color:var(--t);overflow-x:hidden;cursor:none;}
+  html,body{height:100%;overflow-x:hidden;}
+  body{font-family:'Segoe UI',sans-serif;background:#000;color:var(--t);cursor:none;}
   canvas{position:fixed;inset:0;z-index:-1;}
   #cursor{
-    position:fixed;width:100px;height:100px;pointer-events:none;z-index:9999;
-    background:radial-gradient(circle at 30% 30%,rgba(139,92,246,0.95),transparent 70%);
-    border:4px solid rgba(139,92,246,0.7);border-radius:50%;
+    position:fixed;width:110px;height:110px;pointer-events:none;z-index:9999;
+    background:radial-gradient(circle at 35% 35%,rgba(139,92,246,0.95),transparent 65%);
+    border:4px solid rgba(139,92,246,0.8);border-radius:50%;
     transform:translate(-50%,-50%);mix-blend-mode:screen;
-    box-shadow:0 0 120px #8b5cf6;transition:0.05s ease-out;
+    box-shadow:0 0 140px #8b5cf6, 0 0 280px #ec4899;transition:0.06s ease-out;
   }
   header{
-    position:fixed;top:0;left:0;right:0;z-index:1000;padding:2.2rem 0;
-    backdrop-filter:blur(50px);background:rgba(11,11,26,0.98);
-    border-bottom:1px solid rgba(139,92,246,0.35);
+    position:fixed;top:0;left:0;right:0;z-index:1000;padding:2.4rem 0;
+    backdrop-filter:blur(60px);background:rgba(11,11,26,0.98);
+    border-bottom:1px solid rgba(139,92,246,0.4);
   }
-  nav{max-width:1700px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:0 5rem;}
-  .logo{font-size:3.6rem;font-weight:900;background:linear-gradient(90deg,var(--a),var(--a2));
+  nav{max-width:1800px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:0 6rem;}
+  .logo{font-size:3.8rem;font-weight:900;background:linear-gradient(90deg,var(--a),var(--a2));
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-    text-shadow:0 0 100px var(--a);}
-  .nav a{color:var(--t);text-decoration:none;font-weight:700;margin:0 3.5rem;position:relative;}
-  nav a::after{content:'';position:absolute;bottom:-20px;left:0;width:0;height:7px;background:var(--a);transition:0.8s ease;border-radius:4px;}
-  nav a:hover::after,.active::after{width:100%;box-shadow:0 0 50px var(--a);}
+    text-shadow:0 0 120px var(--a);}
+  .nav a{color:var(--t);text-decoration:none;font-weight:700;margin:0 4rem;position:relative;}
+  .nav a::after{content:'';position:absolute;bottom:-22px;left:0;width:0;height:8px;background:var(--a);transition:0.8s ease;border-radius:5px;}
+  .nav a:hover::after,.active::after{width:100%;box-shadow:0 0 60px var(--a);}
 
-  main{padding-top:160px;position:relative;z-index:1;}
-  section{padding:18rem 3rem;max-width:1700px;margin:auto;opacity:0;transform:translateY(160px);}
-  section.visible{opacity:1;transform:none;transition:opacity 2.6s ease-out,transform 2.6s cubic-bezier(0.16,1,0.3,1);}
+  main{padding-top:180px;position:relative;z-index:1;}
+  section{padding:20rem 4rem;max-width:1800px;margin:auto;opacity:0;transform:translateY(180px);}
+  section.visible{opacity:1;transform:none;transition:opacity 2.8s ease-out,transform 2.8s cubic-bezier(0.16,1,0.3,1);}
 
-  h2{font-size:7rem;text-align:center;margin-bottom:10rem;color:var(--a);position:relative;}
-  h2::after{content:'';position:absolute;bottom:-45px;left:50%;transform:translateX(-50%);width:320px;height:14px;background:var(--a);border-radius:10px;box-shadow:0 0 120px var(--a);}
+  h2{font-size:7.5rem;text-align:center;margin-bottom:11rem;color:var(--a);position:relative;}
+  h2::after{content:'';position:absolute;bottom:-50px;left:50%;transform:translateX(-50%);width:360px;height:16px;background:var(--a);border-radius:12px;box-shadow:0 0 140px var(--a);}
 
   #home{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column;}
-  #home h1{font-size:13rem;font-weight:900;background:linear-gradient(90deg,var(--a),var(--a2));
+  #home h1{font-size:14rem;font-weight:900;background:linear-gradient(90deg,var(--a),var(--a2));
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-    text-shadow:0 0 300px var(--a);animation:float 14s ease-in-out infinite;}
-  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-70px)}}
+    text-shadow:0 0 350px var(--a);animation:float 16s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-80px)}}
 
-  .typewriter{font-size:4rem;color:var(--g);margin:7rem 0;overflow:hidden;border-right:10px solid var(--a);
-    white-space:nowrap;width:0;animation:typing 6.5s steps(80) forwards,blink 1s infinite;}
-  @keyframes typing{from{width:0}to{width:80ch}}@keyframes blink{50%{border-color:transparent}}
+  .typewriter{font-size:4.4rem;color:var(--g);margin:8rem 0;overflow:hidden;border-right:12px solid var(--a);
+    white-space:nowrap;width:0;animation:typing 7s steps(90) forwards,blink 1s infinite;}
+  @keyframes typing{from{width:0}to{width:90ch}}@keyframes blink{50%{border-color:transparent}}
 
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:9rem;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(500px,1fr));gap:10rem;}
   .card{
-    background:var(--card);border-radius:80px;overflow:hidden;position:relative;
-    box-shadow:0 70px 180px rgba(0,0,0,0.98);will-change:transform;
-    transform:perspective(4000px) rotateX(0) rotateY(0) translateZ(0);
+    background:var(--card);border-radius:90px;overflow:hidden;position:relative;
+    box-shadow:0 80px 200px rgba(0,0,0,0.99);will-change:transform;
+    transform:perspective(5000px) rotateX(0) rotateY(0) translateZ(0);
     transition:transform 0.01s linear;
   }
-  .card img{width:100%;height:720px;object-fit:cover;transition:transform 2.5s cubic-bezier(0.16,1,0.3,1);}
-  .card:hover img{transform:scale(1.45);}
-  .card-body{padding:5.5rem;background:linear-gradient(135deg,rgba(22,22,37,0.99),rgba(11,11,26,0.99));}
-  .card h3{font-size:3.2rem;margin-bottom:2.2rem;color:var(--a);text-shadow:0 0 100px var(--a);}
+  .card img{width:100%;height:760px;object-fit:cover;transition:transform 2.8s cubic-bezier(0.16,1,0.3,1);}
+  .card:hover img{transform:scale(1.5);}
+  .card-body{padding:6rem;background:linear-gradient(135deg,rgba(22,22,37,0.99),rgba(11,11,26,0.99));}
+  .card h3{font-size:3.4rem;margin-bottom:2.5rem;color:var(--a);text-shadow:0 0 120px var(--a);}
   .btn{
-    display:inline-block;margin-top:5rem;padding:2.2rem 8rem;background:linear-gradient(45deg,var(--a),var(--a2));
-    color:white;border-radius:140px;font-weight:bold;box-shadow:0 80px 160px rgba(139,92,246,1.5);
-    transition:all 1.4s cubic-bezier(0.16,1,0.3,1);
+    display:inline-block;margin-top:6rem;padding:2.5rem 9rem;background:linear-gradient(45deg,var(--a),var(--a2));
+    color:white;border-radius:160px;font-weight:bold;box-shadow:0 100px 200px rgba(139,92,246,1.7);
+    transition:all 1.6s cubic-bezier(0.16,1,0.3,1);
   }
-  .btn:hover{transform:translateY(-35px) scale(1.25);box-shadow:0 140px 280px rgba(139,92,246,1.8);}
+  .btn:hover{transform:translateY(-40px) scale(1.3);box-shadow:0 160px 320px rgba(139,92,246,2);}
 </style>
 </head>
 <body>
@@ -74,7 +75,7 @@
 <header>
   <nav>
     <div class="logo">Janeshwaran R</div>
-    <div>
+    <div class="nav">
       <a href="#home" class="active">Home</a>
       <a href="#about">About</a>
       <a href="#projects">Projects</a>
@@ -88,12 +89,12 @@
   <!-- HOME -->
   <section id="home" class="visible">
     <h1>Janeshwaran R</h1>
-    <p class="typewriter">I Am The Void That Breathes Creation</p>
-    <p style="font-size:3.4rem;color:var(--g);margin:8rem 0;">
+    <p class="typewriter">I Am The Darkness That Dreams In Code</p>
+    <p style="font-size:3.8rem;color:var(--g);margin:9rem 0;">
       Game Developer • 3D Artist • Dark Fantasy Author<br>
       <strong style="color:var(--a);">Pen Name: Darkpath</strong>
     </p>
-    <div style="margin:14rem 0;font-size:9rem;display:flex;justify-content:center;gap:9rem;">
+    <div style="margin:16rem 0;font-size:10rem;display:flex;justify-content:center;gap:10rem;">
       <a href="https://www.artstation.com/janeshboito283" target="_blank"><i class="fab fa-artstation"></i></a>
       <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank"><i class="fab fa-linkedin"></i></a>
       <a href="https://www.webnovel.com/profile/4327938398" target="_blank"><i class="fas fa-book-open"></i></a>
@@ -104,16 +105,16 @@
   <!-- ABOUT -->
   <section id="about">
     <h2>About Me</h2>
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:12rem;align-items:center;">
-      <img src="https://via.placeholder.com/900x1100/8b5cf6/fff?text=YOUR+PHOTO" alt="Janeshwaran" style="border-radius:90px;border:14px solid var(--a);box-shadow:0 0 250px var(--a);">
+    <div style="display:grid;grid-template-columns:1fr 2fr;gap:14rem;align-items:center;">
+      <img src="https://via.placeholder.com/1000x1200/8b5cf6/fff?text=YOUR+PHOTO" alt="Janeshwaran" style="border-radius:100px;border:16px solid var(--a);box-shadow:0 0 300px var(--a);">
       <div>
-        <p style="font-size:2.1rem;line-height:3;margin-bottom:6rem;">
-          I forge entire universes from darkness — 3D worlds that breathe, stories that corrupt, code that defies reality.
+        <p style="font-size:2.4rem;line-height:3.4;margin-bottom:7rem;">
+          I sculpt nightmares into living 3D worlds, write stories that corrupt souls, and code realities that defy physics.
         </p>
-        <h3 style="margin:7rem 0 4rem;color:var(--a);font-size:3.4rem;">Mastered</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:4rem;">
-          <span style="background:var(--card);padding:2rem 5rem;border-radius:100px;border:6px solid var(--a);font-weight:bold;box-shadow:0 0 80px var(--a);">Blender • Unity • Unreal Engine • Godot • Houdini • Substance</span>
-          <span style="background:var(--card);padding:2rem 5rem;border-radius:100px;border:6px solid var(--a);font-weight:bold;box-shadow:0 0 80px var(--a);">GLSL • Ray Marching • Dark Fantasy • C# • Python</span>
+        <h3 style="margin:8rem 0 5rem;color:var(--a);font-size:3.8rem;">Mastered</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:5rem;">
+          <span style="background:var(--card);padding:2.5rem 6rem;border-radius:120px;border:7px solid var(--a);font-weight:bold;box-shadow:0 0 100px var(--a);">Blender • Unity • Unreal • Godot • Houdini • Substance • TouchDesigner</span>
+          <span style="background:var(--card);padding:2.5rem 6rem;border-radius:120px;border:7px solid var(--a);font-weight:bold;box-shadow:0 0 100px var(--a);">Ray Marching • GLSL • Volumetric Lighting • Dark Fantasy • C# • Python</span>
         </div>
       </div>
     </div>
@@ -123,120 +124,117 @@
   <section id="projects">
     <h2>Game Projects</h2>
     <div class="grid">
-      <div class="card"><img src="https://via.placeholder.com/1200x720/111/fff?text=HARDCORE+2D+PLATFORMER" alt="Game 1"><div class="card-body"><h3>Hardcore 2D Rage Platformer</h3><p>Custom engine, pixel art, soul-crushing difficulty.</p></div></div>
-      <div class="card"><img src="https://via.placeholder.com/1200x720/111/fff?text=ROCKET+LANDING+SIM" alt="Game 2"><div class="card-body"><h3>Physics-Based Rocket Landing</h3><p>Realistic physics. One mistake = explosion.</p></div></div>
+      <div class="card"><img src="https://via.placeholder.com/1400x760/111/fff?text=HARDCORE+RAGE+PLATFORMER" alt="Game1"><div class="card-body"><h3>Hardcore 2D Platformer</h3><p>Custom physics, pixel art, pure suffering.</p></div></div>
+      <div class="card"><img src="https://via.placeholder.com/1400x760/111/fff?text=ROCKET+LANDING+SIMULATOR" alt="Game2"><div class="card-body"><h3>Realistic Rocket Landing</h3><p>One mistake = fiery death.</p></div></div>
     </div>
   </section>
 
-  <!-- ALL 5 NOVELS -->
+  <!-- 5 NOVELS -->
   <section id="novels">
-    <h2>My Novels <small style="color:#888;font-size:4rem;">by Darkpath</small></h2>
+    <h2>My Novels <small style="color:#999;font-size:4.5rem;">by Darkpath</small></h2>
     <div class="grid">
-      <div class="card"><img src="https://files.catbox.moe/9q2r8j.png"><div class="card-body"><h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3><p><em>Extreme Dark Revenge Fantasy</em></p><a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn">Read on Webnovel</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/l8u9w2.png"><div class="card-body"><h3>The Hermit's Haven</h3><p><em>Post-Apocalyptic Psychological Control</em></p><a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn">Read on Webnovel</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/vf6h3x.png"><div class="card-body"><h3>The Wish of Malice</h3><p><em>Villain Protagonist • Universe Destroyer</em></p><a href="https://www.webnovel.com/book/29761690700035805" target="_blank" class="btn">Read on Webnovel</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/9i5v2k.png"><div class="card-body"><h3>Formula Jet Racing</h3><p><em>400 mph Sky Death Races</em></p><a href="https://www.webnovel.com/book/32853058600730605" target="_blank" class="btn">Read on Webnovel</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/3t4p7m.png"><div class="card-body"><h3>I Was Summoned But I Tricked The God To Become a God</h3><p><em>Dark Isekai • God Slayer</em></p><a href="https://www.webnovel.com/book/29962599308510305" target="_blank" class="btn">Read on Webnovel</a></div></div>
+      <div class="card"><img src="https://files.catbox.moe/9q2r8j.png"><div class="card-body"><h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3><p><em>Extreme Dark Revenge</em></p><a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn">Read Now</a></div></div>
+      <div class="card"><img src="https://files.catbox.moe/l8u9w2.png"><div class="card-body"><h3>The Hermit's Haven</h3><p><em>Post-Apocalyptic Tyranny</em></p><a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn">Read Now</a></div></div>
+      <div class="card"><img src="https://files.catbox.moe/vf6h3x.png"><div class="card-body"><h3>The Wish of Malice</h3><p><em>Villain Destroys Universe</em></p><a href="https://www.webnovel.com/book/29761690700035805" target="_blank" class="btn">Read Now</a></div></div>
+      <div class="card"><img src="https://files.catbox.moe/9i5v2k.png"><div class="card-body"><h3>Formula Jet Racing</h3><p><em>400mph Death Races</em></p><a href="https://www.webnovel.com/book/32853058600730605" target="_blank" class="btn">Read Now</a></div></div>
+      <div class="card"><img src="https://files.catbox.moe/3t4p7m.png"><div class="card-body"><h3>I Was Summoned But I Tricked The God</h3><p><em>Dark Isekai Ascension</em></p><a href="https://www.webnovel.com/book/29962599308510305" target="_blank" class="btn">Read Now</a></div></div>
     </div>
+  >
   </section>
 
   <!-- CONTACT -->
   <section id="contact">
     <h2>Contact Me</h2>
-    <form name="contact" method="POST" data-netlify="true" style="max-width:1200px;margin:12rem auto;display:grid;gap:5rem;">
-      <input type="text" name="name" placeholder="Your Name" required style="padding:3rem;border-radius:50px;background:rgba(50,50,90,0.85);border:5px solid #666;color:white;font-size:1.8rem;">
-      <input type="email" name="email" placeholder="Your Email" required style="padding:3rem;border-radius:50px;background:rgba(50,50,90,0.85);border:5px solid #666;color:white;font-size:1.8rem;">
-      <textarea rows="14" name="message" placeholder="Your Message" required style="padding:3rem;border-radius:50px;background:rgba(50,50,90,0.85);border:5px solid #666;color:white;font-size:1.8rem;"></textarea>
-      <button type="submit" style="padding:3.2rem;background:linear-gradient(45deg,var(--a),var(--a2));border-radius:120px;font-size:2.4rem;box-shadow:0 100px 200px rgba(139,92,246,1.6);">Send to the Void</button>
+    <form name="contact" method="POST" data-netlify="true" style="max-width:1300px;margin:14rem auto;display:grid;gap:6rem;">
+      <input type="text" name="name" placeholder="Name" required style="padding:3.5rem;border-radius:60px;background:rgba(60,60,100,0.9);border:6px solid #777;color:white;font-size:2rem;">
+      <input type="email" name="email" placeholder="Email" required style="padding:3.5rem;border-radius:60px;background:rgba(60,60,100,0.9);border:6px solid #777;color:white;font-size:2rem;">
+      <textarea rows="16" name="message" placeholder="Your Message" required style="padding:3.5rem;border-radius:60px;background:rgba(60,60,100,0.9);border:6px solid #777;color:white;font-size:2rem;"></textarea>
+      <button type="submit" style="padding:3.8rem;background:linear-gradient(45deg,var(--a),var(--a2));border-radius:140px;font-size:2.8rem;box-shadow:0 120px 240px rgba(139,92,246,1.8);">Send Into The Void</button>
     </form>
   </section>
 </main>
 
 <script>
-// PERFECT RAY-MARCHED VOLUMETRIC FOG + 3D SCENE (Inigo Quilez + Shadertoy level)
+// INIGO QUILEZ LEVEL RAY MARCHING + VOLUMETRIC LIGHTING + GOD RAYS + SOFT SHADOWS
 const canvas = document.getElementById('gl');
 const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
-canvas.width = innerWidth; canvas.height = innerHeight;
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
 const vs = `attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}`;
 const fs = `#ifdef GL_ES
 precision highp float;
 #endif
+
 uniform float t;
 uniform vec2 r;
 uniform vec2 m;
 
-#define PI 3.14159
-#define MAX_STEPS 120
+#define MAX_STEPS 160
 #define MAX_DIST 100.0
 #define SURF_DIST 0.001
+#define PI 3.141592
 
-float hash21(vec2 p){
-  p = fract(p*vec2(285.233,371.437));
-  p += dot(p,p+47.35);
-  return fract(p.x*p.y);
-}
-
-float noise(vec3 p){
-  vec3 i = floor(p);
-  vec3 f = fract(p);
-  f = f*f*(3.0-2.0*f);
-  return mix(mix(mix(hash21(i.xy), hash21(i.xy+vec2(1,0)),f.x),
-                 mix(hash21(i.xy+vec2(0,1)), hash21(i.xy+vec2(1,1)),f.x),f.y),
-             mix(mix(hash21(i.xy+vec2(0,0)+i.z+1.0), hash21(i.xy+vec2(1,0)+i.z+1.0),f.x),
-                 mix(hash21(i.xy+vec2(0,1)+i.z+1.0), hash21(i.xy+vec2(1,1)+i.z+1.0),f.x),f.y),f.z);
+float hash(vec3 p){ p=fract(p*0.3183099+.1); p*=17.0; return fract(p.x*p.y*p.z*(p.x+p.y+p.z)); }
+float noise(vec3 x){
+  vec3 i = floor(x), f = fract(x); f = f*f*(3.0-2.0*f);
+  return mix(mix(mix(hash(i+vec3(0,0,0)), hash(i+vec3(1,0,0)),f.x),
+                 mix(hash(i+vec3(0,1,0)), hash(i+vec3(1,1,0)),f.x),f.y),
+             mix(mix(hash(i+vec3(0,0,1)), hash(i+vec3(1,0,1)),f.x),
+                 mix(hash(i+vec3(0,1,1)), hash(i+vec3(1,1,1)),f.x),f.y),f.z);
 }
 
 float fbm(vec3 p){
-  float a = 0.5;
-  float f = 0.0;
-  for(int i=0;i<5;i++){
-    f += a*noise(p);
-    p *= 2.02;
-    a *= 0.5;
-  }
+  float a=0.5, f=0.0;
+  for(int i=0;i<6;i++){ f+=a*noise(p); p*=2.01; a*=0.5; }
   return f;
 }
 
-float sdSphere(vec3 p, vec3 c, float r){
-  return length(p-c)-r;
-}
-
-float sdBox(vec3 p, vec3 b){
-  vec3 q = abs(p) - b;
-  return length(max(q,0.0)) + min(max(q.x,max(q.y,q.z)),0.0);
-}
+float sdSphere(vec3 p, vec3 c, float s){ return length(p-c)-s; }
+float sdBox(vec3D(vec3 p, vec3 b){ vec3 q=abs(p)-b; return length(max(q,0.0))+min(max(q.x,max(q.y,q.z)),0.0); }
 
 float map(vec3 p){
-  p.xz = p.xz * mat2(cos(t*0.15), -sin(t*0.15), sin(t*0.15), cos(t*0.15));
-  float d = sdSphere(p, vec3(0), 2.0);
-  d = min(d, sdSphere(p, vec3(5.5*sin(t*0.3), 2.0*cos(t*0.2), 0), 1.8));
-  d = min(d, sdBox(p + vec3(0, -4, 0), vec3(10, 0.5, 10)));
+  p.xz *= mat2(cos(t*0.2),-sin(t*0.2),sin(t*0.2),cos(t*0.2));
+  float d = sdSphere(p, vec3(0,0,0), 2.2);
+  d = min(d, sdSphere(p, vec3(6.0*cos(t*0.4), 2.0*sin(t*0.3), 0), 1.9));
+  d = min(d, sdBox3D(p + vec3(0,-5,0), vec3(15,0.5,15)));
   return d;
 }
 
 vec3 calcNormal(vec3 p){
-  const float h = 0.001;
+  const float h = 0.0005;
   const vec2 k = vec2(1,-1);
   return normalize( k.xyy*map(p+k.xyy*h) + k.yyx*map(p+k.yyx*h) + k.yxy*map(p+k.yxy*h) + k.xxx*map(p+k.xxx*h) );
 }
 
-float volumetricFog(vec3 ro, vec3 rd, float dist){
-  float fog = 0.0;
-  float stepSize = dist / 20.0;
-  for(int i=0; i<20; i++){
-    vec3 pos = ro + rd * (float(i)+0.5) * stepSize;
-    fog += fbm(pos * 0.3 + t * 0.2);
+float softShadow(vec3 ro, vec3 rd, float mint, float tmax){
+  float res = 1.0, h, ph = 1e20;
+  for(int i=0; i<32; i++){
+    h = map(ro + rd*mint);
+    res = min(res, 8.0*h/mint);
+    mint += clamp(h, 0.02, 0.4);
+    if(res<0.005 || mint>tmax) break;
   }
-  return fog * 0.05;
+  return clamp(res,0.0,1.0);
 }
 
-void mainImage( out vec4 fragColor, in vec2 fragCoord ){
+float volumetricLight(vec3 ro, vec3 rd, float steps){
+  float light = 0.0;
+  float stepSize = 0.4;
+  for(float i=0.5; i<steps; i+=1.0){
+    vec3 p = ro + rd * i * stepSize;
+    float density = fbm(p*0.3 + t*0.15) * 0.8;
+    light += density * (1.0 - light) * 0.2;
+  }
+  return light;
+}
+
+void mainImage(out vec4 fragColor, in vec2 fragCoord){
   vec2 uv = (fragCoord - 0.5*r)/r.y;
-  vec2 mo = m*3.0 - 1.5;
+  vec2 mo = m * 3.0 - 1.5;
   mo.x *= r.x/r.y;
 
-  vec3 ro = vec3(sin(mo.x*2.0)*8.0, mo.y*4.0+2.0, cos(mo.x*2.0)*8.0);
+  vec3 ro = vec3(sin(mo.x*2.0)*10.0, mo.y*6.0+3.0, cos(mo.x*2.0)*10.0);
   vec3 target = vec3(0,0,0);
   vec3 forward = normalize(target - ro);
   vec3 right = normalize(cross(forward, vec3(0,1,0)));
@@ -244,20 +242,32 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord ){
   vec3 rd = normalize(forward + uv.x*right + uv.y*up);
 
   float h = 0.0;
-  float res = 0.0;
+  float glow = 0.0;
   for(int i=0; i<MAX_STEPS; i++){
     vec3 p = ro + rd * h;
     float d = map(p);
     if(d < SURF_DIST || h > MAX_DIST) break;
-    h += d;
-    res += 0.02 / (0.1 + d*d*100.0); // glow
+    glow += 0.04 / (0.1 + d*d*200.0);
+    h += d*0.95 + d;
   }
 
-  vec3 col = vec3(0.05, 0.0, 0.15);
-  col += res * vec3(0.8, 0.3, 1.8);
-  col += volumetricFog(ro, rd, h) * vec3(0.6, 0.2, 1.2);
-  col = pow(col, vec3(0.75));
+  vec3 col = vec3(0.04, 0.0, 0.12);
+  col += glow * vec3(1.2, 0.4, 2.0);
 
+  // Volumetric lighting / god rays
+  col += volumetricLight(ro, rd, 40.0) * vec3(1.0, 0.6, 2.2);
+
+  // Soft shadows on hit
+  if(h < MAX_DIST){
+    vec3 p = ro + rd * h;
+    vec3 n = calcNormal(p);
+    vec3 lightDir = normalize(vec3(1,2,1));
+    float dif = clamp(dot(n, lightDir), 0.0, 1.0);
+    float sh = softShadow(p + n*0.01, lightDir, 0.02, 6.0);
+    col = mix(col, vec3(0.8,0.3,1.5)*dif*sh, 0.7);
+  }
+
+  col = pow(col, vec3(0.7));
   fragColor = vec4(col, 1.0);
 }
 
@@ -271,7 +281,9 @@ const program = gl.createProgram();
   const sh = gl.createShader(i ? gl.FRAGMENT_SHADER : gl.VERTEX_SHADER);
   gl.shaderSource(sh, src);
   gl.compileShader(sh);
-  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(sh));
+  if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+    console.error("Shader error:", gl.getShaderInfoLog(sh));
+  }
   gl.attachShader(program, sh);
 });
 gl.linkProgram(program);
@@ -305,30 +317,27 @@ function animate(time) {
 }
 requestAnimationFrame(animate);
 
-// Ultra-smooth 3D card physics
+// Ultra-smooth 3D cards
 document.querySelectorAll('.card').forEach(card => {
   let rect;
   card.addEventListener('mousemove', e => {
     rect = card.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(4000px) rotateY(${x*60}deg) rotateX(${-y*60}deg) translateZ(300px) scale(1.12)`;
+    card.style.transform = `perspective(5000px) rotateY(${x*65}deg) rotateX(${-y*65}deg) translateZ(350px) scale(1.15)`;
   });
   card.addEventListener('mouseenter', () => card.style.transition = 'none');
   card.addEventListener('mouseleave', () => {
-    card.style.transition = 'all 2.2s cubic-bezier(0.16,1,0.3,1)';
-    card.style.transform = 'perspective(4000px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
+    card.style.transition = 'all 2.4s cubic-bezier(0.16,1,0.3,1)';
+    card.style.transform = 'perspective(5000px) rotateX(0) rotateY(0) translateZ(0) scale(1)';
   });
 });
 
-// Scroll reveal
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) entry.target.classList.add('visible');
-  });
-}, { threshold: 0.2 });
+// Scroll animations
+const observer = new IntersectionObserver(e => e.forEach(en => en.isIntersecting && en.target.classList.add('visible')) , {threshold: 0.2});
 document.querySelectorAll('section').forEach(s => observer.observe(s));
 
+// Resize
 window.addEventListener('resize', () => {
   canvas.width = innerWidth;
   canvas.height = innerHeight;
