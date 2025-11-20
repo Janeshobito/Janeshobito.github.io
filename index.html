@@ -3,137 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JANESHWARAN R | Game & Narrative Designer</title>
+  <title>JANESH | POW! Game & Narrative Designer</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <!-- Header/Hero -->
-  <header class="header">
-    <div class="container">
-      <h1 class="name">JANESHWARAN R</h1>
-      <p class="title">Game Designer / Narrative Designer</p>
-    </div>
-  </header>
-
-  <main class="container">
-    <!-- About -->
-    <section class="about-section card">
-      <h2>About Me</h2>
-      <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates. Eager to learn, adapt, and contribute fresh, innovative ideas to every project while refining my skills to bring creative visions to life.</p>
-    </section>
-
-    <!-- Skills & Tools Grid -->
-    <section class="skills-section">
-      <div class="card skills-card">
-        <h2>Skills</h2>
-        <div class="skill-item">
-          <span>3D Modeling (Blender)</span>
-          <div class="progress"><div class="progress-bar" style="width: 75%;"></div></div>
-          <span class="percentage">75%</span>
+  <!-- Comic Page Container -->
+  <div class="comic-book">
+    <!-- PAGE 1 - HERO -->
+    <section class="page active" id="page1">
+      <div class="panel hero-panel">
+        <h1 class="pow-text">JANESH</h1>
+        <h2 class="boom">GAME DESIGNER <span class="zap">POW!</span><br>GRAPHIC DESIGNER<br>NARRATIVE DESIGNER <span class="zap">ZAP!</span></h2>
+        <div class="speech-bubble big">
+          <p>BRINGING IDEAS TO LIFE!</p>
         </div>
-        <div class="skill-item">
-          <span>Scriptwriting (for games/film/cutscenes)</span>
-          <div class="progress"><div class="progress-bar" style="width: 87%;"></div></div>
-          <span class="percentage">87%</span>
+        <div class="action-buttons">
+          <button class="btn red" onclick="flipTo(2)">VIEW PROJECTS →</button>
+          <button class="btn blue" onclick="flipTo(5)">GET IN TOUCH →</button>
         </div>
-        <div class="skill-item">
-          <span>Storytelling & Narrative Writing</span>
-          <div class="progress"><div class="progress-bar" style="width: 95%;"></div></div>
-          <span class="percentage">95%</span>
-        </div>
-        <div class="skill-item">
-          <span>Programming</span>
-          <div class="progress"><div class="progress-bar" style="width: 60%;"></div></div>
-          <span class="percentage">60%</span>
-        </div>
-      </div>
-
-      <div class="card tools-card">
-        <h2>Tools</h2>
-        <ul>
-          <li>Unity</li>
-          <li>Unreal</li>
-          <li>Godot</li>
-          <li>Blender</li>
-          <li>Material Maker</li>
-          <li>Krita</li>
-        </ul>
+        <div class="page-number">1</div>
       </div>
     </section>
 
-    <!-- Education & Projects Grid -->
-    <section class="edu-projects-section">
-      <div class="card edu-card">
-        <h2>Education</h2>
-        <div class="edu-item">
-          <h3>ST. JOSEPH COLLEGE ARTS AND SCIENCE</h3>
-          <p>Bachelor of B.Sc Computer Science (2020-2024)</p>
+    <!-- PAGE 2 - ABOUT & SKILLS -->
+    <section class="page" id="page2">
+      <div class="panel-grid">
+        <div class="panel about">
+          <div class="speech-bubble">About Me</div>
+          <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates. Eager to learn, adapt, and contribute fresh, innovative ideas!</p>
         </div>
-        <div class="edu-item">
-          <h3>ICAT College of Design & Media</h3>
-          <p>Masters in M.Sc Game Technology (2024-Present)</p>
-        </div>
-      </div>
-
-      <div class="card projects-card">
-        <h2>Project Experience</h2>
-        <div class="project-item">
-          <h3>Hardcore Mario-Style 2D Pixel Game</h3>
+        <div class="panel skills">
+          <div class="speech-bubble">Skills:</div>
           <ul>
-            <li>Developed a challenging 2D platformer inspired by classic Mario mechanics.</li>
-            <li>Designed pixel art assets, implemented responsive player controls, and built progressively difficult levels.</li>
-            <li>Focused on gameplay balance, user engagement, and smooth performance.</li>
+            <li>3D Modeling (Blender) <strong>75%</strong></li>
+            <li>Scriptwriting <strong>87%</strong></li>
+            <li>Storytelling & Narrative <strong>95%</strong></li>
+            <li>Programming <strong>60%</strong></li>
           </ul>
         </div>
-        <div class="project-item">
-          <h3>Rocket Thruster Landing Game</h3>
-          <ul>
-            <li>Created a physics-based game where players control a rocket using thrust mechanics to stay airborne and land safely on a platform.</li>
-            <li>Implemented collision detection, obstacle challenges, and precise landing mechanics.</li>
-            <li>Enhanced player experience with intuitive controls and increasing difficulty.</li>
-          </ul>
+        <div class="panel tools">
+          <div class="speech-bubble">Tools:</div>
+          <div class="tool-grid">
+            <span>Unity</span><span>Unreal</span><span>Godot</span><span>Blender</span><span>Material Maker</span><span>Krita</span>
+          </div>
+        </div>
+        <div class="panel education">
+          <div class="speech-bubble">Education:</div>
+          <p><strong>St. Joseph College</strong><br>B.Sc Computer Science 2020-2024</p>
+          <p><strong>ICAT Design & Media</strong><br>M.Sc Game Technology (2024-Present)</p>
         </div>
       </div>
+      <div class="page-number">2</div>
+      <button class="next-page" onclick="flipTo(3)">→</button>
     </section>
 
-    <!-- Languages -->
-    <section class="languages-section card">
-      <h2>Language</h2>
-      <div class="languages-grid">
-        <div class="lang-item">
-          <div class="circle-progress" style="--progress: 92;"></div>
-          <span>English</span>
-          <span class="percentage">92%</span>
+    <!-- PAGE 3 - PROJECTS -->
+    <section class="page" id="page3">
+      <h2 class="title-bubble">PROJECTS</h2>
+      <div class="project-grid">
+        <div class="project-card" onclick="playSound('pow')">
+          <h3>Pixel Warriors</h3>
+          <p>Retro-style fighting game with unique character designs</p>
+          <div class="btn small red">VIEW →</div>
         </div>
-        <div class="lang-item">
-          <div class="circle-progress" style="--progress: 98;"></div>
-          <span>Tamil</span>
-          <span class="percentage">98%</span>
+        <div class="project-card" onclick="playSound('zap')">
+          <h3>Hardcore Mario-Style 2D</h3>
+          <p>Challenging platformer with pixel art & tight controls</p>
+          <div class="btn small red">VIEW →</div>
+        </div>
+        <div class="project-card" onclick="playSound('boom')">
+          <h3>Rocket Thruster Landing</h3>
+          <p>Physics-based rocket landing madness!</p>
+          <div class="btn small red">VIEW →</div>
         </div>
       </div>
+      <div class="page-number">3</div>
+      <button class="next-page" onclick="flipTo(4)">→</button>
     </section>
 
-    <!-- Contact -->
-    <section class="contact-section card">
-      <h2>Contact</h2>
+    <!-- PAGE 4 - NOVELS -->
+    <section class="page" id="page4">
+      <h2 class="title-bubble red">MY NOVELS <span class="blue-tab">Stories That Come Alive!</span></h2>
+      <div class="novels">
+        <div class="novel-cover published">
+          <div class="stamp">PUBLISHED!</div>
+          <h3>The Chronicles of Shadow</h3>
+        </div>
+        <div class="novel-cover published">
+          <div class="stamp">PUBLISHED!</div>
+          <h3>Neon Dreams</h3>
+        </div>
+      </div>
+      <div class="page-number">4</div>
+      <button class="next-page" onclick="flipTo(5)">→</button>
+    </section>
+
+    <!-- PAGE 5 - CONTACT -->
+    <section class="page" id="page5">
+      <h2 class="title-bubble">SEND MESSAGE!</h2>
       <div class="contact-grid">
-        <div class="contact-item">
-          <strong>Phone</strong><br>6379989918
-        </div>
-        <div class="contact-item">
-          <strong>Email</strong><br>janeshwaranobito28@gmail.com
-        </div>
-        <div class="contact-item">
-          <strong>Location</strong><br>Kundrathur, Chennai-600069
-        </div>
+        <div class="contact-box blue">✉️ janeshwaranobito28@gmail.com</div>
+        <div class="contact-box yellow">🎮 @janeshobito283</div>
+        <div class="contact-box red">📍 Chennai, India</div>
       </div>
-      <div class="social-links">
-        <a href="https://www.artstation.com/janeshobito283" class="social-btn">ArtStation</a>
-        <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" class="social-btn">LinkedIn</a>
+      <a href="mailto:janeshwaranobito28@gmail.com" class="btn big red">HIRE ME! 💥</a>
+      <div class="social-comic">
+        <a href="https://artstation.com/janeshobito283" class="btn small yellow">ArtStation</a>
+        <a href="https://linkedin.com/in/janeshwaran-r-a33729285" class="btn small blue">LinkedIn</a>
       </div>
+      <div class="page-number">5</div>
     </section>
-  </main>
+  </div>
+
+  <!-- Sound Effects -->
+  <audio id="pow" src="https://assets.codepen.io/605876/pow-sound.mp3"></audio>
+  <audio id="zap" src="https://assets.codepen.io/605876/zap-sound.mp3"></audio>
+  <audio id="boom" src="https://assets.codepen.io/605876/boom-sound.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
