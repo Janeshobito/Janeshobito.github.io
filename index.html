@@ -1,140 +1,70 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JANESH | POW! Game & Narrative Designer</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Janeshwaran — Comic Portfolio</title>
+
+  <link rel="stylesheet" href="styles.css">
+
+  <!-- GSAP + ScrollTrigger + Lottie (CDN) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.0/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.9.6/lottie.min.js"></script>
 </head>
 <body>
-  <div class="comic-book">
-    <!-- PAGE 1: Hero (Like Your First Mockup) -->
-    <section class="page active" id="page1">
-      <nav class="comic-nav">
-        <span class="logo">PORTFOLIO</span>
-        <ul>
-          <li><a href="#" onclick="flipTo(2)">About</a></li>
-          <li><a href="#" onclick="flipTo(2)">Skills</a></li>
-          <li><a href="#" onclick="flipTo(3)">Projects</a></li>
-          <li><a href="#" onclick="flipTo(4)">Novels</a></li>
-          <li><a href="#" onclick="flipTo(5)">Contact</a></li>
-        </ul>
-      </nav>
+  <header class="site-header">
+    <div class="brand">
+      <h1>JANESHWARAN R</h1>
+      <p>Game Designer • Narrative • 3D & Unity</p>
+    </div>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="/mnt/data/Janeshwaran R ((Resume )).pdf" download>Resume</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
       <div class="hero-panel">
-        <h1 class="pow-text">GAME DESIGNER <span class="zap">POW!</span></h1>
-        <h2>GRAPHIC DESIGNER<br><span class="narrative">NARRATIVE DESIGNER</span></h2>
-        <div class="speech-bubble tagline">Bringing Ideas to Life!</div>
-        <div class="cta-buttons">
-          <button class="btn red" onclick="flipTo(3)">VIEW PROJECTS</button>
-          <button class="btn blue" onclick="flipTo(5)">GET IN TOUCH</button>
-        </div>
+        <h2>Visual Storytelling — Cinematic, comic-style portfolio</h2>
+        <p>Scroll to explore projects with panel transitions & camera motion.</p>
       </div>
-      <div class="page-number">1</div>
     </section>
 
-    <!-- PAGE 2: About/Skills/Edu (Clean Resume Flow) -->
-    <section class="page" id="page2">
-      <div class="panel-grid two-col">
-        <div class="panel about">
-          <div class="speech-bubble">About Me</div>
-          <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates. Eager to learn, adapt, and contribute fresh, innovative ideas to every project while refining my skills to bring creative visions to life.</p>
+    <section id="work" class="masonry">
+      <!-- Comic-style cards -->
+      <article class="card panel">
+        <div class="panel-img" style="background-image:url('assets/project1.jpg')"></div>
+        <div class="panel-text">
+          <h3>Silent Rage — Isometric shooter</h3>
+          <p>John Wick vibes, camera punches, cinematic shots and stealth.</p>
         </div>
-        <div class="panel skills">
-          <div class="speech-bubble">Skills</div>
-          <ul>
-            <li>3D Modeling (Blender) <span>75%</span></li>
-            <li>Scriptwriting (for games/film/cutscenes) <span>87%</span></li>
-            <li>Storytelling & Narrative Writing <span>95%</span></li>
-            <li>Programming <span>60%</span></li>
-          </ul>
-          <div class="speech-bubble small yellow">Tools: Unity • Unreal • Godot • Blender • Material Maker • Krita</div>
-        </div>
-        <div class="panel education">
-          <div class="speech-bubble">Education</div>
-          <p><strong>ST. JOSEPH COLLEGE ARTS AND SCIENCE</strong><br>Bachelor of B.Sc Computer Science (2020-2024)</p>
-          <p><strong>ICAT College of Design & Media</strong><br>Masters in M.Sc Game Technology (2024-Present)</p>
-        </div>
-        <div class="panel languages">
-          <div class="speech-bubble">Language</div>
-          <div class="circles">
-            <div class="circle english">English<br>92%</div>
-            <div class="circle tamil">Tamil<br>98%</div>
-          </div>
-        </div>
-      </div>
-      <div class="page-number">2</div>
-      <button class="next-page" onclick="flipTo(3)">→ Next</button>
-    </section>
+      </article>
 
-    <!-- PAGE 3: Projects (Exact Grid from Your Screenshot) -->
-    <section class="page" id="page3">
-      <h2 class="title-bubble red">PROJECTS</h2>
-      <div class="project-grid">
-        <div class="project-panel">
-          <h3>Pixel Warriors</h3>
-          <p>Retro-style fighting game with unique character designs</p>
-          <button class="btn small red view-btn" onclick="playSound('pow')">VIEW →</button>
-        </div>
-        <div class="project-panel">
-          <h3>Hardcore Mario-Style 2D</h3>
-          <p>Challenging platformer with pixel art & tight controls</p>
-          <button class="btn small red view-btn" onclick="playSound('zap')">VIEW →</button>
-        </div>
-        <div class="project-panel">
+      <article class="card panel">
+        <div class="panel-img" style="background-image:url('assets/project2.jpg')"></div>
+        <div class="panel-text">
           <h3>Rocket Thruster Landing</h3>
-          <p>Physics-based rocket landing madness!</p>
-          <button class="btn small red view-btn" onclick="playSound('boom')">VIEW →</button>
+          <p>Physics-based challenge with polished controls.</p>
         </div>
-      </div>
-      <div class="page-number">3</div>
-      <button class="next-page" onclick="flipTo(4)">→ Next</button>
+      </article>
+
+      <article class="card panel">
+        <div class="panel-img" style="background-image:url('assets/hero.jpg')"></div>
+        <div class="panel-text">
+          <h3>2D Pixel Platformer</h3>
+          <p>Classic platform design with a modern twist.</p>
+        </div>
+      </article>
     </section>
 
-    <!-- PAGE 4: Novels (Yellow "PUBI" Stamps from Screenshot) -->
-    <section class="page" id="page4">
-      <h2 class="title-bubble">MY NOVELS <span class="blue-tab">Stories That Come Alive!</span></h2>
-      <div class="novels-grid">
-        <div class="novel-panel">
-          <div class="cover yellow published">
-            <div class="stamp">PUBI!</div>
-          </div>
-          <h3>The Chronicles of Shadow</h3>
-          <button class="btn small yellow">VIEW</button>
-        </div>
-        <div class="novel-panel">
-          <div class="cover yellow published">
-            <div class="stamp">PUBI!</div>
-          </div>
-          <h3>Neon Dreams</h3>
-          <button class="btn small yellow">VIEW</button>
-        </div>
-      </div>
-      <div class="page-number">4</div>
-      <button class="next-page" onclick="flipTo(5)">→ Next</button>
+    <section id="about" class="about">
+      <h2>About</h2>
+      <p>Unity · Unreal · Blender · Story & Narrative · Programming</p>
     </section>
-
-    <!-- PAGE 5: Contact (Pink Location, Exact Bubbles) -->
-    <section class="page" id="page5">
-      <h2 class="title-bubble red">SEND MESSAGE!</h2>
-      <div class="contact-grid">
-        <div class="contact-bubble white">janeshwaranobito28@gmail.com</div>
-        <div class="contact-bubble white">@janeshobito283</div>
-        <div class="contact-bubble pink">Chennai, India</div>
-      </div>
-      <button class="btn big red hire-btn" onclick="playSound('boom')">HIRE ME! 💥</button>
-      <div class="social-grid">
-        <a href="https://www.artstation.com/janeshobito283" class="btn small yellow">ArtStation</a>
-        <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" class="btn small blue">LinkedIn</a>
-      </div>
-      <div class="page-number">5</div>
-    </section>
-  </div>
-
-  <!-- Free Royalty-Free Sounds (from Pixabay/SoundBible) -->
-  <audio id="pow" preload="auto"><source src="https://cdn.pixabay.com/audio/2022/03/15/audio_6d4a4e5b0a.mp3" type="audio/mpeg"></audio>
-  <audio id="zap" preload="auto"><source src="https://www.soundjay.com/misc/sounds/cartoon/impact-1.mp3" type="audio/mpeg"></audio>
-  <audio id="boom" preload="auto"><source src="https://www.soundjay.com/misc/sounds/cartoon/impact-3.mp3" type="audio/mpeg"></audio>
+  </main>
 
   <script src="script.js"></script>
 </body>
