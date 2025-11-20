@@ -4,190 +4,178 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Janeshwaran R – Darkpath</title>
-  <meta name="description" content="Game Developer • 3D Artist • Dark Fantasy Author" />
+  <meta name="description" content="Game Developer • 3D Artist • Dark Fantasy Author (Darkpath on Webnovel)" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    :root {
-      --bg: #0b0b1a;
-      --card: #161625;
-      --accent: #8b5cf6;
-      --accent2: #ec4899;
-      --text: #e2e8f0;
-      --gray: #94a3b8;
+    :root{
+      --bg:#0b0b1a;--card:#161625;--accent:#8b5cf6;--accent2:#ec4899;
+      --text:#e2e8f0;--gray:#94a3b8;
     }
-    *{margin:0;padding:0;box-sizing:border-box;}
+    *,*::before,*::after{box-sizing:border-box;}
     body{
-      font-family:'Segoe UI',sans-serif;
-      background:var(--bg);
-      color:var(--text);
-      overflow-x:hidden;
-      position:relative;
+      margin:0;font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);
+      overflow-x:hidden;position:relative;min-height:100vh;
     }
-    canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:0.4;}
+    canvas{position:fixed;inset:0;z-index:0;opacity:0.35;}
+
+    /* GPU Acceleration */
+    header, .card, .about-img, .btn, .socials a, nav, h2{
+      transform:translateZ(0);will-change:transform;
+    }
 
     header{
-      position:fixed;top:0;left:0;right:0;
-      background:rgba(11,11,26,0.95);
-      backdrop-filter:blur(12px);
-      z-index:1000;
-      border-bottom:1px solid #333344;
-      box-shadow:0 8px 32px rgba(0,0,0,0.5);
+      position:fixed;top:0;left:0;right:0;background:rgba(11,11,26,0.95);
+      backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+      z-index:1000;border-bottom:1px solid #333344;
+      box-shadow:0 8px 32px rgba(0,0,0,0.6);
     }
     nav{max-width:1200px;margin:0 auto;padding:1.2rem;display:flex;justify-content:space-between;align-items:center;}
     .logo{
-      font-size:2rem;font-weight:900;
+      font-size:2.1rem;font-weight:900;
       background:linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;
+      -webkit-background-clip:text;background-clip:text;
       -webkit-text-fill-color:transparent;
-      text-shadow:0 0 20px rgba(139,92,246,0.5);
     }
-    .nav-links{display:flex;gap:2.5rem;}
     .nav-links a{
       color:var(--text);text-decoration:none;font-weight:600;position:relative;
-      transition:all 0.4s;letter-spacing:0.5px;
+      padding:0.5rem 0;transition:color 0.4s;
     }
     .nav-links a::after{
       content:'';position:absolute;bottom:-10px;left:50%;width:0;height:3px;
-      background:var(--accent);transition:all 0.4s;transform:translateX(-50%);
+      background:var(--accent);transition:width 0.4s ease, left 0.4s ease;
+      border-radius:2px;transform:translateX(-50%);
     }
-    .nav-links a:hover,.nav-links a.active{
-      color:var(--accent);text-shadow:0 0 10px var(--accent);
-    }
-    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;left:50%;}
 
     main{margin-top:80px;position:relative;z-index:1;}
 
     section{
-      display:none;padding:6rem 2rem;max-width:1200px;margin:0 auto;min-height:80vh;
-      scroll-margin-top:100px;opacity:0;transform:translateY(50px);transition:all 1s;
+      padding:6rem 2rem;max-width:1200px;margin:0 auto;min-height:80vh;
+      scroll-margin-top:100px;opacity:0;transform:translateY(60px);
+      transition:opacity 1s ease, transform 1s ease;
     }
-    section.active{opacity:1;transform:none;display:block;}
+    section.visible{opacity:1;transform:none;}
 
     #home{
       text-align:center;padding-top:12rem;
-      background:radial-gradient(circle at center,rgba(139,92,246,0.15),transparent 70%);
+      background:radial-gradient(circle at 50% 30%,rgba(139,92,246,0.2),transparent 70%);
     }
     .hero h1{
-      font-size:5.5rem;font-weight:900;
+      font-size:5.8rem;font-weight:900;margin:0;
       background:linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-      margin-bottom:1rem;
-      text-shadow:0 0 30px rgba(139,92,246,0.6);
+      -webkit-background-clip:text;background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-shadow:0 0 40px rgba(139,92,246,0.5);
     }
     .typewriter{
-      font-size:1.8rem;color:var(--gray);margin:2rem 0;
-      border-right:3px solid var(--accent);padding-right:8px;
-      white-space:nowrap;overflow:hidden;width:0;animation:typing 4s steps(40) forwards, blink 0.8s infinite;
+      font-size:1.9rem;color:var(--gray);margin:2rem auto;overflow:hidden;
+      border-right:4px solid var(--accent);white-space:nowrap;width:0;
+      animation:typing 4s steps(44) forwards, blink 0.8s infinite;
     }
-    @keyframes typing{from{width:0}to{width:38ch}}
+    @keyframes typing{from{width:0}to{width:44ch}}
     @keyframes blink{50%{border-color:transparent}}
 
     .socials{
-      margin:4rem 0;font-size:2.8rem;gap:2.5rem;display:flex;justify-content:center;flex-wrap:wrap;
+      margin:4rem 0;font-size:2.8rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;
     }
     .socials a{
-      color:var(--gray);transition:all 0.4s;
-      padding:15px;border-radius:50%;background:rgba(139,92,246,0.1);
-      box-shadow:0 0 20px rgba(139,92,246,0.2);
+      color:var(--gray);width:70px;height:70px;display:grid;place-items:center;
+      background:rgba(139,92,246,0.15);border-radius:50%;transition:all 0.5s;
+      box-shadow:0 10px 30px rgba(139,92,246,0.2);
     }
     .socials a:hover{
-      color:white;transform:translateY(-12px) scale(1.2);
-      background:var(--accent);box-shadow:0 0 40px var(--accent);
+      background:var(--accent);color:white;transform:translateY(-15px) scale(1.2);
+      box-shadow:0 20px 50px rgba(139,92,246,0.6);
     }
 
     h2{
-      font-size:3.5rem;text-align:center;margin-bottom:4rem;color:var(--accent);
-      text-shadow:0 0 20px rgba(139,92,246,0.4);
+      font-size:3.6rem;text-align:center;margin-bottom:4rem;color:var(--accent);
       position:relative;
     }
     h2::after{
       content:'';position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);
-      width:120px;height:4px;background:var(--accent);border-radius:2px;
-      box-shadow:0 0 20px var(--accent);
+      width:100px;height:5px;background:var(--accent);border-radius:3px;
+      box-shadow:0 0 30px var(--accent);
     }
 
+    .about-grid{
+      display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:center;
+    }
+    .about-img{
+      border-radius:30px;border:6px solid var(--accent);box-shadow:0 0 70px rgba(139,92,246,0.6);
+      transition:transform 0.8s;
+    }
+    .about-img:hover{transform:scale(1.05) rotate(2deg);}
+
     .grid{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:3rem;
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:3rem;
     }
     .card{
-      background:var(--card);border-radius:24px;overflow:hidden;
-      border:1px solid #333344;transition:all 0.6s;
-      opacity:0;transform:translateY(60px);
-      box-shadow:0 10px 30px rgba(0,0,0,0.4);
+      background:var(--card);border-radius:28px;overflow:hidden;
+      border:1px solid #333344;box-shadow:0 15px 40px rgba(0,0,0,0.5);
+      transition:all 0.7s cubic-bezier(0.25,0.8,0.25,1);
+      opacity:0;transform:translateY(80px);
     }
     .card.visible{opacity:1;transform:none;}
     .card:hover{
-      transform:translateY(-20px) scale(1.03);
-      border-color:var(--accent);
-      box-shadow:0 30px 80px rgba(139,92,246,0.4);
+      transform:translateY(-25px) scale(1.04);
+      border-color:var(--accent);box-shadow:0 40px 100px rgba(139,92,246,0.4);
     }
     .card img{
-      width:100%;height:450px;object-fit:cover;
-      transition:transform 0.6s;
+      width:100%;height:460px;object-fit:cover;transition:transform 0.8s ease;
     }
-    .card:hover img{transform:scale(1.08);}
-    .card-body{padding:2rem;}
+    .card:hover img{transform:scale(1.1);}
+    .card-body{padding:2.2rem;}
     .card h3{
-      font-size:1.7rem;margin-bottom:1rem;color:var(--accent);
-      text-shadow:0 0 10px rgba(139,92,246,0.5);
+      font-size:1.8rem;margin-bottom:1rem;color:var(--accent);
+      text-shadow:0 0 15px rgba(139,92,246,0.6);
     }
     .synopsis{
-      margin-top:1.2rem;font-size:0.98rem;color:var(--gray);
-      max-height:0;overflow:hidden;transition:max-height 0.8s ease;
-      line-height:1.8;
+      margin-top:1.2rem;color:var(--gray);line-height:1.9;font-size:0.98rem;
+      max-height:0;overflow:hidden;transition:max-height 0.9s ease;
     }
-    .synopsis.open{max-height:1500px;padding-top:1rem;}
+    .synopsis.open{max-height:2000px;padding-top:1rem;}
     .read-more{
-      color:var(--accent);cursor:pointer;font-weight:bold;margin-top:1rem;display:inline-block;
-      transition:0.3s;text-shadow:0 0 10px var(--accent);
+      color:var(--accent);font-weight:bold;cursor:pointer;transition:0.4s;
     }
-    .read-more:hover{transform:translateX(10px);}
+    .read-more:hover{transform:translateX(12px);text-shadow:0 0 15px var(--accent);}
     .btn{
-      display:inline-block;margin-top:1.5rem;padding:1rem 2rem;
+      display:inline-block;margin-top:1.5rem;padding:1rem 2.2rem;
       background:linear-gradient(45deg,var(--accent),var(--accent2));
       color:white;border:none;border-radius:50px;font-weight:bold;
-      box-shadow:0 10px 30px rgba(139,92,246,0.4);
-      transition:all 0.4s;
+      box-shadow:0 12px 40px rgba(139,92,246,0.5);
+      transition:all 0.5s;
     }
     .btn:hover{
-      transform:translateY(-5px);box-shadow:0 20px 40px rgba(139,92,246,0.6);
+      transform:translateY(-8px);box-shadow:0 25px 60px rgba(139,92,246,0.7);
     }
 
-    .about-img{
-      border-radius:30px;border:5px solid var(--accent);
-      box-shadow:0 0 60px rgba(139,92,246,0.6);
-      transition:0.6s;
+    form input,form textarea{
+      background:rgba(22,22,37,0.9);border:1px solid #444;border-radius:16px;
+      padding:1.3rem;color:white;transition:all 0.4s;
     }
-    .about-img:hover{transform:scale(1.05);}
-
-    form input, form textarea{
-      background:rgba(30,30,50,0.8);border:1px solid #444;
-      transition:all 0.4s;box-shadow:0 0 15px rgba(139,92,246,0.1);
-    }
-    form input:focus, form textarea:focus{
-      border-color:var(--accent);box-shadow:0 0 25px rgba(139,92,246,0.5);
-      outline:none;
+    form input:focus,form textarea:focus{
+      border-color:var(--accent);box-shadow:0 0 30px rgba(139,92,246,0.5);outline:none;
     }
     button{
       background:linear-gradient(45deg,var(--accent),var(--accent2));
-      padding:1.2rem 3rem;border-radius:50px;
-      font-size:1.3rem;transition:all 0.4s;
-      box-shadow:0 10px 40px rgba(139,92,246,0.5);
+      padding:1.3rem 3.5rem;border-radius:50px;font-size:1.3rem;
+      box-shadow:0 15px 50px rgba(139,92,246,0.6);transition:all 0.5s;cursor:pointer;
     }
     button:hover{
-      transform:translateY(-8px);box-shadow:0 20px 60px rgba(139,92,246,0.7);
+      transform:translateY(-10px);box-shadow:0 30px 80px rgba(139,92,246,0.8);
     }
 
     @media(max-width:768px){
-      .hero h1{font-size:3.8rem;}
-      .typewriter{font-size:1.4rem;}
-      .nav-links{gap:1.5rem;font-size:0.9rem;}
+      .hero h1{font-size:4rem;}
+      .typewriter{font-size:1.5rem;}
+      .about-grid{grid-template-columns:1fr;}
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Particles Background -->
+  <!-- Floating Particles (lightweight, GPU-friendly) -->
   <canvas id="particles"></canvas>
 
   <header>
@@ -204,12 +192,13 @@
   </header>
 
   <main>
+
     <!-- HOME -->
-    <section id="home" class="active">
+    <section id="home" class="visible">
       <div class="hero">
         <h1>Janeshwaran R</h1>
         <p class="typewriter">Crafting Worlds. Writing Darkness. Coding Dreams.</p>
-        <p style="font-size:1.6rem;color:var(--gray);margin:2rem 0;">
+        <p style="font-size:1.7rem;color:var(--gray);margin:2rem 0;">
           Game Developer • 3D Artist • Dark Fantasy Author<br>
           <strong style="color:var(--accent);">Pen Name: Darkpath</strong>
         </p>
@@ -222,85 +211,137 @@
       </div>
     </section>
 
-    <!-- Keep all your existing sections (About, Projects, Novels, Contact) exactly as before -->
-    <!-- Just paste them here from your previous code -->
-    <!-- (I'm keeping them short here for space — use your full ones) -->
-
-    <!-- Example: Novels section with animation class -->
-    <section id="novels">
-      <h2>My Novels <small style="color:#aaa;">by Darkpath</small></h2>
-      <div class="grid">
-        <!-- Paste all your 5 novel cards here -->
+    <!-- ABOUT -->
+    <section id="about">
+      <h2>About Me</h2>
+      <div class="about-grid">
+        <img src="https://via.placeholder.com/500x600/8b5cf6/ffffff?text=Your+Photo" alt="Janeshwaran R" class="about-img">
+        <div>
+          <p style="font-size:1.25rem;margin-bottom:1.5rem;">Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design.</p>
+          <p>Known for a calm and thoughtful approach that fosters smooth collaboration. Eager to learn and contribute innovative ideas.</p>
+          <h3 style="margin:2.5rem 0 1rem;color:var(--accent);">Skills</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;">
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">3D Modeling (Blender)</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Scriptwriting</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Storytelling & Narrative</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Programming</span>
+          </div>
+          <h3 style="margin:2.5rem 0 1rem;color:var(--accent);">Tools</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:1rem;">
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Unity</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Unreal Engine</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Godot</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Blender</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Material Maker</span>
+            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Krita</span>
+          </div>
+          <h3 style="margin:2.5rem 0 1rem;color:var(--accent);">Education</h3>
+          <p><strong>B.Sc Computer Science</strong> – St. Joseph College (2020–2024)</p>
+          <p><strong>M.Sc Game Technology</strong> – ICAT Design & Media (2024–Present)</p>
+        </div>
       </div>
     </section>
 
-    <!-- ... other sections ... -->
+    <!-- PROJECTS -->
+    <section id="projects">
+      <h2>Game Projects</h2>
+      <div class="grid">
+        <div class="card"><img src="https://via.placeholder.com/800x460/222/fff?text=Hardcore+Mario+Game" alt="Mario Game">
+          <div class="card-body"><h3>Hardcore Mario-Style 2D Pixel Game</h3>
+            <p>Challenging 2D platformer with custom pixel art, tight controls, and progressively difficult levels.</p></div></div>
+        <div class="card"><img src="https://via.placeholder.com/800x460/222/fff?text=Rocket+Thruster+Landing" alt="Rocket Game">
+          <div class="card-body"><h3>Rocket Thruster Landing Game</h3>
+            <p>Physics-based rocket control game with precise landing mechanics and increasing difficulty.</p></div></div>
+      </div>
+    </section>
+
+    <!-- NOVELS -->
+    <section id="novels">
+      <h2>My Novels <small style="color:#aaa;">by Darkpath</small></h2>
+      <div class="grid">
+        <div class="card"><img src="https://files.catbox.moe/9q2r8j.png" alt="Gods Betrayed Me">
+          <div class="card-body"><h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3><p><em>Extreme Dark Revenge Fantasy</em></p>
+            <div class="synopsis">David was betrayed by everyone he loved... Reborn in the divine realm, he enslaves the gods themselves.</div>
+            <div class="read-more">Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn">Read on Webnovel</a></div></div>
+
+        <div class="card"><img src="https://files.catbox.moe/l8u9w2.png" alt="Hermits Haven">
+          <div class="card-body"><h3>The Hermit's Haven</h3><p><em>Post-apocalyptic Psychological Thriller</em></p>
+            <div class="synopsis">SOME SECRETS NEVER SLEEP. John builds a city of control — but power corrupts absolutely.</div>
+            <div class="read-more">Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn">Read on Webnovel</a></div></div>
+
+        <div class="card"><img src="https://files.catbox.moe/vf6h3x.png" alt="Wish of Malice">
+          <div class="card-body"><h3>The Wish of Malice</h3><p><em>Villain Protagonist Dark Fantasy</em></p>
+            <div class="synopsis">Robert will protect his loved ones — even if it means destroying the universe.</div>
+            <div class="read-more">Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/book/29761690700035805" target="_blank" class="btn">Read on Webnovel</a></div></div>
+
+        <div class="card"><img src="https://files.catbox.moe/9i5v2k.png" alt="Formula Jet Racing">
+          <div class="card-body"><h3>Formula Jet Racing</h3><p><em>Skyborne Rivals • High-Octane Action</em></p>
+            <div class="synopsis">Jets at 400 mph. Maverick vs James. Every race is a fight to the death.</div>
+            <div class="read-more">Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/book/32853058600730605" target="_blank" class="btn">Read on Webnovel</a></div></div>
+
+        <div class="card"><img src="https://files.catbox.moe/3t4p7m.png" alt="I Was Summoned">
+          <div class="card-body"><h3>I Was Summoned By a God But I Tricked The God To Become a God</h3>
+            <p><em>Dark Isekai • Ruthless Manipulation</em></p>
+            <div class="synopsis">Joshua outsmarts the gods and ascends to godhood through betrayal.</div>
+            <div class="read-more">Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/book/29962599308510305" target="_blank" class="btn">Read on Webnovel</a></div></div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <div style="text-align:center;font-size:1.5rem;margin:2rem 0;color:var(--accent);">
+        Pen Name: <strong>Darkpath</strong> • 
+        <a href="https://www.webnovel.com/profile/4327938398" target="_blank" style="color:var(--accent);">Webnovel Profile</a>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-bottom:4rem;text-align:center;">
+        <div><i class="fas fa-phone" style="font-size:2rem;color:var(--accent);"></i><p>+91 6379989918</p></div>
+        <div><i class="fas fa-envelope" style="font-size:2rem;color:var(--accent);"></i><p>janeshwaranboito283@gmail.com</p></div>
+        <div><i class="fas fa-map-marker-alt" style="font-size:2rem;color:var(--accent);"></i><p>Kundrathur, Chennai-600069</p></div>
+      </div>
+      <form name="contact" method="POST" data-netlify="true" style="max-width:700px;margin:0 auto;display:grid;gap:1.5rem;">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <textarea rows="6" name="message" placeholder="Your Message" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
 
   </main>
 
   <script>
-    // Floating particles background
-    const canvas = document.getElementById('particles');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    let particles = [];
-
-    class Particle {
-      constructor(){this.reset();}
-      reset(){
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = Math.random() * 1 - 0.5;
-        this.speedY = Math.random() * 1 - 0.5;
-      }
-      update(){
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-      }
-      draw(){
-        ctx.fillStyle = 'rgba(139,92,246,0.6)';
-        ctx.beginPath();
-        ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
-        ctx.fill();
-      }
+    // Lightweight particles (only 60 particles, 60 FPS)
+    const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
+    canvas.width=innerWidth;canvas.height=innerHeight;
+    const particles=[];
+    class Particle{
+      constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*2.5+0.5;this.speedX=Math.random()*0.8-0.4;this.speedY=Math.random()*0.8-0.4;}
+      update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>canvas.width)this.speedX*=-1;if(this.y<0||this.y>canvas.height)this.speedY*=-1;}
+      draw(){ctx.fillStyle='rgba(139,92,246,0.6)';ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();}
     }
-
-    for(let i=0;i<80;i++) particles.push(new Particle());
-
-    function animate(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      particles.forEach(p=>{p.update();p.draw();});
-      requestAnimationFrame(animate);
-    }
+    for(let i=0;i<60;i++)particles.push(new Particle());
+    function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw();});requestAnimationFrame(animate);}
     animate();
+    window.addEventListener('resize',()=>{canvas.width=innerWidth;canvas.height=innerHeight;});
 
-    window.addEventListener('resize',()=>{
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    });
+    // Intersection Observer for smooth reveal (zero layout thrashing)
+    const observer=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');en.target.querySelectorAll('.card').forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),i*150));}}),{threshold:0.15});
+    document.querySelectorAll('section').forEach(s=>observer.observe(s));
 
-    // Section fade-in on scroll
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(entry=>{
-        if(entry.isIntersecting){
-          entry.target.classList.add('active');
-          entry.target.querySelectorAll('.card').forEach((card,i)=>{
-            setTimeout(()=>card.classList.add('visible'), i*200);
-          });
-        }
-      });
-    },{threshold:0.1});
-
-    document.querySelectorAll('section').forEach(sec=>observer.observe(sec));
-
-    // Keep your existing navigation & synopsis toggle scripts
-    // (Just paste them here — they still work perfectly)
+    // Navigation & synopsis toggle
+    document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',e=>{
+      e.preventDefault();document.querySelectorAll('section').forEach(s=>s.classList.remove('visible'));
+      document.querySelectorAll('.nav-links a').forEach(l=>l.classList.remove('active'));
+      const target=document.querySelector(a.getAttribute('href'));
+      target.classList.add('visible');a.classList.add('active');
+      target.scrollIntoView({behavior:'smooth'});
+    }));
+    document.querySelectorAll('.read-more').forEach(b=>b.addEventListener('click',()=>{const s=b.previousElementSibling;s.classList.toggle('open');b.textContent=s.classList.contains('open')?'Collapse':'Read Full Synopsis';}));
   </script>
-
-  <!-- Paste your existing navigation + synopsis scripts here -->
 </body>
 </html>
