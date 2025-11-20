@@ -3,161 +3,234 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JANESHWARAN R | S-Rank Creator</title>
+  <title>JANESHWARAN R | S-Rank Game & Narrative Designer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Creepster&family=Exo+2:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Exo+2:wght@300;600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    :root { --bg:#0a0a0a; --page:#111; --accent:#00eeff; --red:#ff0044; --purple:#e100ff; --text:#fff; }
-    [data-theme="light"] { --bg:#f8f8f8; --page:#fff; --accent:#0066cc; --text:#000; }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:var(--bg); color:var(--text); font-family:'Exo 2',sans-serif; overflow-x:hidden; height:100vh; perspective:2000px; }
+    :root {
+      --bg: #0d0a0f;
+      --dark: #111;
+      --red: #ff0033;
+      --neon-red: #ff3366;
+      --accent: #00eeff;
+      --text: #e0e0e0;
+      --glow-red: 0 0 40px rgba(255,0,51,0.8);
+      --glow-cyan: 0 0 40px rgba(0,238,255,0.6);
+    }
+    * { margin:before, *:after { box-sizing: border-box; }
+    body { margin:0; background:var(--bg); color:var(--text); font-family:'Exo 2',sans-serif; overflow-x:hidden; }
     
-    .book { position:relative; width:100vw; height:100vh; transform-style:preserve-3d; }
-    .page { position:absolute; width:50%; height:100%; left:50%; top:0; background:var(--page); box-shadow:inset 0 0 100px #000; transform-origin:left; transition:transform 1.4s; backface-visibility:hidden; padding:60px 50px; overflow-y:auto; }
-    .page:nth-child(odd) { left:0; background:linear-gradient(to right, #000 0%, var(--page) 20%); }
-    .page.active { transform:rotateY(-178deg); z-index:10; }
-    .page-content { max-width:600px; margin:0 auto; }
-    h1 { font-family:'Bangers',cursive; font-size:5rem; background:linear-gradient(90deg,var(--accent),var(--purple),var(--red)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-    h2 { font-family:'Bangers'; font-size:3.5rem; color:var(--accent); margin:30px 0 20px; text-shadow:0 0 20px var(--accent); }
-    .kapow { font-family:'Bangers'; font-size:8rem; color:var(--red); transform:rotate(-12deg); display:block; text-shadow:8px 8px 0 #000; margin:20px 0; }
-    .btn { padding:15px 40px; background:var(--red); color:white; border:none; border-radius:50px; font-weight:bold; cursor:pointer; box-shadow:0 0 30px var(--red); }
-    .skill-bar { height:25px; background:#333; border-radius:12px; overflow:hidden; margin:10px 0; border:2px solid var(--purple); }
-    .fill { height:100%; background:linear-gradient(90deg,var(--accent),var(--purple)); width:0%; transition:width 2s ease; }
-    .circle { display:inline-block; width:70px; height:70px; background:conic-gradient(var(--accent) 0% 92%, #333 92% 100%); border-radius:50%; text-align:center; line-height:70px; font-weight:bold; margin:0 10px; }
-    .contact a { color:var(--accent); text-decoration:none; }
+    /* HERO */
+    #hero {
+      height:100vh; background:linear-gradient(135deg,#1a0000,#0d0a0f), url('https://i.imgur.com/5c7V5nZ.jpg') center/cover;
+      display:flex; align-items:center; justify-content:center; text-align:center; position:relative;
+    }
+    #hero::before { content:''; position:absolute; inset:0; background:radial-gradient(circle at center, transparent 30%, #000 80%); }
+    #hero h1 {
+      font-family:'Orbitron',sans-serif; font-size:9vw; letter-spacing:8px;
+      background:linear-gradient(90deg,var(--red),var(--neon-red),var(--accent));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent; text-shadow:var(--glow-red);
+    }
+    #hero p { font-size:2.5rem; margin:20px 0; text-shadow:0 0 20px var(--red); }
+    .kapow { font-family:'Bebas Neue',sans-serif; font-size:10rem; color:var(--neon-red); transform:rotate(-10deg); display:block; text-shadow:var(--glow-red); }
 
-    .nav-btn { position:fixed; top:50%; transform:translateY(-50%); background:rgba(0,0,0,0.7); color:white; border:none; padding:20px; font-size:3rem; z-index:999; cursor:pointer; border-radius:50%; }
-    .nav-btn.prev { left:20px; } .nav-btn.next { right:20px; }
-    .theme-btn { position:fixed; top:20px; right:20px; z-index:999; background:var(--purple); color:white; border:none; width:60px; height:60px; border-radius:50%; font-size:2rem; }
+    /* NAV */
+    nav {
+      position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:1000;
+      background:rgba(0,0,0,0.8); backdrop-filter:blur(20px); padding:15px 50px; border-radius:50px;
+      border:2px solid var(--red); box-shadow:var(--glow-red); display:flex; gap:30px;
+    }
+    nav a { color:white; text-decoration:none; font-weight:800; font-size:1.3rem; padding:10px 25px; border-radius:30px; transition:0.4s; }
+    nav a:hover, nav a.active { background:var(--red); box-shadow:var(--glow-red); transform:scale(1.1); }
+
+    /* SECTIONS */
+    section { padding:120px 8% 100px; min-height:100vh; position:relative; }
+    .container { max-width:1400px; margin:0 auto; }
+
+    /* RESUME PANEL */
+    .resume-panel {
+      background:var(--dark); border:3px solid var(--red); border-radius:20px; padding:60px; margin-top:-100px;
+      box-shadow:0 0 60px rgba(255,0,51,0.4); position:relative; overflow:hidden;
+    }
+    .resume-panel::before {
+      content:''; position:absolute; inset:0; background:linear-gradient(45deg,transparent 48%,rgba(255,0,51,0.1) 50%,transparent 52%);
+      background-size:50px 50px; animation:scan 8s linear infinite;
+    }
+    @keyframes scan { 0%{transform:translateX(-100px)} 100%{transform:translateX(100px)} }
+
+    .grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-top:40px;
+    }
+    .box {
+      background:rgba(20,0,20,0.6); padding:30px; border-radius:15px; border-left:5px solid var(--neon-red);
+      border-left:5px solid var(--neon-red);
+      box-shadow:var(--glow-red);
+    }
+    .box h3 {
+      font-family:'Orbitron'; color:var(--neon-red); font-size:2rem; margin-bottom:20px; text-shadow:var(--glow-red);
+    }
+    .skill-bar {
+      height:12px; background:#222; border-radius:6px; overflow:hidden; margin:12px 0;
+      border:1px solid var(--red);
+    }
+    .fill {
+      height:100%; background:linear-gradient(90deg,var(--red),var(--neon-red)); width:0%; transition:width 2s ease;
+    }
+    .circle {
+      width:90px; height:90px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
+      font-size:1.8rem; font-weight:900; color:white;
+      background:conic-gradient(var(--neon-red) 0% var(--percent), #111 var(--percent) 100%);
+    }
+
+    .project-list {
+      background:rgba(20,0,20,0.6); padding:30px; border-radius:15px; border:2px dashed var(--red);
+    }
+    .project-list li { margin:15px 0; line-height:1.7; }
+
+    .contact-info {
+      text-align:center; margin-top:50px; font-size:1.5rem;
+    }
+    .contact-info a { color:var(--accent); text-decoration:none; }
+    .btn-download {
+      display:inline-block; margin-top:30px; padding:18px 50px; background:var(--red); color:white;
+      border-radius:50px; text-decoration:none; font-weight:900; box-shadow:var(--glow-red); transition:0.4s;
+    }
+    .btn-download:hover { transform:scale(1.1); background:var(--neon-red); }
+
+    footer {
+      text-align:center; padding:40px; background:#000; color:#555; font-size:1rem;
+    }
   </style>
 </head>
-<body data-theme="dark">
+<body>
 
-  <button class="theme-btn" onclick="document.body.dataset.theme=document.body.dataset.theme==='dark'?'light':'dark'">
-    Sun/Moon
-  </button>
-  <button class="nav-btn prev" onclick="prevPage()">Previous</button>
-  <button class="nav-btn next" onclick="nextPage()">Next</button>
+  <nav>
+    <a href="#hero" class="active">HOME</a>
+    <a href="#resume">RESUME</a>
+    <a href="#projects">PROJECTS</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
 
-  <div class="book">
-    <!-- COVER -->
-    <div class="page active" id="p0">
-      <div class="page-content" style="text-align:center;display:flex;flex-direction:column;justify-content:center;height:100%;">
-        <h1>JANESHWARAN R</h1>
-        <p style="font-size:2.5rem;margin:20px 0;">Game Designer / Narrative Designer</p>
-        <div class="kapow">S-RANK!</div>
-      </div>
+  <!-- HERO -->
+  <section id="hero">
+    <div>
+      <h1>JANESHWARAN R</h1>
+      <p>Game Designer / Narrative Designer</p>
+      <div class="kapow">S-RANK</div>
+      <p style="font-size:2rem; margin-top:30px;">"From E-Rank to S-Rank — I will become the King of Games!"</p>
     </div>
+  </section>
 
-    <!-- PAGE 1 -->
-    <div class="page" id="p1">
-      <div class="page-content">
-        <h2>About Me</h2>
-        <p style="font-size:1.3rem;line-height:1.9;">
-          Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. 
-          Skilled at developing visually compelling concepts while continuously expanding technical expertise. 
-          Known for a calm and thoughtful approach that fosters smooth collaboration with teammates. 
-          Eager to learn, adapt, and contribute fresh, innovative ideas to every project while refining my skills to bring creative visions to life.
-        </p>
+  <!-- RESUME PANEL -->
+  <section id="resume">
+    <div class="container">
+      <div class="resume-panel">
+        <h2 style="text-align:center; font-size:5rem; margin-bottom:40px; color:var(--neon-red); text-shadow:var(--glow-red);">RESUME</h2>
+        
+        <div class="grid">
+          <!-- LEFT -->
+          <div>
+            <div class="box">
+              <h3>About Me</h3>
+              <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates.</p>
+            </div>
 
-        <h2 style="margin-top:40px;">Skills</h2>
-        <div>3D Modeling (Blender)        <div class="skill-bar"><div class="fill" style="width:75%"></div></div></div>
-        <div>Scriptwriting (for games/film/cutscenes) <div class="skill-bar"><div class="fill" style="width:87%"></div></div></div>
-        <div>Storytelling & Narrative Writing <div class="skill-bar"><div class="fill" style="width:95%"></div></div></div>
-        <div>Programming                  <div class="skill-bar"><div class="fill" style="width:60%"></div></div></div>
-      </div>
-    </div>
+            <div class="box" style="margin-top:30px;">
+              <h3>Skills</h3>
+              <div>3D Modeling (Blender)       <div class="skill-bar"><div class="fill" style="width:75%"></div></div></div>
+              <div>Scriptwriting (games/film)   <div class="skill-bar"><div class="fill" style="width:87%"></div></div></div>
+              <div>Storytelling & Narrative      <div class="skill-bar"><div class="fill" style="width:95%"></div></div></div>
+              <div>Programming                  <div class="skill-bar"><div class="fill" style="width:60%"></div></div></div>
+            </div>
 
-    <!-- PAGE 2 -->
-    <div class="page" id="p2">
-      <div class="page-content">
-        <h2>Tools</h2>
-        <ul style="font-size:1.4rem;columns:2;gap:40px;">
-          <li>Unity</li>
-          <li>Unreal Engine</li>
-          <li>Godot</li>
-          <li>Blender</li>
-          <li>Material Maker</li>
-          <li>Krita</li>
-        </ul>
+            <div class="box" style="margin-top:30px;">
+              <h3>Education</h3>
+              <p><strong>ST. JOSEPH COLLEGE ARTS AND SCIENCE</strong><br>
+                 Bachelor of BSc Computer Science<br>2020 – 2024<br><br>
+                 <strong>ICAT College of Design & Media</strong><br>
+                 Masters in MSC Game Technology<br>2024 – Present</p>
+            </div>
 
-        <h2 style="margin-top:50px;">Education</h2>
-        <p style="font-size:1.3rem;">
-          <strong>ST. JOSEPH COLLEGE ARTS AND SCIENCE</strong><br>
-          Bachelor of BSC COMPUTER SCIENCE of 2020 - 2024<br><br>
-          <strong>ICAT College of Design & Media</strong><br>
-          Masters in MSC Game Technology<br>
-          • 2024 - Present
-        </p>
+            <div class="box" style="margin-top:30px;">
+              <h3>Language</h3>
+              <div style="text-align:center;">
+                <span class="circle" style="--percent:92%">92%</span>
+                <span style="margin-left:40px; font-size:2rem;">English</span><br><br>
+                <span class="circle" style="--percent:98%">98%</span>
+                <span style="margin-left:40px; font-size:2rem;">Tamil</span>
+              </div>
+            </div>
+          </div>
 
-        <h2 style="margin-top:50px;">Language</h2>
-        <div style="text-align:center;">
-          <span class="circle">92%</span> English
-          <span class="circle" style="background:conic-gradient(var(--accent) 0% 98%, #333 98% 100%); margin-left:40px;">98%</span> Tamil
+          <!-- RIGHT -->
+          <div>
+            <div class="box">
+              <h3>Tools</h3>
+              <ul style="columns:2; font-size:1.4rem; line-height:2.2;">
+                <li>Unity</li>
+                <li>Unreal Engine</li>
+                <li>Godot</li>
+                <li>Blender</li>
+                <li>Material Maker</li>
+                <li>Krita</li>
+              </ul>
+            </div>
+
+            <div class="box" style="margin-top:30px;">
+              <h3>Project Experience</h3>
+              <div class="project-list">
+                <p><strong>Hardcore Mario-Style 2D Pixel Game</strong><br>
+                   • Developed a challenging 2D platformer inspired by classic Mario mechanics<br>
+                   • Designed pixel art assets, implemented responsive player controls, and built progressively difficult levels<br>
+                   • Focused on gameplay balance, user engagement, and smooth performance</p>
+                <hr style="border-color:var(--red);margin:20px 0;">
+                <p><strong>Rocket Thruster Landing Game</strong><br>
+                   • Created a physics-based game where players control a rocket using thrust<br>
+                   • Implemented collision detection, obstacle challenges, and precise landing mechanics<br>
+                   • Enhanced player experience with intuitive controls and increasing difficulty</p>
+              </div>
+            </div>
+
+            <div class="contact-info">
+              <p><i class="fas fa-phone"></i> +91 63799 89918<br>
+                 <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br>
+                 <i class="fas fa-map-marker-alt"></i> Kundrathur, Chennai-600069<br><br>
+                 <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283">ArtStation</a> | 
+                 <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/">LinkedIn</a></p>
+              <a href="YOUR_RESUME.pdf" download class="btn-download">DOWNLOAD RESUME PDF</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- PAGE 3 -->
-    <div class="page" id="p3">
-      <div class="page-content">
-        <h2>Project Experience</h2>
-        <h3 style="color:var(--accent);font-size:2rem;margin:25px 0 15px;">Hardcore Mario-Style 2D Pixel Game</h3>
-        <p>• Developed a challenging 2D platformer inspired by classic Mario mechanics.<br>
-           • Designed pixel art assets, implemented responsive player controls, and built progressively difficult levels.<br>
-           • Focused on gameplay balance, user engagement, and smooth performance.</p>
-
-        <h3 style="color:var(--accent);font-size:2rem;margin:40px 0 15px;">Rocket Thruster Landing Game</h3>
-        <p>• Created a physics-based game where players control a rocket using thrust mechanics to stay airborne and land safely on a platform.<br>
-           • Implemented collision detection, obstacle challenges, and precise landing mechanics.<br>
-           • Enhanced player experience with intuitive controls and increasing difficulty.</p>
-      </div>
-    </div>
-
-    <!-- PAGE 4 - CONTACT -->
-    <div class="page" id="p4">
-      <div class="page-content" style="text-align:center;">
-        <h2>CONTACT ME</h2>
-        <p style="font-size:2rem;margin:40px 0;line-height:2.4;">
-          <i class="fas fa-phone"></i> +91 63799 89918<br>
-          <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br>
-          <i class="fas fa-map-marker-alt"></i> Kundrathur, Chennai-600069<br><br>
-          <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283" class="contact">ArtStation</a><br>
-          <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" class="contact">LinkedIn</a>
-        </p>
-        <br><br>
-        <a href="YOUR_RESUME.pdf" download class="btn">DOWNLOAD RESUME PDF</a>
-      </div>
-    </div>
-  </div>
+  <footer>
+    © 2025 Janeshwaran R — Built with blood, sweat and pure passion
+  </footer>
 
   <script>
-    const pages = document.querySelectorAll('.page');
-    let current = 0;
-
-    function nextPage() {
-      if (current >= pages.length - 1) return;
-      gsap.to(pages[current], { rotationY: -178, z: -100, duration: 1.4, ease: "power2.inOut" });
-      current++;
-      pages[current].classList.add('active');
-    }
-
-    function prevPage() {
-      if (current <= 0) return;
-      gsap.to(pages[current], { rotationY: 0, z: 0, duration: 1.4, ease: "power2.inOut" });
-      pages[current].classList.remove('active');
-      current--;
-    }
-
-    // Keyboard support
-    document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') nextPage();
-      if (e.key === 'ArrowLeft') prevPage();
+    // Smooth scroll + active nav
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        link.classList.add('active');
+      });
     });
 
-    // Auto-animate skill bars when page 1 is visible
-    gsap.to(".fill", { width: (i, el) => el.style.width, duration: 2, ease: "elastic.out(1,0.5)", delay: 1 });
+    // Skill bar animation on scroll
+    gsap.utils.toArray(".fill").forEach(bar => {
+      gsap.to(bar, {
+        width: bar.style.width,
+        duration: 2,
+        ease: "power3.out",
+        scrollTrigger: { trigger: bar, start: "top 80%" }
+      });
+    });
   </script>
 </body>
 </html>
