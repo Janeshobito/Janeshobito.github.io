@@ -1,95 +1,87 @@
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap');
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-  background: #f5f5dc url('https://www.textures4photoshop.com/wp-content/uploads/2017/09/retro-comic-book-background-free.jpg') repeat; /* Free halftone from Textures4Photoshop */
-  font-family: 'Comic Neue', cursive; 
-  overflow-x: hidden; 
+:root{
+  --bg:#0f0f12;
+  --card:#111216;
+  --accent:#ff5a5f;
+  --glass: rgba(255,255,255,0.04);
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,#07070a 0%, #0f0f12 100%);
+  color:#efefef;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.45;
 }
 
-.comic-book { perspective: 1200px; }
-.page { 
-  position: fixed; inset: 0; 
-  opacity: 0; pointer-events: none; 
-  transform: rotateY(180deg) scale(0.8); 
-  transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Page flip curve */
-  background: white; 
-  border: 10px solid #000; 
-  box-shadow: 15px 15px 0 #000; 
-  margin: 20px; 
-  border-radius: 15px; 
-  overflow: hidden; 
+.site-header{
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 28px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.1));
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid rgba(255,255,255,0.03);
 }
-.page.active { opacity: 1; pointer-events: all; transform: rotateY(0) scale(1); z-index: 10; }
+.site-header .brand h1{margin:0; font-size:18px; letter-spacing:1px}
+.site-header nav a{color:#ddd; margin-left:18px; text-decoration:none}
 
-.comic-nav { 
-  background: #ff3366; color: white; padding: 10px; display: flex; justify-content: space-between; 
-  font-family: 'Bangers'; font-size: 1.2rem; 
+.hero{
+  height:60vh; display:flex; align-items:center; justify-content:center;
+  padding:48px;
 }
-.comic-nav ul { display: flex; list-style: none; gap: 20px; }
-.comic-nav a { color: white; text-decoration: none; padding: 5px 10px; border: 3px solid white; transition: all 0.3s; }
-.comic-nav a:hover { background: white; color: #ff3366; transform: scale(1.1); }
-
-.hero-panel { 
-  height: 100vh; background: linear-gradient(135deg, #ff3366, #ffcc00); 
-  display: flex; flex-direction: column; align-items: center; justify-content: center; 
-  text-align: center; color: white; text-shadow: 4px 4px 0 #000; 
-  animation: heroShake 0.5s infinite alternate; 
+.hero-panel{
+  width:100%; max-width:1000px; padding:36px;
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:16px; box-shadow:0 10px 30px rgba(0,0,0,0.5);
+  transform-origin:center;
+  border:1px solid rgba(255,255,255,0.03);
 }
-.pow-text { font-family: 'Bangers'; font-size: 5rem; color: #ff0; }
-.zap { color: #00f; animation: zapFlash 0.5s infinite; }
-.narrative { color: #00f; }
-.tagline { font-size: 2rem; background: #ffcc00; color: #000; padding: 15px 30px; border: 5px solid #000; transform: rotate(-5deg); margin: 20px 0; }
-.cta-buttons { display: flex; gap: 20px; }
-.btn { 
-  padding: 12px 25px; font-family: 'Bangers'; font-size: 1.2rem; cursor: pointer; 
-  border: 5px solid #000; transform: skew(-10deg); box-shadow: 6px 6px 0 #000; 
-  transition: all 0.3s; 
+
+.masonry{
+  column-count:3;
+  column-gap:20px;
+  padding:28px;
+  max-width:1300px; margin:0 auto;
 }
-.btn:hover { transform: translateY(-8px) skew(-10deg); box-shadow: 12px 12px 0 #000; animation: btnBoom 0.2s; }
-.red { background: #ff3366; color: white; }
-.blue { background: #0099ff; color: white; }
-.yellow { background: #ffcc00; color: #000; }
-.small { padding: 8px 15px; font-size: 1rem; }
+@media (max-width:900px){ .masonry{column-count:2} }
+@media (max-width:600px){ .masonry{column-count:1} }
 
-.panel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 40px; height: 100%; }
-.panel { background: #fffbe6; border: 6px solid #000; padding: 20px; position: relative; }
-.speech-bubble { 
-  background: #ffcc00; color: #000; padding: 10px 20px; position: absolute; top: -15px; left: 20px; 
-  font-family: 'Bangers'; font-weight: bold; border: 4px solid #000; transform: rotate(-3deg); 
+.card{
+  display:inline-block;
+  width:100%;
+  margin:0 0 20px;
+  background:var(--card);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+  transform-origin:center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.03);
 }
-.small { position: static; transform: none; font-size: 0.9rem; text-align: center; }
-ul { list-style: none; padding-left: 0; }
-ul li { margin: 10px 0; font-weight: bold; }
-.circles { display: flex; justify-content: center; gap: 30px; margin-top: 20px; }
-.circle { width: 80px; height: 80px; border-radius: 50%; border: 5px solid #000; background: #0099ff; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: bold; }
 
-.title-bubble { font-family: 'Bangers'; font-size: 3rem; text-align: center; color: #ff3366; margin: 20px 0; text-shadow: 3px 3px 0 #000; position: relative; }
-.title-bubble::before { content: ''; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); border: 15px solid transparent; border-top: 15px solid #ff3366; }
-.blue-tab { color: #0099ff; background: none; }
+/* panel style = comic panel */
+.panel-img{
+  height:220px;
+  background-size:cover;
+  background-position:center;
+  filter: contrast(1.05) saturate(1.05);
+  transform-origin:center;
+}
+.panel-text{
+  padding:18px;
+}
+.card:hover{
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+}
 
-.project-grid, .novels-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
-.project-panel, .novel-panel { border: 6px solid #000; padding: 15px; text-align: center; background: #fffbe6; position: relative; }
-.view-btn:hover { animation: explode 0.3s; }
-.cover { height: 150px; background: #ccc; border: 4px solid #000; margin-bottom: 10px; position: relative; }
-.published { background: linear-gradient(45deg, #ffcc00, #ff9900); }
-.stamp { position: absolute; top: 10px; right: 10px; background: #ff3366; color: white; padding: 5px 10px; font-family: 'Bangers'; font-size: 1.2rem; transform: rotate(15deg); border: 3px solid #000; }
+/* comic borders and peel */
+.card::after{
+  content:"";
+  position:absolute; pointer-events:none;
+}
 
-.contact-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 20px; }
-.contact-bubble { padding: 15px 25px; border: 5px solid #000; font-size: 1.1rem; font-weight: bold; }
-.white { background: white; }
-.pink { background: #ffccff; }
-.hire-btn { font-size: 1.5rem; padding: 20px 40px; display: block; margin: 20px auto; }
-.social-grid { display: flex; justify-content: center; gap: 15px; margin-top: 20px; }
+/* about */
+.about{ padding:48px; text-align:center; max-width:1000px; margin:40px auto; }
 
-.page-number { position: absolute; bottom: 20px; right: 30px; font-family: 'Bangers'; font-size: 4rem; color: #000; opacity: 0.3; }
-.next-page { position: absolute; bottom: 30px; left: 30px; background: none; border: 4px solid #000; color: #000; font-size: 2rem; padding: 10px 20px; cursor: pointer; animation: bounce 2s infinite; }
-.next-page:hover { background: #ff3366; color: white; }
-
-@keyframes heroShake { 0% { transform: translateX(0); } 100% { transform: translateX(5px); } }
-@keyframes zapFlash { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-@keyframes btnBoom { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
-@keyframes explode { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
-@keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-@media (max-width: 768px) { .panel-grid, .project-grid, .novels-grid { grid-template-columns: 1fr; } .cta-buttons { flex-direction: column; } }
