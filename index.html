@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hemanth Kumar — Game Programmer Portfolio</title>
+  <meta name="description" content="Portfolio of Hemanth Kumar — Game programmer. Playable builds, code samples, and technical write-ups." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg: #0f1724;
+      --card: #0b1220;
+      --muted: #9aa4b2;
+      --accent: #7c6cff;
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#071021 0%,var(--bg) 100%);color:#e6eef7}
+    a{color:inherit;text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:40px 20px}
+
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;gap:16px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#3dd9b2);display:flex;align-items:center;justify-content:center;font-weight:800;color:#061022}
+    .title{line-height:1}
+    .title h1{font-size:20px;margin:0}
+    .title p{margin:0;color:var(--muted);font-size:13px}
+
+    nav a{color:var(--muted);margin-left:18px;font-weight:600}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;margin-top:36px;align-items:center}
+    .card{background:linear-gradient(180deg,var(--glass),var(--glass-2));padding:22px;border-radius:14px;border:1px solid rgba(255,255,255,0.04)}
+
+    .intro h2{margin:0;font-size:28px}
+    .intro p{color:var(--muted);margin-top:12px;line-height:1.6}
+    .cta{margin-top:18px;display:flex;gap:12px}
+    .btn{background:linear-gradient(90deg,var(--accent),#5ab8ff);padding:10px 14px;border-radius:10px;color:#061022;font-weight:700;border:none;cursor:pointer}
+    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:10px;color:var(--muted);cursor:pointer}
+
+    .profile{display:flex;flex-direction:column;gap:12px}
+    .avatar{width:100%;height:240px;border-radius:12px;background:linear-gradient(180deg,#081022,#06101b);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px}
+    .meta{display:flex;gap:10px;justify-content:space-between}
+    .meta div{font-size:13px;color:var(--muted)}
+
+    .projects{margin-top:36px}
+    .projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .project-card{padding:16px;border-radius:10px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid rgba(255,255,255,0.03)}
+    .project-card h3{margin:0 0 8px 0}
+    .project-card p{margin:0;color:var(--muted);font-size:13px}
+    .badges{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .badge{padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);font-size:12px;color:var(--muted);border:1px solid rgba(255,255,255,0.03)}
+    .project-cta{margin-top:12px;display:flex;gap:8px}
+
+    .about-contact{display:grid;grid-template-columns:1fr 320px;gap:18px;margin-top:36px}
+    .tech-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    footer{margin-top:40px;padding:20px 0;color:var(--muted);text-align:center}
+
+    /* responsive */
+    @media (max-width:1000px){
+      .hero{grid-template-columns:1fr}
+      .projects-grid{grid-template-columns:repeat(2,1fr)}
+      .about-contact{grid-template-columns:1fr}
+    }
+    @media (max-width:640px){
+      .projects-grid{grid-template-columns:1fr}
+      header{flex-direction:column;align-items:flex-start}
+      nav{margin-top:10px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">YN</div>
+        <div class="title">
+          <h1>Hemanth Kumar</h1>
+          <p>Game Programmer — Gameplay, Tools, Systems</p>
+        </div>
+      </div>
+      <nav>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="intro card">
+        <h2>Crafting fun mechanics & robust systems</h2>
+        <p>I build gameplay systems, AI, and tools for fast iteration. My projects show playable prototypes, clean code, and technical write-ups — perfect for hiring teams looking for pragmatic programmers.</p>
+        <div class="cta">
+          <a class="btn" href="#projects">View Projects</a>
+          <a class="ghost" href="https://github.com/your-github" target="_blank">GitHub</a>
+        </div>
+
+        <div style="margin-top:18px;font-size:13px;color:var(--muted)">
+          <strong>Quick highlights:</strong>
+          <div class="tech-list">
+            <div class="badge">Unity / C#</div>
+            <div class="badge">Unreal / C++</div>
+            <div class="badge">AI / NavMesh</div>
+            <div class="badge">Networking</div>
+            <div class="badge">Tools & Editor Scripting</div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="profile card">
+        <div class="avatar">Upload a profile image here (260×260)</div>
+        <div class="meta">
+          <div>
+            <div style="font-weight:700">Role</div>
+            <div style="color:var(--muted);font-size:13px">Gameplay Programmer</div>
+          </div>
+          <div>
+            <div style="font-weight:700">Location</div>
+            <div style="color:var(--muted);font-size:13px">India</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="projects" class="projects">
+      <h2 style="margin:0 0 14px 0">Selected Projects</h2>
+      <div class="projects-grid">
+
+        <!-- Project 1 (example: 2D platformer) -->
+        <article class="project-card card">
+          <h3>Precision Platformer — "Featherfall"</h3>
+          <p>Polished 2D platformer with advanced movement (variable jump, wall-jump, dash) and 12 handcrafted levels.</p>
+          <div class="badges">
+            <div class="badge">Unity</div>
+            <div class="badge">C#</div>
+            <div class="badge">Playable Build</div>
+          </div>
+          <div class="project-cta">
+            <a class="btn" href="https://itch.io/your-build" target="_blank">Play</a>
+            <a class="ghost" href="https://github.com/your-github/featherfall" target="_blank">Code</a>
+          </div>
+        </article>
+
+        <!-- Project 2 (example: 3D action prototype) -->
+        <article class="project-card card">
+          <h3>3D Action Prototype — "Shadowstrike"</h3>
+          <p>Third-person action prototype demonstrating movement, combat, and AI (NavMesh + FSM). Includes performance case study.</p>
+          <div class="badges">
+            <div class="badge">Unity</div>
+            <div class="badge">C#</div>
+            <div class="badge">AI</div>
+          </div>
+          <div class="project-cta">
+            <a class="btn" href="https://itch.io/your-build" target="_blank">Play</a>
+            <a class="ghost" href="https://github.com/your-github/shadowstrike" target="_blank">Code</a>
+          </div>
+        </article>
+
+        <!-- Project 3 (example: systems pack) -->
+        <article class="project-card card">
+          <h3>Systems Pack — Inventory & Save</h3>
+          <p>Reusable inventory & save/load system with editor integration and usage docs. Easy to drop into other projects.</p>
+          <div class="badges">
+            <div class="badge">Unity</div>
+            <div class="badge">Tools</div>
+            <div class="badge">Docs</div>
+          </div>
+          <div class="project-cta">
+            <a class="btn" href="https://github.com/your-github/systems-pack" target="_blank">Code</a>
+            <a class="ghost" href="#contact">Hire / Contact</a>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <section id="about" class="about-contact">
+      <div class="card">
+        <h3>About Me</h3>
+        <p style="color:var(--muted)">I'm a game programmer focused on gameplay systems and tools. I enjoy shipping playable prototypes that balance fun with solid engineering. I work primarily in Unity and have experience with Unreal. I care about clean, maintainable code and building systems that other developers and designers can use.</p>
+
+        <h4 style="margin-top:18px">Case Studies</h4>
+        <ul style="color:var(--muted);line-height:1.6">
+          <li><strong>Shadowstrike</strong> — improved AI pathing by implementing OffMeshLinks and fallback steering; reduced enemy CPU usage by 35% using pooling.</li>
+          <li><strong>Featherfall</strong> — created a responsive jump curve system to tune feel across levels.</li>
+        </ul>
+
+        <h4 style="margin-top:18px">Skills</h4>
+        <div class="tech-list">
+          <div class="badge">C#</div>
+          <div class="badge">Unity</div>
+          <div class="badge">Gameplay Systems</div>
+          <div class="badge">AI</div>
+          <div class="badge">Editor Tools</div>
+        </div>
+      </div>
+
+      <aside id="contact" class="card">
+        <h3>Contact</h3>
+        <p style="color:var(--muted)">Looking for a gameplay programmer or collaborator? Send a short message and links to any work you'd like me to review.</p>
+        <form id="contactForm" onsubmit="submitForm(event)">
+          <label style="font-size:13px;color:var(--muted)">Email</label>
+          <input id="email" type="email" placeholder="you@example.com" required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);margin-top:6px;background:transparent;color:inherit">
+          <label style="font-size:13px;color:var(--muted);margin-top:8px;display:block">Message</label>
+          <textarea id="message" rows="5" placeholder="Hi — I'm interested in your work..." required style="width:100%;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);margin-top:6px;background:transparent;color:inherit"></textarea>
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button type="submit" class="btn">Send</button>
+            <button type="button" class="ghost" onclick="copyEmail()">Copy Email</button>
+          </div>
+        </form>
+
+        <script>
+          function submitForm(e){
+            e.preventDefault();
+            const email=document.getElementById('email').value;
+            const msg=document.getElementById('message').value;
+            alert('Thanks! This demo form does not actually send emails.\nPlease email '+email+' with your message or link to your work.');
+            // In production, wire this to a serverless function or Formspree / Netlify Forms
+            document.getElementById('contactForm').reset();
+          }
+          function copyEmail(){
+            navigator.clipboard.writeText('your.email@example.com').then(()=>{alert('Email copied to clipboard')})
+          }
+        </script>
+
+        <div style="margin-top:16px;color:var(--muted);font-size:13px">
+          <div><strong>Resume</strong>: <a href="#" style="color:var(--accent)">Download (PDF)</a></div>
+          <div style="margin-top:8px"><strong>External</strong>:</div>
+          <div style="margin-top:6px;display:flex;gap:8px">
+            <a class="ghost" href="https://github.com/your-github" target="_blank">GitHub</a>
+            <a class="ghost" href="https://itch.io/your-profile" target="_blank">itch.io</a>
+            <a class="ghost" href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <footer>
+      © Hemanth Kumar — Game Programmer · Built with ❤️ · Last updated: 2025-09-25
+    </footer>
+  </div>
+</body>
+</html>
