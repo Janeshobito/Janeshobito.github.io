@@ -5,168 +5,224 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>JANESHWARAN R | Game & Narrative Designer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Orbitron:wght@700;900&family=Exo+2:wght@600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Exo+2:wght@400;700;900&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     :root {
-      --bg: #0a0000;
-      --card: rgba(15,0,0,0.85);
+      --bg: #000;
       --red: #ff0033;
       --neon-red: #ff3366;
-      --cyan: #00ffff;
-      --text: #f0f0f0;
-      --glow: 0 0 30px #ff0033;
+      --blue: #0a1a3a;
+      --text: #e0e0e0;
+      --glow: 0 0 40px rgba(255,0,51,0.7);
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      background: var(--bg) url('https://i.imgur.com/5c7V5nZ.jpg') center/cover fixed;
-      color: var(--text); font-family: 'Exo 2', sans-serif; min-height: 100vh;
-      overflow-x: hidden;
+    body { background:#000; color:var(--text); font-family:'Exo 2',sans-serif; overflow-x:hidden; }
+    
+    /* FIXED NAV */
+    nav {
+      position:fixed; top:0; left:0; width:100%; z-index:1000; padding:30px 5%; display:flex; justify-content:space-between; align-items:center;
+      background:linear-gradient(to bottom, #000 0%, transparent 100%);
     }
-    .overlay { position:fixed; inset:0; background: rgba(10,0,0,0.7); pointer-events:none; z-index:1; }
+    .logo { font-family:'Orbitron'; font-size:2.5rem; color:var(--red); text-shadow:var(--glow); }
+    .nav-links { display:flex; gap:50px; }
+    .nav-links a { color:white; text-decoration:none; font-weight:700; font-size:1.2rem; transition:0.3s; position:relative; }
+    .nav-links a:hover, .nav-links a.active { color:var(--red); }
+    .nav-links a.active::after { content:''; position:absolute; bottom:-8px; left:0; width:100%; height:3px; background:var(--red); }
+    .get-tickets { background:var(--red); color:white; padding:12px 35px; border-radius:50px; font-weight:bold; text-decoration:none; box-shadow:var(--glow); }
 
-    /* CARD STYLE - EXACT MATCH TO YOUR HORROR UI */
-    .card {
-      width: 90%; max-width: 420px; margin: 40px auto; position: relative;
-      background: var(--card); border-radius: 20px; overflow: hidden;
-      border: 3px solid var(--red); box-shadow: 0 0 40px rgba(255,0,51,0.6);
-      backdrop-filter: blur(10px); transition: transform 0.4s, box-shadow 0.4s;
+    /* HERO SECTION */
+    #hero {
+      height:100vh; background: url('https://i.imgur.com/5c7V5nZ.jpg') center/cover no-repeat;
+      position:relative; display:flex; align-items:center;
     }
-    .card:hover { transform: scale(1.05); box-shadow: 0 0 80px rgba(255,0,51,0.9); }
+    #hero::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,20,0.6) 50%, rgba(0,0,0,0.9) 100%); }
+    .hero-content { position:relative; z-index:2; padding-left:8%; max-width:700px; }
+    .hero-content h1 { font-family:'Orbitron'; font-size:8rem; color:white; line-height:1; margin-bottom:20px; text-shadow:0 0 60px var(--red); }
+    .hero-content p { font-size:2rem; margin:20px 0; }
+    .kapow { font-size:6rem; color:var(--neon-red); font-weight:900; text-shadow:0 0 50px var(--red); animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { text-shadow:0 0 50px var(--red); } 50% { text-shadow:0 0 80px var(--red); } }
 
-    .card img {
-      width: 100%; height: 500px; object-fit: cover; filter: brightness(0.7) contrast(1.2);
+    /* ABOUT SECTION - VENOM STYLE */
+    #about {
+      min-height:100vh; background:#000; position:relative; padding:150px 8% 100px;
+      display:flex; align-items:center; gap:100px; flex-wrap:wrap;
     }
-    .content {
-      position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; text-align: center;
-      background: linear-gradient(transparent, #000);
+    .about-left img {
+      width:100%; max-width:600px; border:4px solid var(--red); border-radius:15px; box-shadow:var(--glow);
     }
-    .title {
-      font-family: 'Creepster', cursive; font-size: 4rem; color: white;
-      text-shadow: 0 0 20px var(--red); margin-bottom: 10px;
+    .about-right { flex:1; min-width:300px; }
+    .about-right h2 {
+      font-size:5rem; color:var(--red); margin-bottom:30px; writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
+      font-family:'Orbitron'; text-shadow:var(--glow);
     }
-    .subtitle {
-      font-size: 1.4rem; margin: 10px 0; color: var(--cyan);
+    .info-box {
+      background:rgba(20,20,40,0.4); padding:40px; border-left:5px solid var(--red); border-radius:10px; margin-bottom:30px;
+      backdrop-filter:blur(10px);
     }
-    .desc {
-      font-size: 1.1rem; line-height: 1.6; margin: 20px 0;
-    }
-    .buttons {
-      display: flex; justify-content: center; gap: 15px; margin-top: 20px;
-    }
-    .btn {
-      padding: 12px 30px; border-radius: 50px; font-weight: bold; cursor: pointer;
-      transition: 0.3s; text-decoration: none; font-size: 1rem;
-    }
-    .play { background: var(--red); color: white; box-shadow: var(--glow); }
-    .play:hover { background: white; color: var(--red); }
-    .download { border: 2px solid var(--red); color: var(--red); }
-    .download:hover { background: var(--red); color: white; }
-    .trailer { background: var(--red); color: white; }
-    .trailer:hover { background: #c00; }
+    .info-box h3 { color:var(--neon-red); font-size:1.8rem; margin-bottom:15px; }
+    .skill-bar { height:8px; background:#333; border-radius:4px; overflow:hidden; margin:10px 0; }
+    .fill { height:100%; background:var(--red); width:0%; }
+    .circle { width:80px; height:80px; border-radius:50%; background:conic-gradient(var(--red) 0% var(--p), #222 var(--p) 100%); display:inline-flex; align-items:center; justify-content:center; font-weight:bold; color:white; }
 
-    /* HEADER */
-    header {
-      text-align: center; padding: 60px 20px; position: relative; z-index: 2;
+    /* GALLERY / PROJECTS */
+    #gallery {
+      min-height:100vh; background:#000 url('https://wallpaperaccess.com/full/1146750.jpg') center/cover; position:relative; padding:150px 8%;
     }
-    header h1 {
-      font-family: 'Creepster', cursive; font-size: 6rem; color: var(--neon-red);
-      text-shadow: 0 0 40px var(--red); letter-spacing: 5px;
+    #gallery::before { content:''; position:absolute; inset:0; background:rgba(0,0,30,0.8); }
+    .gallery-title {
+      font-size:5rem; color:var(--red); writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
+      position:absolute; left:5%; top:50%; transform:translateY(-50%) rotate(180deg); font-family:'Orbitron'; text-shadow:var(--glow);
     }
-    header p { font-size: 2rem; color: var(--cyan); margin-top: 10px; }
+    .projects-grid {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(400px,1fr)); gap:40px; max-width:1400px; margin:0 auto;
+    }
+    .project-card {
+      background:rgba(0,0,20,0.7); border:3px solid var(--red); border-radius:15px; overflow:hidden; box-shadow:var(--glow);
+      transition:0.4s;
+    }
+    .project-card:hover { transform:scale(1.05); }
+    .project-card img { width:100%; height:300px; object-fit:cover; }
+    .project-card h3 { padding:20px; color:var(--neon-red); font-size:1.8rem; }
 
-    /* CONTACT CARD */
-    .contact-card {
-      background: rgba(0,0,0,0.9); padding: 40px; text-align: center; margin: 60px auto;
-      border: 2px solid var(--red); border-radius: 20px; max-width: 500px;
+    footer {
+      text-align:center; padding:60px; background:#000; color:#555; font-size:1.1rem;
     }
-    .contact-card a { color: var(--cyan); text-decoration: none; font-size: 1.3rem; }
   </style>
 </head>
 <body>
 
-  <div class="overlay"></div>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="logo">J</div>
+    <div class="nav-links">
+      <a href="#hero" class="active">HOME</a>
+      <a href="#about">ABOUT</a>
+      <a href="#gallery">PROJECTS</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+    <a href="Janeshwaran_R_Resume.pdf" download class="get-tickets">DOWNLOAD RESUME</a>
+  </nav>
 
-  <header>
-    <h1>JANESHWARAN R</h1>
-    <p>Game Designer / Narrative Designer</p>
-  </header>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-content">
+      <h1>JANESHWARAN R</h1>
+      <p>Game Designer / Narrative Designer</p>
+      <div class="kapow">S-RANK</div>
+    </div>
+  </section>
 
-  <!-- ABOUT ME CARD -->
-  <div class="card">
-    <img src="https://i.imgur.com/5c7V5nZ.jpg" alt="Janeshwaran">
-    <div class="content">
-      <div class="title">ABOUT ME</div>
-      <div class="subtitle">From E-Rank to S-Rank</div>
-      <p class="desc">
-        Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design.<br>
-        Known for calm collaboration and bringing creative visions to life.
-      </p>
-      <div class="buttons">
-        <a href="#resume" class="btn play">VIEW RESUME</a>
-        <a href="Janeshwaran_Resume.pdf" download class="btn download">DOWNLOAD PDF</a>
+  <!-- ABOUT / RESUME SECTION -->
+  <section id="about">
+    <div class="about-left">
+      <img src="https://i.imgur.com/5c7V5nZ.jpg" alt="Janeshwaran R">
+    </div>
+    <div class="about-right">
+      <h2>ABOUT</h2>
+      <div class="info-box">
+        <h3>About Me</h3>
+        <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates.</p>
+      </div>
+
+      <div class="info-box">
+        <h3>Skills</h3>
+        <div>3D Modeling (Blender)         <div class="skill-bar"><div class="fill" style="width:75%"></div></div></div>
+        <div>Scriptwriting (games/film)     <div class="skill-bar"><div class="fill" style="width:87%"></div></div></div>
+        <div>Storytelling & Narrative       <div class="skill-bar"><div class="fill" style="width:95%"></div></div></div>
+        <div>Programming                    <div class="skill-bar"><div class="fill" style="width:60%"></div></div></div>
+      </div>
+
+      <div class="info-box">
+        <h3>Tools</h3>
+        <ul style="columns:2; line-height:2;">
+          <li>Unity</li>
+          <li>Unreal Engine</li>
+          <li>Godot</li>
+          <li>Blender</li>
+          <li>Material Maker</li>
+          <li>Krita</li>
+        </ul>
+      </div>
+
+      <div class="info-box">
+        <h3>Education & Language</h3>
+        <p><strong>ST. JOSEPH COLLEGE ARTS AND SCIENCE</strong><br>Bachelor of BSc Computer Science • 2020-2024<br><br>
+           <strong>ICAT College of Design & Media</strong><br>MSC Game Technology • 2024-Present</p><br>
+        <p><strong>Language:</strong><br>
+           <span class="circle" style="--p:92%">92%</span> English 
+           <span class="circle" style="--p:98%">98%</span> Tamil
+        </p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- PROJECT 1 CARD -->
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800" alt="Mario Game">
-    <div class="content">
-      <div class="title">HARDCORE MARIO-STYLE</div>
-      <div class="subtitle">2D Pixel Platformer</div>
-      <p class="desc">
-        Brutal difficulty • Pixel-perfect controls • Custom levels<br>
-        Inspired by classic Mario with modern precision.
-      </p>
-      <div class="buttons">
-        <a href="https://www.youtube.com/watch?v=YOUR_MARIO_VIDEO" target="_blank" class="btn trailer">WATCH TRAILER</a>
+  <!-- PROJECTS / GALLERY -->
+  <section id="gallery">
+    <h2 class="gallery-title">PROJECTS</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800" alt="Mario Game">
+        <h3>HARDCORE MARIO-STYLE 2D PIXEL GAME</h3>
+        <p style="padding:20px;">Brutal difficulty • Pixel art • Precision platforming</p>
+      </div>
+      <div class="project-card">
+        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt="Rocket Game">
+        <h3>ROCKET THRUSTER LANDING</h3>
+        <p style="padding:20px;">Physics-based • Realistic thrust • Precision landing challenge</p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- PROJECT 2 CARD -->
-  <div class="card">
-    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt="Rocket Game">
-    <div class="content">
-      <div class="title">ROCKET THRUSTER LANDING</div>
-      <div class="subtitle">Physics-Based Challenge</div>
-      <p class="desc">
-        Realistic thrust mechanics • Precision landing<br>
-        Increasing difficulty • Smooth controls
-      </p>
-      <div class="buttons">
-        <a href="https://www.youtube.com/watch?v=YOUR_ROCKET_VIDEO" target="_blank" class="btn trailer">WATCH TRAILER</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONTACT CARD -->
-  <div class="contact-card">
-    <h2 style="font-family:Creepster; font-size:3rem; color:var(--neon-red); margin-bottom:20px;">
-      LET'S CREATE SOMETHING TERRIFYINGLY GOOD
-    </h2>
-    <p>
+  <!-- CONTACT -->
+  <section id="contact" style="min-height:80vh; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
+    <h2 style="font-size:6rem; color:var(--red); text-shadow:var(--glow); margin-bottom:40px;">GET IN TOUCH</h2>
+    <p style="font-size:2rem; max-width:800px; margin-bottom:40px;">
+      Ready to create the next S-Rank game?<br>Let's make it legendary.
+    </p>
+    <p style="font-size:1.5rem; line-height:2.4;">
       <i class="fas fa-phone"></i> +91 63799 89918<br>
       <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br><br>
-      <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283">ArtStation</a> • 
-      <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/">LinkedIn</a>
+      <i class="fab fa-artstation"></i> ArtStation • <i class="fab fa-linkedin"></i> LinkedIn
     </p>
-    <br>
-    <a href="Janeshwaran_Resume.pdf" download class="btn play" style="display:inline-block; padding:15px 40px;">
-      DOWNLOAD FULL RESUME
-    </a>
-  </div>
+    <a href="Janeshwaran_R_Resume.pdf" download class="get-tickets" style="margin-top:50px; display:inline-block;">DOWNLOAD RESUME</a>
+  </section>
+
+  <footer>
+    © 2025 Janeshwaran R — Game Designer / Narrative Designer<br>
+    "We are S-Rank."
+  </footer>
 
   <script>
-    // Simple hover animation
-    gsap.utils.toArray(".card").forEach(card => {
-      card.addEventListener("mouseenter", () => {
-        gsap.to(card, { y: -20, duration: 0.4, ease: "power2.out" });
+    // Smooth scroll + active nav
+    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) => {
+        e.preventDefault();
+        document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        anchor.classList.add('active');
       });
-      card.addEventListener("mouseleave", () => {
-        gsap.to(card, { y: 0, duration: 0.4, ease: "power2.out" });
+    });
+
+    // Skill animation on scroll
+    gsap.utils.toArray(".fill").forEach(bar => {
+      gsap.to(bar, {
+        width: bar.style.width,
+        duration: 2.5,
+        ease: "power4.out",
+        scrollTrigger: { trigger: bar, start: "top 80%" }
       });
+    });
+
+    // Nav active state on scroll
+    window.addEventListener('scroll', () => {
+      let current = 'hero';
+      document.querySelectorAll('section').forEach(sec => {
+        if (sec.offsetTop - 200 < window.scrollY + window.innerHeight / 2) current = sec.id;
+      });
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      document.querySelector(`nav a[href="#${current}"]`)?.classList.add('active');
     });
   </script>
 </body>
