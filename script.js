@@ -1,36 +1,61 @@
-let currentPage = 1;
-function flipTo(pageNum) {
-  document.querySelector('.page.active').classList.remove('active');
-  document.getElementById(`page${pageNum}`).classList.add('active');
-  currentPage = pageNum;
-  playSound('whoosh'); // Page flip sound
-  if (pageNum === 1) document.querySelector('.comic-nav').style.display = 'flex'; else document.querySelector('.comic-nav').style.display = 'none';
-}
+// Basic GSAP + ScrollTrigger animations
+gsap.registerPlugin(ScrollTrigger);
 
-// Play sounds (free from Pixabay/SoundBible)
-function playSound(type) {
-  const audio = document.getElementById(type);
-  audio.currentTime = 0;
-  audio.play().catch(() => {}); // Silent fail if no audio
-}
-
-// Keyboard nav for fun (arrow keys flip pages)
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight' && currentPage < 5) flipTo(currentPage + 1);
-  if (e.key === 'ArrowLeft' && currentPage > 1) flipTo(currentPage - 1);
+// hero scale-in
+gsap.from(".hero-panel", {
+  duration: 1.1,
+  y: 40,
+  opacity: 0,
+  ease: "power3.out"
 });
 
-// Easter egg: Click hero for confetti (using canvas for fun)
-document.querySelector('.hero-panel').addEventListener('click', () => {
-  playSound('pow');
-  // Simple confetti burst
-  for (let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      const star = document.createElement('div');
-      star.style.cssText = 'position:fixed;top:50%;left:50%;width:10px;height:10px;background:#ff0;border-radius:50%;pointer-events:none;animation:confetti 1s forwards;z-index:100;';
-      star.style.transform = `translate(${Math.random()*200-100}px, ${Math.random()*200-100}px) rotate(${Math.random()*360}deg)`;
-      document.body.appendChild(star);
-      setTimeout(() => star.remove(), 1000);
-    }, i * 50);
-  }
+// panels entrance stagger with a slight rotation for comic effect
+gsap.utils.toArray(".card").forEach((card, i) => {
+  gsap.from(card, {
+    scrollTrigger: {
+      trigger: card,
+      start: "top 85%",
+    },
+    y: 40,
+    rotation: gsap.utils.random(-2, 2),
+    opacity: 0,
+    duration: 0.9,
+    delay: i * 0.06,
+    ease: "power3.out"
+  });
+
+  // tiny hover tilt
+  card.addEventListener("mousemove", (e) => {
+    let rect = card.getBoundingClientRect();
+    let mx = (e.clientX - (rect.left + rect.width/2)) / rect.width;
+    let my = (e.clientY - (rect.top + rect.height/2)) / rect.height;
+    gsap.to(card, {rotationY: mx * 6, rotationX: my * -4, duration: 0.4, ease:"power2.out"});
+  });
+  card.addEventListener("mouseleave", () => {
+    gsap.to(card, {rotationY: 0, rotationX: 0, duration: 0.6, ease:"power3.out"});
+  });
+});
+
+// cinematic parallax "camera" on scroll for hero
+gsap.to(".hero-panel", {
+  scrollTrigger: {
+    trigger: ".hero",
+    scrub: 0.6,
+    start: "top top",
+    end: "bottom top"
+  },
+  y: -80,
+  scale: 1.03,
+  ease: "none"
+});
+
+// example: punchy reveal for a selected project (you can add click handlers)
+document.querySelectorAll(".panel").forEach(el=>{
+  el.addEventListener("click", ()=> {
+    // zoom the clicked panel into view like a 'camera punch'
+    gsap.timeline()
+      .to(".card", {opacity:0.2, scale:0.98, duration:0.25})
+      .to(el, {opacity:1, scale:1.06, duration:0.35})
+      .to(el, {scale:1, duration:0.35});
+  });
 });
