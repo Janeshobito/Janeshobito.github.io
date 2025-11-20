@@ -5,333 +5,246 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Janeshwaran R | Game & Narrative Designer</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <style>
     :root {
-      --bg: #F5F5E8;
+      --bg: #F0F4E8;
+      --box: #FFFFFF;
       --accent: #8B9D76;
-      --dark: #2D3A2B;
-      --light: #E8E4E4E0;
+      --text: #2D3A2B;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
-      font-family: 'Segoe UI', sans-serif;
+      font-family: 'Segoe UI', Tahoma', sans-serif;
       background: var(--bg);
-      color: var(--dark);
-      line-height: 1.6;
-      overflow-x: hidden;
+      color: var(--text);
+      padding: 40px 20px;
+      min-height: 100vh;
     }
     .container {
-      max-width: 1100px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 40px 20px;
+      background: var(--box);
+      border-radius: 30px;
+      padding: 60px 50px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
     }
     header {
       text-align: center;
-      padding: 80px 0 60px;
-      background: linear-gradient(135deg, var(--accent), #A8B894);
-      color: white;
-      clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-      margin-bottom: -50px;
+      margin-bottom: 50px;
     }
     h1 {
-      font-size: 4.5rem;
-      margin-bottom: 10px;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-size: 4.8rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -2px;
     }
     .subtitle {
       font-size: 1.6rem;
-      opacity: 0.95;
-    }
-    .section {
-      margin-bottom: 80px;
-      opacity: 0;
-      transform: translateY(50px);
-    }
-    .card {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      transition: transform 0.4s;
-    }
-    .card:hover { transform: translateY(-10px); }
-    h2 {
-      font-size: 2rem;
-      margin-bottom: 20px;
       color: var(--accent);
-      position: relative;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+    .box {
+      background: #F8FAF5;
+      padding: 25px 30px;
+      border-radius: 20px;
+      margin-bottom: 30px;
+      border: 2px solid #E8EBE2;
+    }
+    h2 {
+      font-size: 1.4rem;
+      color: var(--accent);
+      margin-bottom: 15px;
+      font-weight: 700;
       display: inline-block;
+      padding-bottom: 6px;
+      border-bottom: 3px solid var(--accent);
     }
-    h2::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 60px;
-      height: 4px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
-    .about-text {
-      font-size: 1.15rem;
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .skills-grid {
+    .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: 1fr 1fr;
       gap: 30px;
-      margin-top: 40px;
+      margin-bottom: 30px;
     }
-    .skill-item {
-      background: var(--light);
-      padding: 20px;
-      border-radius: 15px;
+    .skill {
+      margin-bottom: 16px;
     }
     .skill-name {
       font-weight: 600;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
+      margin-bottom: 6px;
     }
-    .progress-bar {
-      height: 12px;
-      background: #ddd;
-      border-radius: 6px;
+    .bar {
+      height: 10px;
+      background: #DDD;
+      border-radius: 5px;
       overflow: hidden;
     }
-    .progress {
+    .fill {
       height: 100%;
       background: var(--accent);
-      width: 0%;
-      border-radius: 6px;
-      transition: width 2s cubic-bezier(0.65, 0, 0.35, 1);
+      border-radius: 5px;
+      width: 0;
+      transition: width 2s ease;
     }
     .tools ul {
-      columns: 2;
-      column-gap: 40px;
+      list-style: none;
     }
     .tools li {
-      margin-bottom: 12px;
+      padding: 8px 0;
       font-size: 1.1rem;
     }
-    .tools i {
+    .tools li:before {
+      content: "•";
       color: var(--accent);
-      margin-right: 8px;
-    }
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-      gap: 30px;
-    }
-    .project-card {
-      background: white;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-      transition: 0.4s;
-    }
-    .project-card:hover {
-      transform: scale(1.03);
-    }
-    .project-card h3 {
-      background: var(--accent);
-      color: white;
-      padding: 15px;
-      font-size: 1.3rem;
-    }
-    .project-card p {
-      padding: 20px;
-      font-size: 1rem;
-    }
-    .languages {
-      display: flex;
-      justify-content: center;
-      gap: 60px;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-    .lang {
-      text-align: center;
+      font-weight: bold;
+      margin-right: 12px;
     }
     .circle {
-      width: 120px;
-      height: 120px;
-      background: conic-gradient(var(--accent) 0% var(--p,0%), #ddd var(--p) 100%);
+      width: 100px;
+      height: 100px;
+      background: conic-gradient(var(--accent) 0% var(--p), #E0E4D9 var(--p) 100%);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 15px;
       font-size: 1.5rem;
       font-weight: bold;
-      color: var(--dark);
+      color: var(--text);
+      margin: 0 auto 10px;
+    }
+    .langs {
+      display: flex;
+      justify-content: center;
+      gap: 80px;
+      flex-wrap: wrap;
+      margin: 40px 0;
     }
     .contact {
       text-align: center;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+      line-height: 2;
     }
     .contact a {
       color: var(--accent);
       text-decoration: none;
-      margin: 0 15px;
     }
-    .contact a:hover { text-decoration: underline; }
-    footer {
-      text-align: center;
-      padding: 40px;
-      background: var(--dark);
-      color: white;
-      margin-top: 100px;
+    .contact i {
+      margin-right: 8px;
+      color: var(--text);
     }
-    @media (max-width: 768px) {
-      h1 { font-size: 3rem; }
-      .subtitle { font-size: 1.3rem; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .tools ul { columns: 1; }
-      .languages { gap: 40px; }
+    @media (max-width: 868px) {
+      .grid { grid-template-columns: 1fr; }
+      h1 { font-size: 3.5rem; }
+      .langs { gap: 40px; }
+      .container { padding: 40px 25px; }
     }
   </style>
 </head>
 <body>
 
+<div class="container">
   <header>
-    <div class="container">
-      <h1>JANESHWARAN R</h1>
-      <p class="subtitle">Game Designer / Narrative Designer</p>
-    </div>
+    <h1>JANESHWARAN R</h1>
+    <p class="subtitle">Game Designer / Narrative Designer</p>
   </header>
 
-  <div class="container">
+  <div class="box">
+    <h2>About Me</h2>
+    <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates. Eager to learn, adapt, and contribute fresh, innovative ideas to every project while refining my skills to bring creative visions to life.</p>
+  </div>
 
-    <section class="about">
-      <div class="card">
-        <h2>About Me</h2>
-        <p class="about-text">
-          Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. 
-          Skilled at developing visually compelling concepts while continuously expanding technical expertise. 
-          Known for a calm and thoughtful approach that fosters smooth collaboration. 
-          Eager to learn, adapt, and bring fresh, innovative ideas to every project.
-        </p>
-      </div>
-    </section>
-
-    <section class="skills">
-      <h2 style="text-align:center;">Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-item">
+  <div class="grid">
+    <div>
+      <div class="box">
+        <h2>Skills</h2>
+        <div class="skill">
           <div class="skill-name">3D Modeling (Blender)</div>
-          <div class="progress-bar"><div class="progress" data-width="75"></div></div>
+          <div class="bar"><div class="fill" style="width:75%"></div></div>
         </div>
-        <div class="skill-item">
-          <div class="skill-name">Scriptwriting (Games/Film/Cutscenes)</div>
-          <div class="progress-bar"><div class="progress" data-width="87"></div></div>
+        <div class="skill">
+          <div class="skill-name">Scriptwriting (for games/film/cutscenes)</div>
+          <div class="bar"><div class="fill" style="width:87%"></div></div>
         </div>
-        <div class="skill-item">
+        <div class="skill">
           <div class="skill-name">Storytelling & Narrative Writing</div>
-          <div class="progress-bar"><div class="progress" data-width="95"></div></div>
+          <div class="bar"><div class="fill" style="width:95%"></div></div>
         </div>
-        <div class="skill-item">
+        <div class="skill">
           <div class="skill-name">Programming</div>
-          <div class="progress-bar"><div class="progress" data-width="60"></div></div>
+          <div class="bar"><div class="fill" style="width:60%"></div></div>
         </div>
       </div>
-    </section>
 
-    <section class="tools-education">
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
-        <div class="card tools">
-          <h2>Tools</h2>
+      <div class="box">
+        <h2>Education</h2>
+        <p><strong>St. Joseph College Arts and Science</strong><br>Bachelor of BSc Computer Science<br>2020 – 2024</p>
+        <p style="margin-top:18px;"><strong>ICAT College of Design & Media</strong><br>Masters in MSC Game Technology<br>2024 – Present</p>
+      </div>
+
+      <div class="box">
+        <h2>Languages</h2>
+        <div class="langs">
+          <div style="text-align:center">
+            <div class="circle" style="--p:92%">92%</div>
+            <p>English</p>
+          </div>
+          <div style="text-align:center">
+            <div class="circle" style="--p:98%">98%</div>
+            <p>Tamil</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="box">
+        <h2>Tools</h2>
+        <div class="tools">
           <ul>
-            <li><i class="fab fa-unity"></i> Unity</li>
-            <li><i class="fas fa-gamepad"></i> Unreal Engine</li>
-            <li><i class="fas fa-cubes"></i> Godot</li>
-            <li><i class="fas fa-blender"></i> Blender</li>
+            <li>Unity</li>
+            <li>Unreal Engine</li>
+            <li>Godot</li>
+            <li>Blender</li>
             <li>Material Maker</li>
             <li>Krita</li>
           </ul>
         </div>
-
-        <div class="card">
-          <h2>Education</h2>
-          <p><strong>St. Joseph College of Arts & Science</strong><br>
-             Bachelor of BSc Computer Science<br>2020 – 2024</p>
-          <p style="margin-top:20px;"><strong>ICAT College of Design & Media</strong><br>
-             Masters in MSC Game Technology<br>2024 – Present</p>
-        </div>
       </div>
-    </section>
 
-    <section class="projects">
-      <h2 style="text-align:center; margin-bottom:40px;">Project Experience</h2>
-      <div class="projects">
-        <div class="project-card">
-          <h3>Hardcore Mario-Style 2D Pixel Game</h3>
-          <p>Developed a challenging 2D platformer inspired by classic Mario mechanics. Designed pixel art assets, implemented responsive controls, and built progressively difficult levels with focus on gameplay balance and performance.</p>
-        </div>
-        <div class="project-card">
-          <h3>Rocket Thruster Landing Game</h3>
-          <p>Physics-based game where players control a rocket using thrust to stay airborne and land safely. Implemented collision detection, obstacles, precise landing mechanics, and intuitive controls with increasing difficulty.</p>
-        </div>
+      <div class="box" style="min-height:340px;">
+        <h2>Project Experience</h2>
+        <p><strong>Hardcore Mario-Style 2D Pixel Game</strong><br>
+        Developed a challenging 2D platformer inspired by classic Mario. Designed pixel art, responsive controls, and progressively difficult levels focused on gameplay balance.</p>
+        <p style="margin-top:20px;"><strong>Rocket Thruster Landing Game</strong><br>
+        Physics-based game with thrust control to land a rocket safely. Implemented collision, obstacles, precise landing mechanics, and increasing difficulty.</p>
       </div>
-    </section>
-
-    <section class="languages">
-      <h2 style="text-align:center;">Languages</h2>
-      <div class="lang">
-        <div class="circle" data-p="92">92%</div>
-        <p>English</p>
-      </div>
-      <div class="lang">
-        <div class="circle" data-p="98">98%</div>
-        <p>Tamil</p>
-      </div>
-    </section>
-
-    <section class="contact">
-      <p>
-        <i class="fas fa-phone"></i> +91 6379989918 &nbsp; | &nbsp;
-        <i class="fas fa-envelope"></i> <a href="mailto:janeshwaranobito28@gmail.com">janeshwaranobito28@gmail.com</a><br><br>
-        <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283" target="_blank">artstation.com/janeshobito283</a> &nbsp; | &nbsp;
-        <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank">linkedin/in/janeshwaran-r</a>
-      </p>
-    </section>
-
+    </div>
   </div>
 
-  <footer>
-    © 2025 Janeshwaran R – Game & Narrative Designer
-  </footer>
+  <div class="contact">
+    <p>
+      <i class="fas fa-phone"></i> +91 6379989918<br>
+      <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br>
+      <i class="fas fa-map-marker-alt"></i> Kundarthur, Chennai-600069<br><br>
+      <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283" target="_blank">artstation.com/janeshobito283</a><br>
+      <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank">linkedin.com/in/janeshwaran-r</a>
+    </p>
+  </div>
+</div>
 
-  <script>
-    // Animate progress bars
-    document.querySelectorAll('.progress').forEach(bar => {
-      setTimeout(() => {
-        bar.style.width = bar.dataset.width + '%';
-      }, 500);
-    });
+<script>
+  // Simple fade-in on load
+  document.body.style.opacity = 0;
+  window.onload = () => {
+    document.body.style.transition = "opacity 1s";
+    document.body.style.opacity = 1;
 
-    // Animate circular language progress
-    document.querySelectorAll('.circle').forEach(circle => {
-      {
-      const p = circle.dataset.p;
-      circle.style.background = `conic-gradient(var(--accent) 0% ${p}%, #ddd ${p}% 100%)`;
+    // Animate bars
+    document.querySelectorAll('.fill').forEach(bar => {
+      setTimeout(() => bar.style.width = bar.parentElement.nextElementSibling?.textContent?.match(/\d+/)?.[0] + '%' || bar.style.width, 300);
     });
+  }
+</script>
 
-    // GSAP Scroll Animations
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.utils.toArray('section').forEach(sec => {
-      gsap.to(sec, {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        scrollTrigger: {
-          trigger: sec,
-          start: "top 80%",
-        }
-      });
-    });
-  </script>
 </body>
+</html>
