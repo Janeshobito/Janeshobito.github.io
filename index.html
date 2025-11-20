@@ -3,226 +3,191 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JANESHWARAN R | Game & Narrative Designer</title>
+  <title>YourName – Portfolio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800;900&family=Exo+2:wght@400;700;900&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
     :root {
-      --bg: #000;
-      --red: #ff0033;
-      --neon-red: #ff3366;
-      --blue: #0a1a3a;
-      --text: #e0e0e0;
-      --glow: 0 0 40px rgba(255,0,51,0.7);
+      --bg: #0b0b1a;
+      --card: #161625;
+      --accent: #8b5cf6;
+      --text: #e2e8f0;
+      --gray: #94a3b8;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body { background:#000; color:var(--text); font-family:'Exo 2',sans-serif; overflow-x:hidden; }
-    
-    /* FIXED NAV */
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    /* Enable smooth scrolling globally */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(11,11,26,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      border-bottom: 1px solid #333344;
+    }
     nav {
-      position:fixed; top:0; left:0; width:100%; z-index:1000; padding:30px 5%; display:flex; justify-content:space-between; align-items:center;
-      background:linear-gradient(to bottom, #000 0%, transparent 100%);
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    .logo { font-family:'Orbitron'; font-size:2.5rem; color:var(--red); text-shadow:var(--glow); }
-    .nav-links { display:flex; gap:50px; }
-    .nav-links a { color:white; text-decoration:none; font-weight:700; font-size:1.2rem; transition:0.3s; position:relative; }
-    .nav-links a:hover, .nav-links a.active { color:var(--red); }
-    .nav-links a.active::after { content:''; position:absolute; bottom:-8px; left:0; width:100%; height:3px; background:var(--red); }
-    .get-tickets { background:var(--red); color:white; padding:12px 35px; border-radius:50px; font-weight:bold; text-decoration:none; box-shadow:var(--glow); }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+      position: relative;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--accent);
+    }
+    .nav-links a.active::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
 
-    /* HERO SECTION */
-    #hero {
-      height:100vh; background: url('https://i.imgur.com/5c7V5nZ.jpg') center/cover no-repeat;
-      position:relative; display:flex; align-items:center;
+    main { margin-top: 80px; }
+    section {
+      display: none;
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      min-height: 80vh;
+      scroll-margin-top: 100px; /* Fixes smooth scroll offset due to fixed header */
     }
-    #hero::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, rgba(0,0,0,0.9) 0%, rgba(0,0,20,0.6) 50%, rgba(0,0,0,0.9) 100%); }
-    .hero-content { position:relative; z-index:2; padding-left:8%; max-width:700px; }
-    .hero-content h1 { font-family:'Orbitron'; font-size:8rem; color:white; line-height:1; margin-bottom:20px; text-shadow:0 0 60px var(--red); }
-    .hero-content p { font-size:2rem; margin:20px 0; }
-    .kapow { font-size:6rem; color:var(--neon-red); font-weight:900; text-shadow:0 0 50px var(--red); animation:pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { text-shadow:0 0 50px var(--red); } 50% { text-shadow:0 0 80px var(--red); } }
+    section.active { display: block; animation: fadeIn 0.6s; }
+    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:none;} }
 
-    /* ABOUT SECTION - VENOM STYLE */
-    #about {
-      min-height:100vh; background:#000; position:relative; padding:150px 8% 100px;
-      display:flex; align-items:center; gap:100px; flex-wrap:wrap;
-    }
-    .about-left img {
-      width:100%; max-width:600px; border:4px solid var(--red); border-radius:15px; box-shadow:var(--glow);
-    }
-    .about-right { flex:1; min-width:300px; }
-    .about-right h2 {
-      font-size:5rem; color:var(--red); margin-bottom:30px; writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
-      font-family:'Orbitron'; text-shadow:var(--glow);
-    }
-    .info-box {
-      background:rgba(20,20,40,0.4); padding:40px; border-left:5px solid var(--red); border-radius:10px; margin-bottom:30px;
-      backdrop-filter:blur(10px);
-    }
-    .info-box h3 { color:var(--neon-red); font-size:1.8rem; margin-bottom:15px; }
-    .skill-bar { height:8px; background:#333; border-radius:4px; overflow:hidden; margin:10px 0; }
-    .fill { height:100%; background:var(--red); width:0%; }
-    .circle { width:80px; height:80px; border-radius:50%; background:conic-gradient(var(--red) 0% var(--p), #222 var(--p) 100%); display:inline-flex; align-items:center; justify-content:center; font-weight:bold; color:white; }
+    /* Rest of your styles (unchanged) */
+    #home { text-align: center; padding-top: 8rem; background: linear-gradient(135deg, #1a1a2e, #16213e); }
+    .hero h1 { font-size: 4.5rem; margin-bottom: 1rem; background: linear-gradient(90deg, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1.4rem; color: var(--gray); max-width: 700px; margin: 0 auto 2rem; }
+    .socials { margin-top: 3rem; font-size: 2rem; gap: 1.5rem; display: flex; justify-content: center; }
+    .socials a { color: var(--gray); transition: 0.3s; }
+    .socials a:hover { color: var(--accent); transform: translateY(-5px); }
 
-    /* GALLERY / PROJECTS */
-    #gallery {
-      min-height:100vh; background:#000 url('https://wallpaperaccess.com/full/1146750.jpg') center/cover; position:relative; padding:150px 8%;
-    }
-    #gallery::before { content:''; position:absolute; inset:0; background:rgba(0,0,30,0.8); }
-    .gallery-title {
-      font-size:5rem; color:var(--red); writing-mode:vertical-rl; text-orientation:mixed; transform:rotate(180deg);
-      position:absolute; left:5%; top:50%; transform:translateY(-50%) rotate(180deg); font-family:'Orbitron'; text-shadow:var(--glow);
-    }
-    .projects-grid {
-      display:grid; grid-template-columns:repeat(auto-fit, minmax(400px,1fr)); gap:40px; max-width:1400px; margin:0 auto;
-    }
-    .project-card {
-      background:rgba(0,0,20,0.7); border:3px solid var(--red); border-radius:15px; overflow:hidden; box-shadow:var(--glow);
-      transition:0.4s;
-    }
-    .project-card:hover { transform:scale(1.05); }
-    .project-card img { width:100%; height:300px; object-fit:cover; }
-    .project-card h3 { padding:20px; color:var(--neon-red); font-size:1.8rem; }
+    h2 { font-size: 3rem; text-align: center; margin-bottom: 3rem; color: var(--accent); }
+    .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 4rem; align-items: center; }
+    .about-img { width: 100%; border-radius: 20px; border: 3px solid var(--accent); box-shadow: 0 0 30px rgba(139,92,246,0.4); }
+    .skills { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+    .skill { background: var(--card); padding: 0.8rem 1.5rem; border-radius: 50px; border: 1px solid var(--accent); }
 
-    footer {
-      text-align:center; padding:60px; background:#000; color:#555; font-size:1.1rem;
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+    .card { background: var(--card); border-radius: 16px; overflow: hidden; border: 1px solid #333344; transition: 0.4s; }
+    .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(139,92,246,0.2); border-color: var(--accent); }
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card-body { padding: 1.5rem; }
+    .card h3 { margin-bottom: 0.5rem; color: var(--accent); }
+    .card p { color: var(--gray); font-size: 0.95rem; }
+    .btn { display: inline-block; margin-top: 1rem; padding: 0.7rem 1.5rem; background: var(--accent); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+
+    form { max-width: 600px; margin: 0 auto; display: grid; gap: 1.5rem; }
+    input, textarea { width: 100%; padding: 1rem; background: var(--card); border: 1px solid #333344; border-radius: 12px; color: white; }
+    button { padding: 1rem 2rem; background: var(--accent); color: white; border: none; border-radius: 12px; font-size: 1.1rem; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 3rem; }
+      .nav-links { gap: 1rem; font-size: 0.9rem; }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
-  <nav>
-    <div class="logo">J</div>
-    <div class="nav-links">
-      <a href="#hero" class="active">HOME</a>
-      <a href="#about">ABOUT</a>
-      <a href="#gallery">PROJECTS</a>
-      <a href="#contact">CONTACT</a>
-    </div>
-    <a href="Janeshwaran_R_Resume.pdf" download class="get-tickets">DOWNLOAD RESUME</a>
-  </nav>
-
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-content">
-      <h1>JANESHWARAN R</h1>
-      <p>Game Designer / Narrative Designer</p>
-      <div class="kapow">S-RANK</div>
-    </div>
-  </section>
-
-  <!-- ABOUT / RESUME SECTION -->
-  <section id="about">
-    <div class="about-left">
-      <img src="https://i.imgur.com/5c7V5nZ.jpg" alt="Janeshwaran R">
-    </div>
-    <div class="about-right">
-      <h2>ABOUT</h2>
-      <div class="info-box">
-        <h3>About Me</h3>
-        <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates.</p>
+  <header>
+    <nav>
+      <div class="logo">YourName</div>
+      <div class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#novels">Novels</a>
+        <a href="#contact">Contact</a>
       </div>
+    </nav>
+  </header>
 
-      <div class="info-box">
-        <h3>Skills</h3>
-        <div>3D Modeling (Blender)         <div class="skill-bar"><div class="fill" style="width:75%"></div></div></div>
-        <div>Scriptwriting (games/film)     <div class="skill-bar"><div class="fill" style="width:87%"></div></div></div>
-        <div>Storytelling & Narrative       <div class="skill-bar"><div class="fill" style="width:95%"></div></div></div>
-        <div>Programming                    <div class="skill-bar"><div class="fill" style="width:60%"></div></div></div>
-      </div>
+  <main>
+    <section id="home" class="active"> <!-- Home content same as before --> </section>
+    <section id="about"> <!-- About content --> </section>
+    <section id="projects"> <!-- Projects --> </section>
+    <section id="novels"> <!-- Novels --> </section>
+    <section id="contact"> <!-- Contact --> </section>
+  </main>
 
-      <div class="info-box">
-        <h3>Tools</h3>
-        <ul style="columns:2; line-height:2;">
-          <li>Unity</li>
-          <li>Unreal Engine</li>
-          <li>Godot</li>
-          <li>Blender</li>
-          <li>Material Maker</li>
-          <li>Krita</li>
-        </ul>
-      </div>
-
-      <div class="info-box">
-        <h3>Education & Language</h3>
-        <p><strong>ST. JOSEPH COLLEGE ARTS AND SCIENCE</strong><br>Bachelor of BSc Computer Science • 2020-2024<br><br>
-           <strong>ICAT College of Design & Media</strong><br>MSC Game Technology • 2024-Present</p><br>
-        <p><strong>Language:</strong><br>
-           <span class="circle" style="--p:92%">92%</span> English 
-           <span class="circle" style="--p:98%">98%</span> Tamil
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROJECTS / GALLERY -->
-  <section id="gallery">
-    <h2 class="gallery-title">PROJECTS</h2>
-    <div class="projects-grid">
-      <div class="project-card">
-        <img src="https://images.unsplash.com/photo-1612287230202-1ff1d85d1bdf?w=800" alt="Mario Game">
-        <h3>HARDCORE MARIO-STYLE 2D PIXEL GAME</h3>
-        <p style="padding:20px;">Brutal difficulty • Pixel art • Precision platforming</p>
-      </div>
-      <div class="project-card">
-        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800" alt="Rocket Game">
-        <h3>ROCKET THRUSTER LANDING</h3>
-        <p style="padding:20px;">Physics-based • Realistic thrust • Precision landing challenge</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" style="min-height:80vh; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center;">
-    <h2 style="font-size:6rem; color:var(--red); text-shadow:var(--glow); margin-bottom:40px;">GET IN TOUCH</h2>
-    <p style="font-size:2rem; max-width:800px; margin-bottom:40px;">
-      Ready to create the next S-Rank game?<br>Let's make it legendary.
-    </p>
-    <p style="font-size:1.5rem; line-height:2.4;">
-      <i class="fas fa-phone"></i> +91 63799 89918<br>
-      <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br><br>
-      <i class="fab fa-artstation"></i> ArtStation • <i class="fab fa-linkedin"></i> LinkedIn
-    </p>
-    <a href="Janeshwaran_R_Resume.pdf" download class="get-tickets" style="margin-top:50px; display:inline-block;">DOWNLOAD RESUME</a>
-  </section>
-
-  <footer>
-    © 2025 Janeshwaran R — Game Designer / Narrative Designer<br>
-    "We are S-Rank."
-  </footer>
+  <!-- Paste ALL your previous section HTML here (Home, About, Projects, Novels, Contact) -->
+  <!-- I'm keeping it short here for clarity, but use your full sections from the last version -->
 
   <script>
-    // Smooth scroll + active nav
-    document.querySelectorAll('nav a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) => {
+    // Enhanced smooth navigation with active state + perfect scroll offset
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section');
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
         e.preventDefault();
-        document.querySelector(anchor.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-        anchor.classList.add('active');
+        
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        // Remove active from all
+        navLinks.forEach(l => l.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+
+        // Add active to clicked
+        link.classList.add('active');
+        targetSection.classList.add('active');
+
+        // Smooth scroll with proper offset for fixed header
+        window.scrollTo({
+          top: targetSection.offsetTop - 90,
+          behavior: 'smooth'
+        });
       });
     });
 
-    // Skill animation on scroll
-    gsap.utils.toArray(".fill").forEach(bar => {
-      gsap.to(bar, {
-        width: bar.style.width,
-        duration: 2.5,
-        ease: "power4.out",
-        scrollTrigger: { trigger: bar, start: "top 80%" }
-      });
-    });
-
-    // Nav active state on scroll
+    // Optional: Update active link on scroll (nice touch)
     window.addEventListener('scroll', () => {
-      let current = 'hero';
-      document.querySelectorAll('section').forEach(sec => {
-        if (sec.offsetTop - 200 < window.scrollY + window.innerHeight / 2) current = sec.id;
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 150;
+        if (scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
       });
-      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-      document.querySelector(`nav a[href="#${current}"]`)?.classList.add('active');
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
