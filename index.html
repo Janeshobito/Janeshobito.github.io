@@ -8,34 +8,30 @@
 <style>
   :root{--a:#8b5cf6;--a2:#ec4899;--t:#e2e8f0;--g:#94a3b8;--card:#161625;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{height:100%;margin:0;background:#000;}
-  body{font-family:'Segoe UI',sans-serif;color:var(--t);overflow-x:hidden;cursor:none;}
+  html,body{height:100%;margin:0;background:#000;color:var(--t);font-family:'Segoe UI',sans-serif;overflow-x:hidden;cursor:none;}
 
-  canvas{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;}
+  /* CANVAS FULLSCREEN — NO CUBE EVER */
+  #gl{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;}
 
   #cursor{
     position:fixed;width:80px;height:80px;pointer-events:none;z-index:9999;
-    background:radial-gradient(circle at 30% 30%,rgba(139,92,246,0.9),transparent 70%);
-    border:2px solid rgba(139,92,246,0.7);border-radius:50%;
-    transform:translate(-50%,-50%);mix-blend-mode:screen;
-    box-shadow:0 0 80px #8b5cf6;transition:0.08s;
+    background:radial-gradient(circle,rgba(139,92,246,0.8),transparent 70%);
+    border:2px solid #8b5cf6;border-radius:50%;transform:translate(-50%,-50%);
+    box-shadow:0 0 80px #8b5cf6;mix-blend-mode:screen;transition:0.08s;
   }
 
-  header{
-    position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.6rem 0;
-    backdrop-filter:blur(40px);background:rgba(11,11,26,0.96);
-    border-bottom:1px solid rgba(139,92,246,0.3);
-  }
+  header{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.6rem 0;
+    backdrop-filter:blur(40px);background:rgba(11,11,26,0.96);border-bottom:1px solid rgba(139,92,246,0.3);}
   nav{max-width:1400px;margin:auto;display:flex;justify-content:space-between;align-items:center;padding:0 3rem;}
   .logo{font-size:2.8rem;font-weight:900;background:linear-gradient(90deg,var(--a),var(--a2));
     -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-  .nav a{color:var(--t);text-decoration:none;font-weight:600;margin:0 2rem;position:relative;}
-  .nav a::after{content:'';position:absolute;bottom:-10px;left:0;width:0;height:4px;background:var(--a);transition:0.5s;border-radius:2px;}
+  .nav a{color:var(--t);text-decoration:none;margin:0 2rem;font-weight:600;position:relative;}
+  .nav a::after{content:'';position:absolute;bottom:-10px;left:0;width:0;height:4px;background:var(--a);transition:0.5s;}
   .nav a:hover::after,.nav a.active::after{width:100%;box-shadow:0 0 30px var(--a);}
 
-  main{padding-top:110px;}
-  section{padding:padding:110px 2rem;max-width:1400px;margin:0 auto;opacity:0;transform:translateY(100px);}
-  section.visible{opacity:1;transform:none;transition:opacity 2s ease-out,transform 2s cubic-bezier(0.16,1,0.3,1);}
+  main{padding-top:100px;}
+  section{padding:120px 2rem;max-width:1400px;margin:auto;opacity:0;transform:translateY(80px);}
+  section.visible{opacity:1;transform:none;transition:all 1.8s cubic-bezier(0.16,1,0.3,1);}
 
   h2{font-size:4.5rem;text-align:center;margin-bottom:5rem;color:var(--a);position:relative;}
   h2::after{content:'';position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);width:140px;height:6px;background:var(--a);border-radius:4px;box-shadow:0 0 50px var(--a);}
@@ -52,23 +48,18 @@
 
   .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(400px,1fr));gap:4rem;margin-top:4rem;}
   .card{
-    background:var(--card);border-radius:40px;overflow:hidden;position:relative;
-    box-shadow:0 30px 80px rgba(0,0,0,0.8);
-    transition:transform 0.8s cubic-bezier(0.16,1,0.3,1);
-    will-change:transform;
-    transform:perspective(3000px) rotateX(0) rotateY(0);
+    background:var(--card);border-radius:40px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.8);
+    transform:perspective(2000px) rotateX(0) rotateY(0);transition:all 0.01s linear;
   }
-  .card:hover{transform:perspective(3000px) rotateX(12deg) rotateY(12deg) translateZ(80px) scale(1.05);}
   .card img{width:100%;height:500px;object-fit:cover;transition:transform 2s ease;}
-  .card:hover img{transform:scale(1.25);}
+  .card:hover img{transform:scale(1.2);}
   .card-body{padding:3rem;}
-  .card h3{font-size:2.1rem;color:var(--a);margin-bottom:1.2rem;text-shadow:0 0 40px var(--a);}
+  .card h3{font-size:2.1rem;color:var(--a);margin-bottom:1rem;}
   .btn{
-    display:inline-block;margin-top:2.5rem;padding:1.2rem 4rem;background:linear-gradient(45deg,var(--a),var(--a2));
-    color:white;border-radius:60px;font-weight:bold;box-shadow:0 30px 60px rgba(139,92,246,0.9);
-    transition:0.6s;
+    display:inline-block;margin-top:2rem;padding:1.2rem 4rem;background:linear-gradient(45deg,var(--a),var(--a2));
+    color:white;border-radius:60px;font-weight:bold;box-shadow:0 30px 60px rgba(139,92,246,0.9);transition:0.6s;
   }
-  .btn:hover{transform:translateY(-12px) scale(1.15);box-shadow:0 50px 100px rgba(139,92,246,1.2);}
+  .btn:hover{transform:scale(1.15);box-shadow:0 50px 100px rgba(139,92,246,1.2);}
 </style>
 </head>
 <body>
@@ -93,10 +84,7 @@
   <section id="home" class="visible">
     <h1>Janeshwaran R</h1>
     <p class="typewriter">I Am The Void That Breathes Creation</p>
-    <p style="font-size:2.2rem;color:var(--g);margin:4rem 0;">
-      Game Developer • 3D Artist • Dark Fantasy Author<br>
-      <strong style="color:var(--a);">Pen Name: Darkpath</strong>
-    </p>
+    <p style="font-size:2.2rem;color:var(--g);margin:4rem 0;">Game Developer • 3D Artist • Dark Fantasy Author<br><strong style="color:var(--a);">Pen Name: Darkpath</strong></p>
     <div style="margin:6rem 0;font-size:5rem;display:flex;justify-content:center;gap:5rem;">
       <a href="https://www.artstation.com/janeshboito283" target="_blank"><i class="fab fa-artstation"></i></a>
       <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank"><i class="fab fa-linkedin"></i></a>
@@ -105,128 +93,88 @@
     </div>
   </section>
 
-  <section id="about">
-    <h2>About Me</h2>
-    <div style="display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:center;">
-      <img src="https://via.placeholder.com/600x750/8b5cf6/fff?text=YOUR+PHOTO" alt="Photo" style="border-radius:40px;border:8px solid var(--a);box-shadow:0 0 120px var(--a);">
-      <div>
-        <p style="font-size:1.6rem;line-height:2.4;">I forge entire universes from darkness — 3D worlds that breathe, stories that corrupt, code that defies reality.</p>
-        <h3 style="margin:4rem 0 2rem;color:var(--a);font-size:2.4rem;">Mastered</h3>
-        <div style="display:flex;flex-wrap:wrap;gap:2rem;">
-          <span style="background:var(--card);padding:1rem 3rem;border-radius:50px;border:4px solid var(--a);box-shadow:0 0 60px var(--a);">Blender • Unity • Unreal • Godot • Houdini</span>
-          <span style="background:var(--card);padding:1rem 3rem;border-radius:50px;border:4px solid var(--a);box-shadow:0 0 60px var(--a);">Ray Marching • GLSL • Dark Fantasy • C#</span>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section id="about"><h2>About Me</h2><div style="display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:center;">
+    <img src="https://via.placeholder.com/600x750/8b5cf6/fff?text=Your+Photo" style="border-radius:40px;border:8px solid var(--a);box-shadow:0 0 120px var(--a);">
+    <div><p style="font-size:1.6rem;line-height:2.4;">I forge entire universes from darkness — 3D worlds that breathe, stories that corrupt, code that defies reality.</p>
+    <h3 style="margin:4rem 0 2rem;color:var(--a);font-size:2.4rem;">Mastered</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:2rem;">
+      <span style="background:var(--card);padding:1rem 3rem;border-radius:50px;border:4px solid var(--a);box-shadow:0 0 60px var(--a);">Blender • Unity • Unreal • Godot</span>
+      <span style="background:var(--card);padding:1rem 3rem;border-radius:50px;border:4px solid var(--a);box-shadow:0 0 60px var(--a);">GLSL • Ray Marching • Dark Fantasy</span>
+    </div></div></div></section>
 
-  <section id="projects">
-    <h2>Game Projects</h2>
-    <div class="grid">
-      <div class="card"><img src="https://via.placeholder.com/1000x560/111/fff?text=HARDCORE+2D+RAGE" alt=""><div class="card-body"><h3>Hardcore 2D Rage Platformer</h3><p>Custom engine, pixel art, soul-crushing difficulty.</p></div></div>
-      <div class="card"><img src="https://via.placeholder.com/1000x560/111/fff?text=ROCKET+LANDING" alt=""><div class="card-body"><h3>Physics-Based Rocket Landing</h3><p>One mistake = explosion.</p></div></div>
-    </div>
-  </section>
+  <section id="projects"><h2>Game Projects</h2><div class="grid">
+    <div class="card"><img src="https://via.placeholder.com/1000x560/111/fff?text=HARDCORE+RAGE"><div class="card-body"><h3>Hardcore 2D Rage Platformer</h3><p>Custom physics, pure suffering.</p></div></div>
+    <div class="card"><img src="https://via.placeholder.com/1000x560/111/fff?text=ROCKET+LANDING"><div class="card-body"><h3>Rocket Landing Simulator</h3><p>One mistake = explosion.</p></div></div>
+  </div></section>
 
-  <section id="novels">
-    <h2>My Novels <span style="font-size:2.6rem;color:#999;">by Darkpath</span></h2>
-    <div class="grid">
-      <div class="card"><img src="https://files.catbox.moe/9q2r8j.png"><div class="card-body"><h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3><p>Extreme Dark Revenge Fantasy</p><a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn">Read Now</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/l8u9w2.png"><div class="card-body"><h3>The Hermit's Haven</h3><p>Post-Apocalyptic Control</p><a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn">Read Now</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/vf6h3x.png"><div class="card-body"><h3>The Wish of Malice</h3><p>Universe Destroyer</p><a href="https://www.webnovel.com/book/29761690700035805" target="_blank" class="btn">Read Now</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/9i5v2k.png"><div class="card-body"><h3>Formula Jet Racing</h3><p>400 mph Sky Races</p><a href="https://www.webnovel.com/book/32853058600730605" target="_blank" class="btn">Read Now</a></div></div>
-      <div class="card"><img src="https://files.catbox.moe/3t4p7m.png"><div class="card-body"><h3>I Was Summoned But I Tricked The God</h3><p>Dark Isekai God Slayer</p><a href="https://www.webnovel.com/book/29962599308510305" target="_blank" class="btn">Read Now</a></div></div>
-    </div>
-  </section>
+  <section id="novels"><h2>My Novels <span style="font-size:2.6rem;color:#999;">by Darkpath</span></h2><div class="grid">
+    <div class="card"><img src="https://files.catbox.moe/9q2r8j.png"><div class="card-body"><h3>Gods Betrayed Me...</h3><p>Extreme Revenge</p><a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn">Read</a></div></div>
+    <div class="card"><img src="https://files.catbox.moe/l8u9w2.png"><div class="card-body"><h3>The Hermit's Haven</h3><p>Post-Apocalyptic</p><a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn">Read</a></div></div>
+    <div class="card"><img src="https://files.catbox.moe/vf6h3x.png"><div class="card-body"><h3>The Wish of Malice</h3><p>Villain MC</p><a href="https://www.webnovel.com/book/29761690700035805" target="_blank" class="btn">Read</a></div></div>
+    <div class="card"><img src="https://files.catbox.moe/9i5v2k.png"><div class="card-body"><h3>Formula Jet Racing</h3><p>Death Races</p><a href="https://www.webnovel.com/book/32853058600730605" target="_blank" class="btn">Read</a></div></div>
+    <div class="card"><img src="https://files.catbox.moe/3t4p7m.png"><div class="card-body"><h3>I Was Summoned But I Tricked The God</h3><p>Dark Isekai</p><a href="https://www.webnovel.com/book/29962599308510305" target="_blank" class="btn">Read</a></div></div>
+  </div></section>
 
-  <section id="contact">
-    <h2>Contact</h2>
+  <section id="contact"><h2>Contact</h2>
     <form name="contact" method="POST" data-netlify="true" style="max-width:900px;margin:6rem auto;display:grid;gap:2.5rem;">
-      <input type="text" name="name" placeholder="Name" required>
-      <input type="email" name="email" placeholder="Email" required>
-      <textarea rows="10" name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send to the Void</button>
+      <input type="text" name="name" placeholder="Name" required style="padding:1.6rem;border-radius:30px;background:#222;border:3px solid #555;color:white;">
+      <input type="email" name="email" placeholder="Email" required style="padding:1.6rem;border-radius:30px;background:#222;border:3px solid #555;color:white;">
+      <textarea rows="10" name="message" placeholder="Message" required style="padding:1.6rem;border-radius:30px;background:#222;border:3px solid #555;color:white;"></textarea>
+      <button type="submit" style="padding:1.6rem;background:linear-gradient(45deg,var(--a),var(--a2));border-radius:60px;color:white;font-size:1.6rem;cursor:pointer;">Send to the Void</button>
     </form>
   </section>
 </main>
 
 <script>
-// MOUSE-ORBITED VOLUMETRIC BACKGROUND + NO CUBE
-const canvas = document.getElementById('gl');
-const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+// FULLSCREEN BACKGROUND + MOUSE ORBIT (NO CUBE)
+const c = document.getElementById('gl');
+const gl = c.getContext('webgl')||c.getContext('experimental-webgl');
+function resize(){c.width=innerWidth;c.height=innerHeight;}
+resize();window.addEventListener('resize',resize);
 
-function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
-resize(); window.addEventListener('resize', resize);
-
-const vs = `attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}`;
-const fs = `#ifdef GL_ES\nprecision highp float;\n#endif
-uniform float t;
-uniform vec2 r;
-uniform vec2 m;
+const vs=`attribute vec2 p;void main(){gl_Position=vec4(p,0,1);}`;
+const fs=`#ifdef GL_ES\nprecision highp float;\n#endif
+uniform float t;uniform vec2 r,m;
 void main(){
-  vec2 uv = (gl_FragCoord.xy - 0.5*r)/r.y;
-  vec2 mo = m*5.0 - 2.5; mo.x *= r.x/r.y;
-  vec3 ro = vec3(sin(mo.x)*8.0, mo.y*4.0+2.0, cos(mo.x)*8.0);
-  vec3 rd = normalize(vec3(uv,1.7));
-  float d = 0.1;
-  vec3 col = vec3(0.03,0.0,0.12);
-  for(int i=0;i<90;i++){
-    float s = length(ro+rd*d)-1.8;
-    if(s<0.01 || d>60.) break;
-    d += s*0.85;
-    col += vec3(0.9,0.3,1.8)*exp(-d*0.08)*0.05;
-  }
-  col += vec3(1.0,0.4,2.0)*pow(max(dot(rd,normalize(vec3(0.5,1,0.5))),0.0),12.0);
-  gl_FragColor = vec4(pow(col,vec3(0.75)),1);
+  vec2 uv=(gl_FragCoord.xy-.5*r)/r.y;
+  vec2 mo=m*5.-2.5;mo.x*=r.x/r.y;
+  vec3 ro=vec3(sin(mo.x)*8.,mo.y*4.+2.,cos(mo.x)*8.);
+  vec3 rd=normalize(vec3(uv,1.7));
+  float d=0.1;vec3 col=vec3(0.03,0.,0.12);
+  for(int i=0;i<90;i++){float s=length(ro+rd*d)-1.8;if(s<0.01||d>60.)break;d+=s*0.85;col+=vec3(0.9,0.3,1.8)*exp(-d*0.08)*0.05;}
+  col+=vec3(1.,0.4,2.)*pow(max(dot(rd,normalize(vec3(0.5,1,0.5))),0.),12.);
+  gl_FragColor=vec4(pow(col,vec3(0.75)),1);
 }`;
 
-const program = gl.createProgram();
-[vs, fs].forEach((s,i)=> { const h=gl.createShader(i?gl.FRAGMENT_SHADER:gl.VERTEX_SHADER); gl.shaderSource(h,s); gl.compileShader(h); gl.attachShader(program,h); });
-gl.linkProgram(program); gl.useProgram(program);
+const p=gl.createProgram();
+[vs,fs].forEach((s,i)=>{const h=gl.createShader(i?gl.FRAGMENT_SHADER:gl.VERTEX_SHADER);gl.shaderSource(h,s);gl.compileShader(h);gl.attachShader(p,h);});
+gl.linkProgram(p);gl.useProgram(p);
+gl.bindBuffer(gl.ARRAY_BUFFER,gl.createBuffer());
+gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+gl.enableVertexAttribArray(gl.getAttribLocation(p,"p"));
+gl.vertexAttribPointer(gl.getAttribLocation(p,"p"),2,gl.FLOAT,false,0,0);
 
-gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
-const pos = gl.getAttribLocation(program,"p");
-gl.enableVertexAttribArray(pos);
-gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+const ut=gl.getUniformLocation(p,"t"),ur=gl.getUniformLocation(p,"r"),um=gl.getUniformLocation(p,"m");
+let mouse=[0.5,0.5];
+document.onmousemove=e=>{mouse=[e.clientX/innerWidth,1-e.clientY/innerHeight];
+  document.getElementById('cursor').style.cssText+=`;left:${e.clientX}px;top:${e.clientY}px;`;
+};
+(function loop(t){gl.uniform1f(ut,t*.001);gl.uniform2fv(ur,[innerWidth,innerHeight]);gl.uniform2fv(um,mouse);gl.drawArrays(gl.TRIANGLES,0,3);requestAnimationFrame(loop);})(0);
 
-const u_t = gl.getUniformLocation(program,"t");
-const u_r = gl.getUniformLocation(program,"r");
-const u_m = gl.getUniformLocation(program,"m");
-
-let mouse = [0.5,0.5];
-document.addEventListener('mousemove', e=>{
-  mouse = [e.clientX/innerWidth, 1-e.clientY/innerHeight];
-  document.getElementById('cursor').style.left = e.clientX+'px';
-  document.getElementById('cursor').style.top = e.clientY+'px';
+// 3D CARD TILT — NOW 100% WORKING
+document.querySelectorAll('.card').forEach(card=>{
+  card.onmousemove=e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-0.5;
+    const y=(e.clientY-r.top)/r.height-0.5;
+    card.style.transform=`perspective(2000px) rotateY(${x*45}deg) rotateX(${-y*45}deg) translateZ(120px) scale(1.06)`;
+  };
+  card.onmouseleave=()=>{card.style.transform='perspective(2000px) rotateX(0) rotateY(0) translateZ(0)';};
 });
 
-(function loop(time){
-  gl.uniform1f(u_t, time*0.001);
-  gl.uniform2fv(u_r, [innerWidth, innerHeight]);
-  gl.uniform2fv(u_m, mouse);
-  gl.drawArrays(gl.TRIANGLES,0,3);
-  requestAnimationFrame(loop);
-})(0);
-
-// 3D CARD TILT EFFECT (the REAL one
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('mousemove', e => {
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    card.style.transform = `perspective(3000px) rotateY(${x*40}deg) rotateX(${-y*40}deg) translateZ(100px) scale(1.06)`;
-  });
-  card.addEventListener('mouseenter', () => card.style.transition = 'none');
-  card.addEventListener('mouseleave', () => {
-    card.style.transition = 'transform 1.4s cubic-bezier(0.16,1,0.3,1)';
-    card.style.transform = 'perspective(3000px) rotateX(0) rotateY(0) translateZ(0)';
-  });
-});
-
-// Scroll reveal
-new IntersectionObserver((e)=>e.forEach(en=>en.isIntersecting && en.target.classList.add('visible')),{threshold:0.12})
-  .observe(document.querySelectorAll('section'));
+// SCROLL REVEAL — BULLETPROOF
+const observer=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.15});
+document.querySelectorAll('section').forEach(s=>observer.observe(s));
 </script>
 </body>
 </html>
