@@ -11,7 +11,7 @@
   <style>
     :root {
       --bg: #0d0a0f;
-      --dark: #111;
+      --card: #111;
       --red: #ff0033;
       --neon-red: #ff3366;
       --accent: #00eeff;
@@ -19,9 +19,18 @@
       --glow-red: 0 0 40px rgba(255,0,51,0.8);
       --glow-cyan: 0 0 40px rgba(0,238,255,0.6);
     }
-    * { margin:before, *:after { box-sizing: border-box; }
-    body { margin:0; background:var(--bg); color:var(--text); font-family:'Exo 2',sans-serif; overflow-x:hidden; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:var(--bg); color:var(--text); font-family:'Exo 2',sans-serif; overflow-x:hidden; }
     
+    /* NAVIGATION */
+    nav {
+      position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:1000;
+      background:rgba(0,0,0,0.8); backdrop-filter:blur(20px); padding:15px 50px; border-radius:50px;
+      border:2px solid var(--red); box-shadow:var(--glow-red); display:flex; gap:30px;
+    }
+    nav a { color:white; text-decoration:none; font-weight:800; font-size:1.3rem; padding:10px 25px; border-radius:30px; transition:0.4s; }
+    nav a:hover, nav a.active { background:var(--red); box-shadow:var(--glow-red); transform:scale(1.1); }
+
     /* HERO */
     #hero {
       height:100vh; background:linear-gradient(135deg,#1a0000,#0d0a0f), url('https://i.imgur.com/5c7V5nZ.jpg') center/cover;
@@ -36,193 +45,209 @@
     #hero p { font-size:2.5rem; margin:20px 0; text-shadow:0 0 20px var(--red); }
     .kapow { font-family:'Bebas Neue',sans-serif; font-size:10rem; color:var(--neon-red); transform:rotate(-10deg); display:block; text-shadow:var(--glow-red); }
 
-    /* NAV */
-    nav {
-      position:fixed; top:20px; left:50%; transform:translateX(-50%); z-index:1000;
-      background:rgba(0,0,0,0.8); backdrop-filter:blur(20px); padding:15px 50px; border-radius:50px;
-      border:2px solid var(--red); box-shadow:var(--glow-red); display:flex; gap:30px;
-    }
-    nav a { color:white; text-decoration:none; font-weight:800; font-size:1.3rem; padding:10px 25px; border-radius:30px; transition:0.4s; }
-    nav a:hover, nav a.active { background:var(--red); box-shadow:var(--glow-red); transform:scale(1.1); }
-
     /* SECTIONS */
-    section { padding:120px 8% 100px; min-height:100vh; position:relative; }
-    .container { max-width:1400px; margin:0 auto; }
+    section { padding:140px 8% 100px; min-height:100vh; opacity:0; transform:translateY(50px); transition:all 1s ease; }
+    section.active { opacity:1; transform:translateY(0); }
 
-    /* RESUME PANEL */
-    .resume-panel {
-      background:var(--dark); border:3px solid var(--red); border-radius:20px; padding:60px; margin-top:-100px;
-      box-shadow:0 0 60px rgba(255,0,51,0.4); position:relative; overflow:hidden;
+    /* RESUME PAGE - EXACT MATCH TO YOUR IMAGE */
+    .resume-container {
+      max-width:1200px; margin:0 auto; background:var(--card); border:3px solid var(--red); border-radius:20px;
+      padding:60px; box-shadow:0 0 60px rgba(255,0,51,0.4); position:relative; overflow:hidden;
     }
-    .resume-panel::before {
-      content:''; position:absolute; inset:0; background:linear-gradient(45deg,transparent 48%,rgba(255,0,51,0.1) 50%,transparent 52%);
-      background-size:50px 50px; animation:scan 8s linear infinite;
+    .resume-container h2 {
+      font-family:'Orbitron'; font-size:5rem; text-align:center; color:var(--neon-red); text-shadow:var(--glow-red); margin-bottom:40px;
     }
-    @keyframes scan { 0%{transform:translateX(-100px)} 100%{transform:translateX(100px)} }
-
-    .grid {
-      display:grid; grid-template-columns:1fr 1fr; gap:60px; margin-top:40px;
+    .resume-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:50px;
     }
-    .box {
-      background:rgba(20,0,20,0.6); padding:30px; border-radius:15px; border-left:5px solid var(--neon-red);
-      border-left:5px solid var(--neon-red);
+    .resume-box {
+      background:rgba(20,0,20,0.7); padding:25px; border-radius:12px; border-left:6px solid var(--neon-red);
       box-shadow:var(--glow-red);
     }
-    .box h3 {
-      font-family:'Orbitron'; color:var(--neon-red); font-size:2rem; margin-bottom:20px; text-shadow:var(--glow-red);
+    .resume-box h3 {
+      font-family:'Orbitron'; color:var(--neon-red); font-size:1.8rem; margin-bottom:15px; text-shadow:var(--glow-red);
     }
-    .skill-bar {
-      height:12px; background:#222; border-radius:6px; overflow:hidden; margin:12px 0;
-      border:1px solid var(--red);
-    }
-    .fill {
-      height:100%; background:linear-gradient(90deg,var(--red),var(--neon-red)); width:0%; transition:width 2s ease;
-    }
+    .skill-item { margin:12px 0; }
+    .skill-bar { height:10px; background:#333; border-radius:5px; overflow:hidden; margin-top:5px; }
+    .fill { height:100%; background:linear-gradient(90deg,var(--red),var(--neon-red)); width:0%; transition:width 2s ease; }
     .circle {
-      width:90px; height:90px; border-radius:50%; display:inline-flex; align-items:center; justify-content:center;
-      font-size:1.8rem; font-weight:900; color:white;
-      background:conic-gradient(var(--neon-red) 0% var(--percent), #111 var(--percent) 100%);
+      width:70px; height:70px; border-radius:50%; background:var(--accent); color:black; font-weight:900;
+      display:inline-flex; align-items:center; justify-content:center; font-size:1.4rem; margin-right:15px;
     }
-
-    .project-list {
-      background:rgba(20,0,20,0.6); padding:30px; border-radius:15px; border:2px dashed var(--red);
-    }
-    .project-list li { margin:15px 0; line-height:1.7; }
-
     .contact-info {
-      text-align:center; margin-top:50px; font-size:1.5rem;
+      margin-top:40px; text-align:center; font-size:1.4rem; line-height:2.2;
     }
     .contact-info a { color:var(--accent); text-decoration:none; }
     .btn-download {
-      display:inline-block; margin-top:30px; padding:18px 50px; background:var(--red); color:white;
-      border-radius:50px; text-decoration:none; font-weight:900; box-shadow:var(--glow-red); transition:0.4s;
+      display:block; width:320px; margin:40px auto 0; padding:18px; background:var(--red); color:white;
+      text-align:center; border-radius:50px; font-weight:900; font-size:1.6rem; text-decoration:none;
+      box-shadow:var(--glow-red); transition:0.4s;
     }
     .btn-download:hover { transform:scale(1.1); background:var(--neon-red); }
 
-    footer {
-      text-align:center; padding:40px; background:#000; color:#555; font-size:1rem;
+    /* PROJECTS PAGE */
+    .projects-grid {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(400px,1fr)); gap:40px; max-width:1200px; margin:0 auto;
     }
+    .project-card {
+      background:rgba(20,0,20,0.8); padding:30px; border-radius:15px; border:3px solid var(--red);
+      box-shadow:var(--glow-red); text-align:center;
+    }
+    .project-card h3 { color:var(--neon-red); font-size:2rem; margin-bottom:20px; }
+
+    /* CONTACT PAGE */
+    .contact-page { text-align:center; max-width:800px; margin:0 auto; }
+    .contact-page h2 { font-size:5rem; color:var(--neon-red); text-shadow:var(--glow-red); }
   </style>
 </head>
 <body>
 
+  <!-- NAVIGATION -->
   <nav>
-    <a href="#hero" class="active">HOME</a>
-    <a href="#resume">RESUME</a>
-    <a href="#projects">PROJECTS</a>
-    <a href="#contact">CONTACT</a>
+    <a href="#hero" class="active" onclick="showSection('hero')">HOME</a>
+    <a href="#resume" onclick="showSection('resume')">RESUME</a>
+    <a href="#projects" onclick="showSection('projects')">PROJECTS</a>
+    <a href="#contact" onclick="showSection('contact')">CONTACT</a>
   </nav>
 
   <!-- HERO -->
-  <section id="hero">
+  <section id="hero" class="active">
     <div>
       <h1>JANESHWARAN R</h1>
-      <p>Game Designer / Narrative Designer</p>
+      <p style="font-size:3rem;">Game Designer / Narrative Designer</p>
       <div class="kapow">S-RANK</div>
       <p style="font-size:2rem; margin-top:30px;">"From E-Rank to S-Rank — I will become the King of Games!"</p>
     </div>
   </section>
 
-  <!-- RESUME PANEL -->
+  <!-- RESUME PAGE - 100% MATCH TO YOUR IMAGE -->
   <section id="resume">
-    <div class="container">
-      <div class="resume-panel">
-        <h2 style="text-align:center; font-size:5rem; margin-bottom:40px; color:var(--neon-red); text-shadow:var(--glow-red);">RESUME</h2>
-        
-        <div class="grid">
-          <!-- LEFT -->
-          <div>
-            <div class="box">
-              <h3>About Me</h3>
-              <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates.</p>
-            </div>
-
-            <div class="box" style="margin-top:30px;">
-              <h3>Skills</h3>
-              <div>3D Modeling (Blender)       <div class="skill-bar"><div class="fill" style="width:75%"></div></div></div>
-              <div>Scriptwriting (games/film)   <div class="skill-bar"><div class="fill" style="width:87%"></div></div></div>
-              <div>Storytelling & Narrative      <div class="skill-bar"><div class="fill" style="width:95%"></div></div></div>
-              <div>Programming                  <div class="skill-bar"><div class="fill" style="width:60%"></div></div></div>
-            </div>
-
-            <div class="box" style="margin-top:30px;">
-              <h3>Education</h3>
-              <p><strong>ST. JOSEPH COLLEGE ARTS AND SCIENCE</strong><br>
-                 Bachelor of BSc Computer Science<br>2020 – 2024<br><br>
-                 <strong>ICAT College of Design & Media</strong><br>
-                 Masters in MSC Game Technology<br>2024 – Present</p>
-            </div>
-
-            <div class="box" style="margin-top:30px;">
-              <h3>Language</h3>
-              <div style="text-align:center;">
-                <span class="circle" style="--percent:92%">92%</span>
-                <span style="margin-left:40px; font-size:2rem;">English</span><br><br>
-                <span class="circle" style="--percent:98%">98%</span>
-                <span style="margin-left:40px; font-size:2rem;">Tamil</span>
-              </div>
-            </div>
+    <div class="resume-container">
+      <h2>RESUME</h2>
+      <div class="resume-grid">
+        <!-- LEFT COLUMN -->
+        <div>
+          <div class="resume-box">
+            <h3>About Me</h3>
+            <p>Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design. Skilled at developing visually compelling concepts while continuously expanding technical expertise. Known for a calm and thoughtful approach that fosters smooth collaboration with teammates. Eager to learn, adapt, and contribute fresh, innovative ideas to every project while refining my skills to bring creative visions to life.</p>
           </div>
 
-          <!-- RIGHT -->
-          <div>
-            <div class="box">
-              <h3>Tools</h3>
-              <ul style="columns:2; font-size:1.4rem; line-height:2.2;">
-                <li>Unity</li>
-                <li>Unreal Engine</li>
-                <li>Godot</li>
-                <li>Blender</li>
-                <li>Material Maker</li>
-                <li>Krita</li>
-              </ul>
-            </div>
+          <div class="resume-box" style="margin-top:30px;">
+            <h3>Skills:</h3>
+            <div class="skill-item">3D Modeling (Blender)         <div class="skill-bar"><div class="fill" style="width:75%"></div></div> 75%</div>
+            <div class="skill-item">Scriptwriting (for games/film/cutscenes) <div class="skill-bar"><div class="fill" style="width:87%"></div></div> 87%</div>
+            <div class="skill-item">Storytelling & Narrative Writing <div class="skill-bar"><div class="fill" style="width:95%"></div></div> 95%</div>
+            <div class="skill-item">Programming                   <div class="skill-bar"><div class="fill" style="width:60%"></div></div> 60%</div>
+          </div>
 
-            <div class="box" style="margin-top:30px;">
-              <h3>Project Experience</h3>
-              <div class="project-list">
-                <p><strong>Hardcore Mario-Style 2D Pixel Game</strong><br>
-                   • Developed a challenging 2D platformer inspired by classic Mario mechanics<br>
-                   • Designed pixel art assets, implemented responsive player controls, and built progressively difficult levels<br>
-                   • Focused on gameplay balance, user engagement, and smooth performance</p>
-                <hr style="border-color:var(--red);margin:20px 0;">
-                <p><strong>Rocket Thruster Landing Game</strong><br>
-                   • Created a physics-based game where players control a rocket using thrust<br>
-                   • Implemented collision detection, obstacle challenges, and precise landing mechanics<br>
-                   • Enhanced player experience with intuitive controls and increasing difficulty</p>
-              </div>
-            </div>
+          <div class="resume-box" style="margin-top:30px;">
+            <h3>Education:</h3>
+            <p><strong>ST. JOSEPH COLLEGE ARTS AND SCIENCE</strong><br>
+               Bachelor of BSc COMPUTER SCIENCE of 2020-2024<br><br>
+               <strong>ICAT College of Design & Media</strong><br>
+               Masters in MSC Game Technology<br>
+               • 2024 - Present</p>
+          </div>
 
-            <div class="contact-info">
-              <p><i class="fas fa-phone"></i> +91 63799 89918<br>
-                 <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br>
-                 <i class="fas fa-map-marker-alt"></i> Kundrathur, Chennai-600069<br><br>
-                 <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283">ArtStation</a> | 
-                 <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/">LinkedIn</a></p>
-              <a href="YOUR_RESUME.pdf" download class="btn-download">DOWNLOAD RESUME PDF</a>
-            </div>
+          <div class="resume-box" style="margin-top:30px;">
+            <h3>Language:</h3>
+            <p style="text-align:center;">
+              <span class="circle">92%</span> English<br><br>
+              <span class="circle">98%</span> Tamil
+            </p>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN -->
+        <div>
+          <div class="resume-box">
+            <h3>Tools:</h3>
+            <ul style="columns:2; line-height:2.2; font-size:1.3rem;">
+              <li>Unity</li>
+              <li>Unreal Engine</li>
+              <li>Godot</li>
+              <li>Blender</li>
+              <li>Material Maker</li>
+              <li>Krita</li>
+            </ul>
+          </div>
+
+          <div class="resume-box" style="margin-top:30px;">
+            <h3>Project Experience</h3>
+            <p><strong>Hardcore Mario-Style 2D Pixel Game</strong><br>
+               • Developed a challenging 2D platformer inspired by classic Mario mechanics.<br>
+               • Designed pixel art assets, implemented responsive player controls, and built progressively difficult levels.<br>
+               • Focused on gameplay balance, user engagement, and smooth performance.</p>
+            <hr style="border-color:var(--red); margin:20px 0;">
+            <p><strong>Rocket Thruster Landing Game</strong><br>
+               • Created a physics-based game where players control a rocket using thrust mechanics to stay airborne and land safely on a platform.<br>
+               • Implemented collision detection, obstacle challenges, and precise landing mechanics.<br>
+               • Enhanced player experience with intuitive controls and increasing difficulty.</p>
+          </div>
+
+          <div class="contact-info">
+            <p>
+              <i class="fas fa-phone"></i> +91 6379989918<br>
+              <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br>
+              <i class="fas fa-map-marker-alt"></i> Kundrathur, Chennai-600069<br><br>
+              <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283">https://www.artstation.com/janeshobito283</a><br>
+              <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/">LinkedIn Profile</a>
+            </p>
+            <a href="Janeshwaran_R_Resume.pdf" download class="btn-download">DOWNLOAD RESUME PDF</a>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <footer>
-    © 2025 Janeshwaran R — Built with blood, sweat and pure passion
-  </footer>
+  <!-- PROJECTS PAGE -->
+  <section id="projects">
+    <div style="max-width:1200px; margin:0 auto; text-align:center;">
+      <h2 style="font-size:5rem; color:var(--neon-red); text-shadow:var(--glow-red); margin-bottom:60px;">PROJECTS</h2>
+      <div class="projects-grid">
+        <div class="project-card">
+          <h3>Hardcore Mario-Style 2D Pixel Game</h3>
+          <p>Challenging platformer with pixel art, precise controls, and brutal difficulty curve.</p>
+        </div>
+        <div class="project-card">
+          <h3>Rocket Thruster Landing Game</h3>
+          <p>Physics-based rocket landing simulator with realistic thrust mechanics and obstacle challenges.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT PAGE -->
+  <section id="contact">
+    <div class="contact-page">
+      <h2>CONTACT ME</h2>
+      <p style="font-size:2rem; margin:40px 0;">
+        Ready to level up your game?<br>
+        Let's create something legendary together.
+      </p>
+      <p style="font-size:1.8rem; line-height:2.4;">
+        <i class="fas fa-phone"></i> +91 63799 89918<br>
+        <i class="fas fa-envelope"></i> janeshwaranobito28@gmail.com<br>
+        <i class="fab fa-artstation"></i> <a href="https://www.artstation.com/janeshobito283">ArtStation</a> | 
+        <i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/">LinkedIn</a>
+      </p>
+      <a href="Janeshwaran_R_Resume.pdf" download class="btn-download" style="margin-top:50px;">DOWNLOAD RESUME PDF</a>
+    </div>
+  </section>
 
   <script>
-    // Smooth scroll + active nav
-    document.querySelectorAll('nav a').forEach(link => {
-      link.addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
-        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-        link.classList.add('active');
-      });
-    });
+    // Show correct section and update active nav
+    function showSection(id) {
+      document.querySelectorAll('section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('nav a').forEach(link => link.classList.remove('active'));
+      
+      document.getElementById(id).classList.add('active');
+      document.querySelector(`nav a[href="#${id}"]`).classList.add('active');
+      
+      window.scrollTo(0, 0);
+    }
 
-    // Skill bar animation on scroll
+    // Skill bar animation
     gsap.utils.toArray(".fill").forEach(bar => {
       gsap.to(bar, {
         width: bar.style.width,
@@ -230,6 +255,16 @@
         ease: "power3.out",
         scrollTrigger: { trigger: bar, start: "top 80%" }
       });
+    });
+
+    // Auto highlight nav on scroll
+    window.addEventListener('scroll', () => {
+      let current = 'hero';
+      document.querySelectorAll('section').forEach(sec => {
+        if (sec.offsetTop - 150 < window.scrollY) current = sec.id;
+      });
+      document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+      document.querySelector(`nav a[href="#${current}"]`)?.classList.add('active');
     });
   </script>
 </body>
