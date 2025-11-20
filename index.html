@@ -4,179 +4,80 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Janeshwaran R – Darkpath</title>
-  <meta name="description" content="Game Developer • 3D Artist • Dark Fantasy Author (Darkpath on Webnovel)" />
+  <meta name="description" content="Game Developer • 3D Artist • Dark Fantasy Author" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.168.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.168.0/examples/js/controls/OrbitControls.js"></script>
   <style>
-    :root{
-      --bg:#0b0b1a;--card:#161625;--accent:#8b5cf6;--accent2:#ec4899;
-      --text:#e2e8f0;--gray:#94a3b8;
+    :root{--bg:#0b0b1a;--card:#161625;--accent:#8b5cf6;--accent2:#ec4899;--text:#e2e8f0;--gray:#94a3b8;}
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;cursor:none;}
+    #webgl{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
+    #cursor{
+      position:fixed;width:40px;height:40px;pointer-events:none;z-index:9999;
+      background:radial-gradient(circle,var(--accent) 0%,transparent 70%);
+      border-radius:50%;mix-blend-mode:difference;transform:translate(-50%,-50%);
+      transition:transform 0.1s ease;opacity:0.8;
     }
-    *,*::before,*::after{box-sizing:border-box;}
-    body{
-      margin:0;font-family:'Segoe UI',sans-serif;background:var(--bg);color:var(--text);
-      overflow-x:hidden;position:relative;min-height:100vh;
-    }
-    canvas{position:fixed;inset:0;z-index:0;opacity:0.35;}
-
-    /* GPU Acceleration */
-    header, .card, .about-img, .btn, .socials a, nav, h2{
-      transform:translateZ(0);will-change:transform;
-    }
-
     header{
-      position:fixed;top:0;left:0;right:0;background:rgba(11,11,26,0.95);
+      position:fixed;top:0;left:0;right:0;background:transparent;z-index:1000;
       backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-      z-index:1000;border-bottom:1px solid #333344;
-      box-shadow:0 8px 32px rgba(0,0,0,0.6);
+      padding:1.5rem 0;transition:background 0.4s;
     }
-    nav{max-width:1200px;margin:0 auto;padding:1.2rem;display:flex;justify-content:space-between;align-items:center;}
-    .logo{
-      font-size:2.1rem;font-weight:900;
+    header.scrolled{background:rgba(11,11,26,0.95);box-shadow:0 10px 40px rgba(0,0,0,0.7);}
+    nav{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem;}
+    .logo{font-size:2.4rem;font-weight:900;background:linear-gradient(90deg,var(--accent),var(--accent2));
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+    .nav-links a{color:var(--text);text-decoration:none;font-weight:600;margin:0 1.5rem;position:relative;}
+    .nav-links a::after{content:'';position:absolute;bottom:-8px;left:0;width:0;height:3px;background:var(--accent);transition:width 0.4s;}
+    .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+
+    main{padding-top:100px;position:relative;z-index:1;}
+    section{padding:8rem 2rem;max-width:1200px;margin:0 auto;opacity:0;}
+    section.visible{opacity:1;}
+
+    #home{text-align:center;padding:15vh 2rem 10vh;}
+    #home h1{font-size:7rem;font-weight:900;margin:0;line-height:1;
       background:linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .nav-links a{
-      color:var(--text);text-decoration:none;font-weight:600;position:relative;
-      padding:0.5rem 0;transition:color 0.4s;
-    }
-    .nav-links a::after{
-      content:'';position:absolute;bottom:-10px;left:50%;width:0;height:3px;
-      background:var(--accent);transition:width 0.4s ease, left 0.4s ease;
-      border-radius:2px;transform:translateX(-50%);
-    }
-    .nav-links a:hover::after,.nav-links a.active::after{width:100%;left:50%;}
+      -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+      text-shadow:0 0 60px rgba(139,92,246,0.6);}
+    .typewriter{font-size:2rem;color:var(--gray);margin:2rem 0;overflow:hidden;
+      border-right:4px solid var(--accent);white-space:nowrap;width:0;animation:typing 4s steps(50) forwards,blink 0.8s infinite;}
+    @keyframes typing{from{width:0}to{width:50ch}} @keyframes blink{50%{border-color:transparent}}
 
-    main{margin-top:80px;position:relative;z-index:1;}
-
-    section{
-      padding:6rem 2rem;max-width:1200px;margin:0 auto;min-height:80vh;
-      scroll-margin-top:100px;opacity:0;transform:translateY(60px);
-      transition:opacity 1s ease, transform 1s ease;
-    }
-    section.visible{opacity:1;transform:none;}
-
-    #home{
-      text-align:center;padding-top:12rem;
-      background:radial-gradient(circle at 50% 30%,rgba(139,92,246,0.2),transparent 70%);
-    }
-    .hero h1{
-      font-size:5.8rem;font-weight:900;margin:0;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;background-clip:text;
-      -webkit-text-fill-color:transparent;
-      text-shadow:0 0 40px rgba(139,92,246,0.5);
-    }
-    .typewriter{
-      font-size:1.9rem;color:var(--gray);margin:2rem auto;overflow:hidden;
-      border-right:4px solid var(--accent);white-space:nowrap;width:0;
-      animation:typing 4s steps(44) forwards, blink 0.8s infinite;
-    }
-    @keyframes typing{from{width:0}to{width:44ch}}
-    @keyframes blink{50%{border-color:transparent}}
-
-    .socials{
-      margin:4rem 0;font-size:2.8rem;display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;
-    }
-    .socials a{
-      color:var(--gray);width:70px;height:70px;display:grid;place-items:center;
-      background:rgba(139,92,246,0.15);border-radius:50%;transition:all 0.5s;
-      box-shadow:0 10px 30px rgba(139,92,246,0.2);
-    }
-    .socials a:hover{
-      background:var(--accent);color:white;transform:translateY(-15px) scale(1.2);
-      box-shadow:0 20px 50px rgba(139,92,246,0.6);
-    }
-
-    h2{
-      font-size:3.6rem;text-align:center;margin-bottom:4rem;color:var(--accent);
-      position:relative;
-    }
-    h2::after{
-      content:'';position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);
-      width:100px;height:5px;background:var(--accent);border-radius:3px;
-      box-shadow:0 0 30px var(--accent);
-    }
-
-    .about-grid{
-      display:grid;grid-template-columns:1fr 2fr;gap:5rem;align-items:center;
-    }
-    .about-img{
-      border-radius:30px;border:6px solid var(--accent);box-shadow:0 0 70px rgba(139,92,246,0.6);
-      transition:transform 0.8s;
-    }
-    .about-img:hover{transform:scale(1.05) rotate(2deg);}
-
-    .grid{
-      display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:3rem;
-    }
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:3rem;}
     .card{
-      background:var(--card);border-radius:28px;overflow:hidden;
-      border:1px solid #333344;box-shadow:0 15px 40px rgba(0,0,0,0.5);
-      transition:all 0.7s cubic-bezier(0.25,0.8,0.25,1);
-      opacity:0;transform:translateY(80px);
+      background:var(--card);border-radius:30px;overflow:hidden;position:relative;
+      box-shadow:0 20px 60px rgba(0,0,0,0.6);transition:all 0.6s;transform-style:preserve-3d;
     }
-    .card.visible{opacity:1;transform:none;}
-    .card:hover{
-      transform:translateY(-25px) scale(1.04);
-      border-color:var(--accent);box-shadow:0 40px 100px rgba(139,92,246,0.4);
-    }
-    .card img{
-      width:100%;height:460px;object-fit:cover;transition:transform 0.8s ease;
-    }
-    .card:hover img{transform:scale(1.1);}
-    .card-body{padding:2.2rem;}
-    .card h3{
-      font-size:1.8rem;margin-bottom:1rem;color:var(--accent);
-      text-shadow:0 0 15px rgba(139,92,246,0.6);
-    }
-    .synopsis{
-      margin-top:1.2rem;color:var(--gray);line-height:1.9;font-size:0.98rem;
-      max-height:0;overflow:hidden;transition:max-height 0.9s ease;
-    }
-    .synopsis.open{max-height:2000px;padding-top:1rem;}
-    .read-more{
-      color:var(--accent);font-weight:bold;cursor:pointer;transition:0.4s;
-    }
-    .read-more:hover{transform:translateX(12px);text-shadow:0 0 15px var(--accent);}
+    .card:hover{transform:translateY(-30px) rotateY(5deg) rotateX(5deg);box-shadow:0 50px 120px rgba(139,92,246,0.4);}
+    .card img{width:100%;height:480px;object-fit:cover;transition:transform 0.8s;}
+    .card:hover img{transform:scale(1.12);}
+    .card-body{padding:2.5rem;background:linear-gradient(135deg,rgba(22,22,37,0.95),rgba(11,11,26,0.95));}
+    .card h3{font-size:1.9rem;margin-bottom:1rem;color:var(--accent);text-shadow:0 0 20px var(--accent);}
     .btn{
-      display:inline-block;margin-top:1.5rem;padding:1rem 2.2rem;
-      background:linear-gradient(45deg,var(--accent),var(--accent2));
-      color:white;border:none;border-radius:50px;font-weight:bold;
-      box-shadow:0 12px 40px rgba(139,92,246,0.5);
+      display:inline-block;margin-top:1.5rem;padding:1rem 2.5rem;background:linear-gradient(45deg,var(--accent),var(--accent2));
+      color:white;border-radius:50px;font-weight:bold;box-shadow:0 15px 40px rgba(139,92,246,0.5);
       transition:all 0.5s;
     }
-    .btn:hover{
-      transform:translateY(-8px);box-shadow:0 25px 60px rgba(139,92,246,0.7);
-    }
-
-    form input,form textarea{
-      background:rgba(22,22,37,0.9);border:1px solid #444;border-radius:16px;
-      padding:1.3rem;color:white;transition:all 0.4s;
-    }
-    form input:focus,form textarea:focus{
-      border-color:var(--accent);box-shadow:0 0 30px rgba(139,92,246,0.5);outline:none;
-    }
-    button{
-      background:linear-gradient(45deg,var(--accent),var(--accent2));
-      padding:1.3rem 3.5rem;border-radius:50px;font-size:1.3rem;
-      box-shadow:0 15px 50px rgba(139,92,246,0.6);transition:all 0.5s;cursor:pointer;
-    }
-    button:hover{
-      transform:translateY(-10px);box-shadow:0 30px 80px rgba(139,92,246,0.8);
-    }
+    .btn:hover{transform:translateY(-10px);box-shadow:0 30px 80px rgba(139,92,246,0.8);}
 
     @media(max-width:768px){
-      .hero h1{font-size:4rem;}
+      #home h1{font-size:4.5rem;}
       .typewriter{font-size:1.5rem;}
-      .about-grid{grid-template-columns:1fr;}
+      .nav-links{display:none;} /* Add mobile menu later if needed */
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Particles (lightweight, GPU-friendly) -->
-  <canvas id="particles"></canvas>
+  <!-- WebGL Background -->
+  <div id="webgl"></div>
+
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
 
   <header>
     <nav>
@@ -193,155 +94,123 @@
 
   <main>
 
-    <!-- HOME -->
     <section id="home" class="visible">
-      <div class="hero">
-        <h1>Janeshwaran R</h1>
-        <p class="typewriter">Crafting Worlds. Writing Darkness. Coding Dreams.</p>
-        <p style="font-size:1.7rem;color:var(--gray);margin:2rem 0;">
-          Game Developer • 3D Artist • Dark Fantasy Author<br>
-          <strong style="color:var(--accent);">Pen Name: Darkpath</strong>
-        </p>
-        <div class="socials">
-          <a href="https://www.artstation.com/janeshboito283" target="_blank"><i class="fab fa-artstation"></i></a>
-          <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank"><i class="fab fa-linkedin"></i></a>
-          <a href="https://www.webnovel.com/profile/4327938398" target="_blank"><i class="fas fa-book-open"></i></a>
-          <a href="mailto:janeshwaranboito283@gmail.com"><i class="fas fa-envelope"></i></a>
-        </div>
+      <h1 data-3d>Janeshwaran R</h1>
+      <p class="typewriter">Master of Dark Worlds & Unreal Realities</p>
+      <p style="font-size:1.8rem;color:var(--gray);margin:3rem 0;">
+        Game Developer • 3D Artist • Dark Fantasy Author<br>
+        <strong style="color:var(--accent);">Pen Name: Darkpath</strong>
+      </p>
+      <div style="margin:4rem 0;font-size:3rem;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;">
+        <a href="https://www.artstation.com/janeshboito283" target="_blank" style="color:var(--gray);transition:all 0.5s;"><i class="fab fa-artstation"></i></a>
+        <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank" style="color:var(--gray);transition:all 0.5s;"><i class="fab fa-linkedin"></i></a>
+        <a href="https://www.webnovel.com/profile/4327938398" target="_blank" style="color:var(--gray);transition:all 0.5s;"><i class="fas fa-book-open"></i></a>
+        <a href="mailto:janeshwaranboito283@gmail.com" style="color:var(--gray);transition:all 0.5s;"><i class="fas fa-envelope"></i></a>
       </div>
     </section>
 
-    <!-- ABOUT -->
-    <section id="about">
-      <h2>About Me</h2>
-      <div class="about-grid">
-        <img src="https://via.placeholder.com/500x600/8b5cf6/ffffff?text=Your+Photo" alt="Janeshwaran R" class="about-img">
-        <div>
-          <p style="font-size:1.25rem;margin-bottom:1.5rem;">Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling, script writing, and design.</p>
-          <p>Known for a calm and thoughtful approach that fosters smooth collaboration. Eager to learn and contribute innovative ideas.</p>
-          <h3 style="margin:2.5rem 0 1rem;color:var(--accent);">Skills</h3>
-          <div style="display:flex;flex-wrap:wrap;gap:1rem;">
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">3D Modeling (Blender)</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Scriptwriting</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Storytelling & Narrative</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Programming</span>
-          </div>
-          <h3 style="margin:2.5rem 0 1rem;color:var(--accent);">Tools</h3>
-          <div style="display:flex;flex-wrap:wrap;gap:1rem;">
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Unity</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Unreal Engine</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Godot</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Blender</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Material Maker</span>
-            <span style="background:var(--card);padding:0.8rem 1.6rem;border-radius:50px;border:1px solid var(--accent);">Krita</span>
-          </div>
-          <h3 style="margin:2.5rem 0 1rem;color:var(--accent);">Education</h3>
-          <p><strong>B.Sc Computer Science</strong> – St. Joseph College (2020–2024)</p>
-          <p><strong>M.Sc Game Technology</strong> – ICAT Design & Media (2024–Present)</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="projects">
-      <h2>Game Projects</h2>
-      <div class="grid">
-        <div class="card"><img src="https://via.placeholder.com/800x460/222/fff?text=Hardcore+Mario+Game" alt="Mario Game">
-          <div class="card-body"><h3>Hardcore Mario-Style 2D Pixel Game</h3>
-            <p>Challenging 2D platformer with custom pixel art, tight controls, and progressively difficult levels.</p></div></div>
-        <div class="card"><img src="https://via.placeholder.com/800x460/222/fff?text=Rocket+Thruster+Landing" alt="Rocket Game">
-          <div class="card-body"><h3>Rocket Thruster Landing Game</h3>
-            <p>Physics-based rocket control game with precise landing mechanics and increasing difficulty.</p></div></div>
-      </div>
-    </section>
-
-    <!-- NOVELS -->
-    <section id="novels">
-      <h2>My Novels <small style="color:#aaa;">by Darkpath</small></h2>
-      <div class="grid">
-        <div class="card"><img src="https://files.catbox.moe/9q2r8j.png" alt="Gods Betrayed Me">
-          <div class="card-body"><h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3><p><em>Extreme Dark Revenge Fantasy</em></p>
-            <div class="synopsis">David was betrayed by everyone he loved... Reborn in the divine realm, he enslaves the gods themselves.</div>
-            <div class="read-more">Read Full Synopsis</div>
-            <a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn">Read on Webnovel</a></div></div>
-
-        <div class="card"><img src="https://files.catbox.moe/l8u9w2.png" alt="Hermits Haven">
-          <div class="card-body"><h3>The Hermit's Haven</h3><p><em>Post-apocalyptic Psychological Thriller</em></p>
-            <div class="synopsis">SOME SECRETS NEVER SLEEP. John builds a city of control — but power corrupts absolutely.</div>
-            <div class="read-more">Read Full Synopsis</div>
-            <a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn">Read on Webnovel</a></div></div>
-
-        <div class="card"><img src="https://files.catbox.moe/vf6h3x.png" alt="Wish of Malice">
-          <div class="card-body"><h3>The Wish of Malice</h3><p><em>Villain Protagonist Dark Fantasy</em></p>
-            <div class="synopsis">Robert will protect his loved ones — even if it means destroying the universe.</div>
-            <div class="read-more">Read Full Synopsis</div>
-            <a href="https://www.webnovel.com/book/29761690700035805" target="_blank" class="btn">Read on Webnovel</a></div></div>
-
-        <div class="card"><img src="https://files.catbox.moe/9i5v2k.png" alt="Formula Jet Racing">
-          <div class="card-body"><h3>Formula Jet Racing</h3><p><em>Skyborne Rivals • High-Octane Action</em></p>
-            <div class="synopsis">Jets at 400 mph. Maverick vs James. Every race is a fight to the death.</div>
-            <div class="read-more">Read Full Synopsis</div>
-            <a href="https://www.webnovel.com/book/32853058600730605" target="_blank" class="btn">Read on Webnovel</a></div></div>
-
-        <div class="card"><img src="https://files.catbox.moe/3t4p7m.png" alt="I Was Summoned">
-          <div class="card-body"><h3>I Was Summoned By a God But I Tricked The God To Become a God</h3>
-            <p><em>Dark Isekai • Ruthless Manipulation</em></p>
-            <div class="synopsis">Joshua outsmarts the gods and ascends to godhood through betrayal.</div>
-            <div class="read-more">Read Full Synopsis</div>
-            <a href="https://www.webnovel.com/book/29962599308510305" target="_blank" class="btn">Read on Webnovel</a></div></div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact Me</h2>
-      <div style="text-align:center;font-size:1.5rem;margin:2rem 0;color:var(--accent);">
-        Pen Name: <strong>Darkpath</strong> • 
-        <a href="https://www.webnovel.com/profile/4327938398" target="_blank" style="color:var(--accent);">Webnovel Profile</a>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;margin-bottom:4rem;text-align:center;">
-        <div><i class="fas fa-phone" style="font-size:2rem;color:var(--accent);"></i><p>+91 6379989918</p></div>
-        <div><i class="fas fa-envelope" style="font-size:2rem;color:var(--accent);"></i><p>janeshwaranboito283@gmail.com</p></div>
-        <div><i class="fas fa-map-marker-alt" style="font-size:2rem;color:var(--accent);"></i><p>Kundrathur, Chennai-600069</p></div>
-      </div>
-      <form name="contact" method="POST" data-netlify="true" style="max-width:700px;margin:0 auto;display:grid;gap:1.5rem;">
-        <input type="text" name="name" placeholder="Your Name" required>
-        <input type="email" name="email" placeholder="Your Email" required>
-        <textarea rows="6" name="message" placeholder="Your Message" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </section>
+    <!-- Keep your full About, Projects, Novels, Contact sections here -->
+    <!-- (Same as before – just paste them) -->
 
   </main>
 
   <script>
-    // Lightweight particles (only 60 particles, 60 FPS)
-    const canvas=document.getElementById('particles'),ctx=canvas.getContext('2d');
-    canvas.width=innerWidth;canvas.height=innerHeight;
-    const particles=[];
-    class Particle{
-      constructor(){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height;this.size=Math.random()*2.5+0.5;this.speedX=Math.random()*0.8-0.4;this.speedY=Math.random()*0.8-0.4;}
-      update(){this.x+=this.speedX;this.y+=this.speedY;if(this.x<0||this.x>canvas.width)this.speedX*=-1;if(this.y<0||this.y>canvas.height)this.speedY*=-1;}
-      draw(){ctx.fillStyle='rgba(139,92,246,0.6)';ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();}
+    // === WebGL Liquid Dark Energy Background ===
+    let scene, camera, renderer, material;
+    function initWebGL() {
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+      renderer = new THREE.WebGLRenderer({canvas: document.getElementById('webgl'), alpha: true, antialias: true});
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      camera.position.z = 3;
+
+      const vertexShader = `
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }
+      `;
+      const fragmentShader = `
+        uniform float uTime;
+        uniform vec2 uMouse;
+        varying vec2 vUv;
+        void main() {
+          vec2 p = vUv - uMouse;
+          float dist = length(p);
+          float wave = sin(dist * 20.0 - uTime * 5.0) * 0.02;
+          vec3 color = mix(vec3(0.3,0.1,0.8), vec3(0.9,0.3,1.0), sin(uTime + dist * 10.0));
+          gl_FragColor = vec4(color + wave, 0.6);
+        }
+      `;
+
+      material = new THREE.ShaderMaterial({
+        vertexShader, fragmentShader,
+        uniforms: { uTime: {value: 0}, uMouse: {value: new THREE.Vector2(0.5, 0.5)} }
+      });
+
+      const geometry = new THREE.PlaneGeometry(10, 10, 128, 128);
+      const mesh = new THREE.Mesh(geometry, material);
+      scene.add(mesh);
+
+      function animate() {
+        material.uniforms.uTime.value += 0.02;
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+      animate();
     }
-    for(let i=0;i<60;i++)particles.push(new Particle());
-    function animate(){ctx.clearRect(0,0,canvas.width,canvas.height);particles.forEach(p=>{p.update();p.draw();});requestAnimationFrame(animate);}
-    animate();
-    window.addEventListener('resize',()=>{canvas.width=innerWidth;canvas.height=innerHeight;});
 
-    // Intersection Observer for smooth reveal (zero layout thrashing)
-    const observer=new IntersectionObserver(e=>e.forEach(en=>{if(en.isIntersecting){en.target.classList.add('visible');en.target.querySelectorAll('.card').forEach((c,i)=>setTimeout(()=>c.classList.add('visible'),i*150));}}),{threshold:0.15});
-    document.querySelectorAll('section').forEach(s=>observer.observe(s));
+    // Mouse interaction
+    document.addEventListener('mousemove', (e) => {
+      const x = e.clientX / window.innerWidth;
+      const y = 1 - (e.clientY / window.innerHeight);
+      if (material) material.uniforms.uMouse.value.set(x, y);
+      document.getElementById('cursor').style.left = e.clientX + 'px';
+      document.getElementById('cursor').style.top = e.clientY + 'px';
+    });
 
-    // Navigation & synopsis toggle
-    document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',e=>{
-      e.preventDefault();document.querySelectorAll('section').forEach(s=>s.classList.remove('visible'));
-      document.querySelectorAll('.nav-links a').forEach(l=>l.classList.remove('active'));
-      const target=document.querySelector(a.getAttribute('href'));
-      target.classList.add('visible');a.classList.add('active');
-      target.scrollIntoView({behavior:'smooth'});
-    }));
-    document.querySelectorAll('.read-more').forEach(b=>b.addEventListener('click',()=>{const s=b.previousElementSibling;s.classList.toggle('open');b.textContent=s.classList.contains('open')?'Collapse':'Read Full Synopsis';}));
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      document.querySelector('header').classList.toggle('scrolled', window.scrollY > 100);
+    });
+
+    // GSAP + ScrollTrigger for insane reveals
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.utils.toArray('section').forEach(sec => {
+      gsap.to(sec, {
+        scrollTrigger: {
+          trigger: sec,
+          start: "top 80%",
+          onEnter: () => sec.classList.add('visible')
+        }
+      });
+    });
+
+    // 3D Tilt Cards
+    document.querySelectorAll('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateY = (x - centerX) / 15;
+        const rotateX = (centerY - y) / 15;
+        card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg) translateY(-20px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    window.addEventListener('load', initWebGL);
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
   </script>
 </body>
 </html>
