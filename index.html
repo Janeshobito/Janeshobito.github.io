@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Janeshwaran R – Portfolio</title>
+  <title>Janeshwaran R – Darkpath</title>
+  <meta name="description" content="Game Developer • 3D Artist • Fantasy Novel Writer (Darkpath on Webnovel)" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     :root {
@@ -14,229 +15,67 @@
       --gray: #94a3b8;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
+    body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; overflow-x:hidden; }
     html { scroll-behavior: smooth; }
 
     header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: fixed; top:0; left:0; right:0;
       background: rgba(11,11,26,0.95);
       backdrop-filter: blur(10px);
-      z-index: 1000;
-      border-bottom: 1px solid #333344;
+      z-index:1000;
+      border-bottom:1px solid #333344;
     }
-    nav {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo {
-      font-size: 1.9rem;
-      font-weight: bold;
-      color: var(--accent);
-      letter-spacing: 1px;
-    }
-    .nav-links {
-      display: flex;
-      gap: 2.2rem;
-    }
-    .nav-links a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      transition: 0.3s;
-      position: relative;
-    }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-    .nav-links a.active::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: var(--accent);
-      border-radius: 2px;
-    }
+    nav { max-width:1200px; margin:0 auto; padding:1rem; display:flex; justify-content:space-between; align-items:center; }
+    .logo { font-size:1.9rem; font-weight:bold; color:var(--accent); }
+    .nav-links { display:flex; gap:2.2rem; }
+    .nav-links a { color:var(--text); text-decoration:none; font-weight:500; position:relative; transition:0.3s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--accent); }
+    .nav-links a.active::after { content:''; position:absolute; bottom:-8px; left:0; width:100%; height:3px; background:var(--accent); border-radius:2px; }
 
-    main { margin-top: 80px; }
-    section {
-      display: none;
-      padding: 5rem 2rem;
-      max-width: 1200px;
-      margin: 0 auto;
-      min-height: 80vh;
-      scroll-margin-top: 100px;
-    }
-    section.active { display: block; animation: fadeIn 0.7s; }
-    @keyframes fadeIn { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:none;} }
+    main { margin-top:80px; }
+    section { display:none; padding:5rem 2rem; max-width:1200px; margin:0 auto; min-height:80vh; scroll-margin-top:100px; }
+    section.active { display:block; animation:fadeIn 0.7s; }
+    @keyframes fadeIn { from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:none;} }
 
     /* HOME */
-    #home {
-      text-align: center;
-      padding-top: 10rem;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-    }
-    .hero h1 {
-      font-size: 5rem;
-      margin-bottom: 1rem;
-      background: linear-gradient(90deg, #8b5cf6, #ec4899);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .hero p {
-      font-size: 1.5rem;
-      color: var(--gray);
-      max-width: 800px;
-      margin: 0 auto 3rem;
-    }
-    .socials {
-      margin-top: 3rem;
-      font-size: 2.2rem;
-      gap: 2rem;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .socials a { color: var(--gray); transition: 0.3s; }
-    .socials a:hover { color: var(--accent); transform: translateY(-6px); }
+    #home { text-align:center; padding-top:10rem; background:linear-gradient(135deg,#1a1a2e,#16213e); }
+    .hero h1 { font-size:5rem; margin-bottom:1rem; background:linear-gradient(90deg,#8b5cf6,#ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero p { font-size:1.5rem; color:var(--gray); max-width:800px; margin:0 auto 3rem; }
+    .socials { font-size:2.3rem; gap:2rem; display:flex; justify-content:center; flex-wrap:wrap; }
+    .socials a { color:var(--gray); transition:0.3s; }
+    .socials a:hover { color:var(--accent); transform:translateY(-6px); }
+
+    h2 { font-size:3.2rem; text-align:center; margin-bottom:3rem; color:var(--accent); }
 
     /* ABOUT */
-    h2 {
-      font-size: 3.2rem;
-      text-align: center;
-      margin-bottom: 3rem;
-      color: var(--accent);
-    }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 4rem;
-      align-items: center;
-    }
-    .about-img {
-      width: 100%;
-      border-radius: 24px;
-      border: 4px solid var(--accent);
-      box-shadow: 0 0 40px rgba(139,92,246,0.5);
-    }
-    .skills, .tools {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    .skill, .tool {
-      background: var(--card);
-      padding: 0.8rem 1.6rem;
-      border-radius: 50px;
-      border: 1px solid var(--accent);
-      font-size: 0.95rem;
-    }
+    .about-grid { display:grid; grid-template-columns:1fr 2fr; gap:4rem; align-items:center; }
+    .about-img { width:100%; border-radius:24px; border:4px solid var(--accent); box-shadow:0 0 40px rgba(139,92,246,0.5); }
+    .skills, .tools { display:flex; flex-wrap:wrap; gap:1rem; margin-top:1.5rem; }
+    .skill, .tool { background:var(--card); padding:0.8rem 1.6rem; border-radius:50px; border:1px solid var(--accent); }
 
-    /* PROJECTS & NOVELS */
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,29 minmax(340px, 1fr));
-      gap: 2.5rem;
-    }
-    .card {
-      background: var(--card);
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid #333344;
-      transition: all 0.4s;
-    }
-    .card:hover {
-      transform: translateY(-12px);
-      box-shadow: 0 25px 50px rgba(139,92,246,0.25);
-      border-color: var(--accent);
-    }
-    .card img {
-      width: 100%;
-      height: 420px;
-      object-fit: cover;
-    }
-    .card-body {
-      padding: 1.8rem;
-    }
-    .card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 0.8rem;
-      color: var(--accent);
-    }
-    .card p {
-      color: var(--gray);
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 1.2rem;
-      padding: 0.8rem 1.8rem;
-      background: var(--accent);
-      color: white;
-      text-decoration: none;
-      border-radius: 12px;
-      font-weight: bold;
-      transition: 0.3s;
-    }
-    .btn:hover { background: #7c4dff; }
+    /* NOVELS & PROJECTS */
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:2.5rem; }
+    .card { background:var(--card); border-radius:20px; overflow:hidden; border:1px solid #333344; transition:0.4s; }
+    .card:hover { transform:translateY(-12px); box-shadow:0 25px 50px rgba(139,92,246,0.25); border-color:var(--accent); }
+    .card img { width:100%; height:420px; object-fit:cover; }
+    .card-body { padding:1.8rem; }
+    .card h3 { font-size:1.5rem; margin-bottom:0.8rem; color:var(--accent); }
+    .synopsis { margin-top:1rem; font-size:0.95rem; color:var(--gray); max-height:0; overflow:hidden; transition:max-height 0.5s ease; }
+    .synopsis.open { max-height:800px; }
+    .read-more { color:var(--accent); cursor:pointer; font-weight:bold; margin-top:0.8rem; display:inline-block; }
+    .btn { display:inline-block; margin-top:1.2rem; padding:0.8rem 1.8rem; background:var(--accent); color:white; text-decoration:none; border-radius:12px; font-weight:bold; }
 
     /* CONTACT */
-    .contact-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-      margin-bottom: 4rem;
-      text-align: center;
-    }
-    .contact-item i {
-      font-size: 2rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-    }
+    .contact-info { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2rem; margin-bottom:4rem; text-align:center; }
+    .contact-item i { font-size:2rem; color:var(--accent); margin-bottom:1rem; }
+    .pen-name { text-align:center; font-size:1.4rem; margin:2rem 0; color:var(--accent); }
+    form { max-width:700px; margin:0 auto; display:grid; gap:1.5rem; }
+    input, textarea { padding:1.2rem; background:var(--card); border:1px solid #333344; border-radius:14px; color:white; font-size:1rem; }
+    button { padding:1.2rem; background:var(--accent); color:white; border:none; border-radius:14px; font-size:1.2rem; cursor:pointer; }
 
-    form {
-      max-width: 700px;
-      margin: 0 auto;
-      display: grid;
-      gap: 1.5rem;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 1.2rem;
-      background: var(--card);
-      border: 1px solid #333344;
-      border-radius: 14px;
-      color: white;
-      font-size: 1rem;
-    }
-    button {
-      padding: 1.2rem 2.5rem;
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 14px;
-      font-size: 1.2rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    button:hover { background: #7c4dff; }
-
-    @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; }
-      .hero h1 { font-size: 3.5rem; }
-      .nav-links { gap: 1.2rem; font-size: 0.95rem; }
+    @media (max-width:768px) {
+      .about-grid { grid-template-columns:1fr; }
+      .hero h1 { font-size:3.5rem; }
     }
   </style>
 </head>
@@ -261,10 +100,11 @@
     <section id="home" class="active">
       <div class="hero">
         <h1>Janeshwaran R</h1>
-        <p>Game Developer • 3D Artist • Fantasy Novel Writer • Narrative Designer</p>
+        <p>Game Developer • 3D Artist • Fantasy Novel Writer<br><strong>Pen Name: Darkpath</strong></p>
         <div class="socials">
           <a href="https://www.artstation.com/janeshboito283" target="_blank"><i class="fab fa-artstation"></i></a>
           <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.webnovel.com/profile/4327938398" target="_blank"><i class="fas fa-book-open"></i></a>
           <a href="mailto:janeshwaranboito283@gmail.com"><i class="fas fa-envelope"></i></a>
         </div>
       </div>
@@ -291,12 +131,8 @@
 
           <h3 style="margin:2rem 0 1rem;color:var(--accent);">Tools</h3>
           <div class="tools">
-            <span class="tool">Unity</span>
-            <span class="tool">Unreal Engine</span>
-            <span class="tool">Godot</span>
-            <span class="tool">Blender</span>
-            <span class="tool">Material Maker</span>
-            <span class="tool">Krita</span>
+            <span class="tool">Unity</span><span class="tool">Unreal Engine</span><span class="tool">Godot</span>
+            <span class="tool">Blender</span><span class="tool">Material Maker</span><span class="tool">Krita</span>
           </div>
 
           <h3 style="margin:2rem 0 1rem;color:var(--accent);">Education</h3>
@@ -311,15 +147,14 @@
       <h2>Game Projects</h2>
       <div class="grid">
         <div class="card">
-          <img src="https://via.placeholder.com/600x400/333/fff?text=Hardcore+Mario+Game" alt="Hardcore Mario Game">
+          <img src="https://via.placeholder.com/600x400?text=Hardcore+Mario+Game" alt="Hardcore Mario Game">
           <div class="card-body">
             <h3>Hardcore Mario-Style 2D Pixel Game</h3>
             <p>Developed a challenging 2D platformer inspired by classic Mario mechanics. Designed pixel art assets, implemented responsive player controls, and built progressively difficult levels. Focused on gameplay balance and smooth performance.</p>
           </div>
         </div>
-
         <div class="card">
-          <img src="https://via.placeholder.com/600x400/333/fff?text=Rocket+Thruster+Game" alt="Rocket Thruster Game">
+          <img src="https://via.placeholder.com/600x400?text=Rocket+Thruster+Game" alt="Rocket Thruster Game">
           <div class="card-body">
             <h3>Rocket Thruster Landing Game</h3>
             <p>Created a physics-based game where players control a rocket using thrust mechanics to stay airborne and land safely. Implemented collision detection, obstacle challenges, and precise landing mechanics with increasing difficulty.</p>
@@ -330,51 +165,86 @@
 
     <!-- NOVELS -->
     <section id="novels">
-      <h2>My Novels</h2>
+      <h2>My Novels <small style="color:#aaa;">(Pen Name: Darkpath)</small></h2>
       <div class="grid">
 
-        <div class="card">
-          <img src="https://files.catbox.moe/9q2r8j.png" alt="Gods Betrayed Me">
-          <div class="card-body">
-            <h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3>
-            <p>Dark revenge fantasy • When the gods abandon humanity, one man rises to punish them in the most twisted way possible.</p>
-            <a href="#" class="btn">Read Synopsis</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <img src="https://files.catbox.moe/9i5v2k.png" alt="Formula Jet Racing">
-          <div class="card-body">
-            <h3>FJET Racing</h3>
-            <p>High-octane sci-fi racing thriller • Speed, betrayal, and corporate wars in the fastest sport known to man.</p>
-            <a href="#" class="btn">Read Synopsis</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <img src="https://files.catbox.moe/3t4p7m.png" alt="I Was Summoned By a God">
-          <div class="card-body">
-            <h3>I Was Summoned By a God But I Tricked The God To Become a God</h3>
-            <p>Isekai • Reverse power fantasy • A summoned hero outsmarts divinity itself.</p>
-            <a href="#" class="btn">Read Synopsis</a>
-          </div>
-        </div>
-
-        <div class="card">
-          <img src="https://files.catbox.moe/l8u9w2.png" alt="The Hermits Haven">
-          <div class="card-body">
-            <h3>The Hermit's Haven</h3>
-            <p>Psychological horror • Some secrets never sleep • A lone wanderer seeks peace in a world of blood.</p>
-            <a href="#" class="btn">Read Synopsis</a>
-          </div>
-        </div>
-
+        <!-- THE WISH OF MALICE -->
         <div class="card">
           <img src="https://files.catbox.moe/vf6h3x.png" alt="The Wish of Malice">
           <div class="card-body">
             <h3>The Wish of Malice</h3>
-            <p>Dark fantasy • A pact of selfish desire • One wish that could destroy everything.</p>
-            <a href="#" class="btn">Read Synopsis</a>
+            <p><em>A Pact of Selfish Desire • Dark Fantasy, Villainous Protagonist</em></p>
+            <div class="synopsis">
+              Meet Robert, a charismatic individual with a sinister secret. Behind his charming exterior lies a cauldron of malevolent emotions, driven by a singular focus: to protect his family and best friend at any cost...<br><br>
+              As Robert navigates the world, his cold logic and calculating gaze size up potential threats, hiding a seething hatred beneath his thin-lipped smile...<br><br>
+              The gods themselves will soon tremble at the mention of Robert's name, for he is a force of nature, unstoppable and merciless. In the end, only one thing is certain: Robert will emerge victorious, his loved ones safe, and the universe in ruins.
+            </div>
+            <div class="read-more">▶ Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/profile/4327938398" target="_blank" class="btn">Read on Webnovel</a>
+          </div>
+        </div>
+
+        <!-- Gods Betrayed Me -->
+        <div class="card">
+          <img src="https://files.catbox.moe/9q2r8j.png" alt="Gods Betrayed Me">
+          <div class="card-body">
+            <h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3>
+            <p><em>Extreme Dark Revenge Fantasy</em></p>
+            <div class="synopsis">
+              David was once a man of wealth and prestige... Their treachery destroyed not only his spirit but his body—leaving him crippled, abandoned, and with nothing left to live for...<br><br>
+              Reborn in a divine world ruled by the very gods who ignored his suffering, David vows to shatter the hierarchy of the divine. He will bring the gods to their knees, enslaving them and turning the divine realm into his personal dominion of vengeance...<br><br>
+              <strong>Author’s Thought:</strong> Inspired by Reverse Insanity, I aim to craft scenarios far darker and more twisted than even Gu Yue Fang Yuan...
+            </div>
+            <div class="read-more">▶ Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/profile/4327938398" target="_blank" class="btn">Read on Webnovel</a>
+          </div>
+        </div>
+
+        <!-- Formula Jet Racing -->
+        <div class="card">
+          <img src="https://files.catbox.moe/9i5v2k.png" alt="Formula Jet Racing">
+          <div class="card-body">
+            <h3>Formula Jet Racing</h3>
+            <p><em>High-octane sci-fi racing thriller</em></p>
+            <div class="synopsis">
+              Formula Jet racing is a brutal dance in the skies, where jets scream at 400 miles per hour... Maverick and James, rival pilots, are locked in a season-long duel...<br><br>
+              Every race is a gamble with death—jets slicing through skyscrapers, engines roaring... The final race at the Circuit of the Stars is a cinematic inferno under a crimson sky...<br><br>
+              “Winning isn’t a word,” James declares, “it’s a story etched into our being.”
+            </div>
+            <div class="read-more">▶ Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/profile/4327938398" target="_blank" class="btn">Read on Webnovel</a>
+          </div>
+        </div>
+
+        <!-- The Hermit's Haven -->
+        <div class="card">
+          <img src="https://files.catbox.moe/l8u9w2.png" alt="The Hermits Haven">
+          <div class="card-body">
+            <h3>The Hermit's Haven</h3>
+            <p><em>Post-apocalyptic Psychological Thriller</em></p>
+            <div class="synopsis">
+              SOME SECRETS NEVER SLEEP<br><br>
+              Meet John, a young man with a passion for learning and a desire to survive in a world gone mad... He manipulates children into following him, promising a safe haven...<br><br>
+              As the years pass, John's city flourishes, but the cost of his success is high. He has created a world of manipulation and deception... And John, once a man with a dream, has become a monster, consumed by his own ambition.
+            </div>
+            <div class="read-more">▶ Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/profile/4327938398" target="_blank" class="btn">Read on Webnovel</a>
+          </div>
+        </div>
+
+        <!-- I Was Summoned By a God -->
+        <div class="card">
+          <img src="https://files.catbox.moe/3t4p7m.png" alt="I Was Summoned By a God">
+          <div class="card-body">
+            <h3>I Was Summoned By a God But I Tricked The God To Become a God</h3>
+            <p><em>Dark Isekai • Manipulation & Power Fantasy</em></p>
+            <div class="synopsis">
+              Joshua, an orphan who has known only hardship, is summoned alongside his classmates to defeat the Demon God...<br><br>
+              But Joshua harbors a cunning secret and a thirst for power. He masterfully plays the gods against each other, weaving lies and alliances to ascend beyond divinity itself...<br><br>
+              A thrilling tale of power, manipulation, and dark intrigue.
+            </div>
+            <div class="read-more">▶ Read Full Synopsis</div>
+            <a href="https://www.webnovel.com/profile/4327938398" target="_blank" class="btn">Read on Webnovel</a>
           </div>
         </div>
 
@@ -384,19 +254,12 @@
     <!-- CONTACT -->
     <section id="contact">
       <h2>Contact Me</h2>
+      <div class="pen-name">Pen Name: <strong>Darkpath</strong> • <a href="https://www.webnovel.com/profile/4327938398" target="_blank" style="color:var(--accent);">Webnovel Profile →</a></div>
+
       <div class="contact-info">
-        <div class="contact-item">
-          <i class="fas fa-phone"></i>
-          <p>+91 6379989918</p>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-envelope"></i>
-          <p>janeshwaranboito283@gmail.com</p>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-map-marker-alt"></i>
-          <p>Kundrathur, Chennai-600069</p>
-        </div>
+        <div class="contact-item"><i class="fas fa-phone"></i><p>+91 6379989918</p></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i><p>janeshwaranboito283@gmail.com</p></div>
+        <div class="contact-item"><i class="fas fa-map-marker-alt"></i><p>Kundrathur, Chennai-600069</p></div>
       </div>
 
       <form name="contact" method="POST" data-netlify="true">
@@ -410,41 +273,37 @@
   </main>
 
   <script>
-    const navLinks = document.querySelectorAll('.nav-links a');
-    const sections = document.querySelectorAll('section');
-
-    navLinks.forEach(link => {
+    // Tab navigation + smooth scroll
+    document.querySelectorAll('.nav-links a').forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
-        const targetId = link.getAttribute('href');
-        const targetSection = document.querySelector(targetId);
-
-        navLinks.forEach(l => l.classList.remove('active'));
-        sections.forEach(s => s.classList.remove('active'));
-
+        const target = document.querySelector(link.getAttribute('href'));
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+        target.classList.add('active');
         link.classList.add('active');
-        targetSection.classList.add('active');
-
-        window.scrollTo({
-          top: targetSection.offsetTop - 90,
-          behavior: 'smooth'
-        });
+        window.scrollTo({ top: target.offsetTop - 90, behavior: 'smooth' });
       });
     });
 
+    // Expand/collapse synopsis
+    document.querySelectorAll('.read-more').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const synopsis = btn.previousElementSibling;
+        synopsis.classList.toggle('open');
+        btn.textContent = synopsis.classList.contains('open') ? '▲ Collapse' : '▶ Read Full Synopsis';
+      });
+    });
+
+    // Active link on scroll
     window.addEventListener('scroll', () => {
       let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 150;
-        if (scrollY >= sectionTop) {
-          current = section.getAttribute('id');
-        }
+      document.querySelectorAll('section').forEach(section => {
+        if (window.scrollY >= section.offsetTop - 150) current = section.getAttribute('id');
       });
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-          link.classList.add('active');
-        }
+      document.querySelectorAll('.nav-links a').forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === `#${current}`) a.classList.add('active');
       });
     });
   </script>
