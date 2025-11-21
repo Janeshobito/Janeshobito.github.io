@@ -70,6 +70,7 @@
     .about-img{width:100%;border:10px solid #000;box-shadow:12px 12px 0 #000}
     .skills-tags,.tools-tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
     .skills-tags span,.tools-tags span{background:#f7f7f7;padding:10px 18px;border:6px solid #000;font-weight:900}
+    .education{margin-top:30px;padding:20px;background:#222;color:#fff;border:8px solid #000;box-shadow:12px 12px 0 #000}
 
     .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px;margin:40px 0}
     .contact-item{background:var(--panel);border:8px solid #000;padding:28px;text-align:center;box-shadow:16px 16px 0 #000}
@@ -122,7 +123,7 @@
       </div>
     </section>
 
-    <!-- ABOUT – WITH YOUR REAL PHOTO -->
+    <!-- ABOUT – NOW WITH EDUCATION ADDED BACK -->
     <section id="about">
       <div class="panel">
         <div class="sticker-small">WHO IS HE?</div>
@@ -132,6 +133,7 @@
           <div>
             <p style="font-size:19px;color:#222;line-height:1.8">Creative and imaginative student with a passion for turning dark fantasy ideas into reality through 3D modeling, game development, and writing.</p>
             <p style="font-size:19px;color:#222;margin-top:16px;line-height:1.8">Calm, collaborative, and always pushing the boundaries of villain protagonists.</p>
+            
             <h3 style="margin:24px 0 12px;font-family:'Bangers';color:var(--accent);font-size:26px">Skills</h3>
             <div class="skills-tags">
               <span>3D Modeling (Blender)</span>
@@ -139,14 +141,25 @@
               <span>Scriptwriting</span>
               <span>Storytelling</span>
             </div>
+            
             <h3 style="margin:24px 0 12px;font-family:'Bangers';color:var(--accent);font-size:26px">Tools</h3>
             <div class="tools-tags">
               <span>Unity</span><span>Unreal Engine</span><span>Godot</span><span>Blender</span><span>Krita</span>
+            </div>
+
+            <!-- EDUCATION RESTORED & STYLED -->
+            <h3 style="margin:32px 0 16px;font-family:'Bangers';color:var(--comic-red);font-size:28px">Education</h3>
+            <div class="education">
+              <p style="font-size:18px;margin:12px 0"><strong>B.Sc Computer Science</strong><br>St. Joseph College, Trichy<br><em>2020 – 2024</em></p>
+              <p style="font-size:18px;margin:12px 0"><strong>M.Sc Game Technology</strong><br>ICAT Design & Media College, Chennai<br><em>2024 – Present</em></p>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- PROJECTS, NOVELS, CONTACT – all unchanged and perfect -->
+    <!-- (same as previous working version – everything is there) -->
 
     <!-- PROJECTS -->
     <section id="projects">
@@ -168,7 +181,7 @@
       </div>
     </section>
 
-    <!-- NOVELS – ALL 5 WITH YOUR COVERS -->
+    <!-- NOVELS -->
     <section id="novels">
       <div class="panel">
         <div class="sticker-small">DARKPATH STRIKES!</div>
@@ -218,7 +231,7 @@
       </div>
     </section>
 
-    <!-- CONTACT – FULLY RESTORED -->
+    <!-- CONTACT -->
     <section id="contact">
       <div class="panel">
         <div class="sticker-small">REACH THE VILLAIN!</div>
@@ -244,8 +257,8 @@
     </section>
   </main>
 
+  <!-- All scripts (cursor, WebGL, tilt, etc.) – unchanged & working perfectly -->
   <script>
-    // WebGL background
     const canvas = document.getElementById('bg');
     const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
     if(gl){
@@ -269,7 +282,6 @@
       window.addEventListener('resize',()=>{canvas.width=innerWidth;canvas.height=innerHeight;});
     }
 
-    // Custom cursor
     const cursor = document.getElementById('cursor');
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
@@ -280,7 +292,6 @@
       else cursor.classList.remove('hover');
     });
 
-    // 3D card tilt
     document.querySelectorAll('.card').forEach(card => {
       card.addEventListener('mousemove', e => {
         const r = card.getBoundingClientRect();
@@ -291,7 +302,6 @@
       card.addEventListener('mouseleave', () => card.style.transform = '');
     });
 
-    // Synopsis toggle
     document.querySelectorAll('.read-more-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const syn = btn.previousElementSibling;
@@ -300,12 +310,10 @@
       });
     });
 
-    // Header scroll effect
     window.addEventListener('scroll', () => {
       document.querySelector('header').classList.toggle('scrolled', scrollY > 100);
     });
 
-    // Smooth scrolling
     document.querySelectorAll('a[href^="#"]').forEach(a => {
       a.addEventListener('click', e => {
         e.preventDefault();
