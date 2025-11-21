@@ -1,422 +1,481 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Janeshwaran R – Darkpath</title>
-  <meta name="description" content="Game Developer • 3D Artist • Dark Fantasy Author (Darkpath on Webnovel)" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    :root{
-      --bg:#0b0b1a;
-      --card:#161625;
-      --accent:#8b5cf6;
-      --accent2:#ec4899;
-      --text:#e2e8f0;
-      --gray:#94a3b8;
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{
-      font-family:'Segoe UI',sans-serif;
-      background: url('https://files.catbox.moe/7i8p0r.jpg') no-repeat center center fixed;
-      background-size: cover;
-      color:var(--text);
-      overflow-x:hidden;
-      cursor:none;
-      position:relative;
-    }
-    /* Subtle dark overlay so text stays readable */
-    body::before{
-      content:'';
-      position:fixed;
-      inset:0;
-      background:rgba(11,11,26,0.92);
-      z-index:-2;
-    }
-    canvas{
-      position:fixed;
-      inset:0;
-      z-index:-1;
-      opacity:0.8;
-    }
-    #cursor{
-      position:fixed;
-      width:50px;
-      height:50px;
-      pointer-events:none;
-      z-index:9999;
-      border:2px solid var(--accent);
-      border-radius:50%;
-      background:radial-gradient(circle,var(--accent) 0%,transparent 70%);
-      transform:translate(-50%,-50%);
-      mix-blend-mode:difference;
-      transition:0.1s;
-    }
-    header{
-      position:fixed;
-      top:0;left:0;right:0;
-      z-index:1000;
-      padding:1.5rem 0;
-      backdrop-filter:blur(15px);
-      background:rgba(11,11,26,0.85);
-      transition:0.6s;
-      border-bottom:1px solid rgba(139,92,246,0.2);
-    }
-    header.scrolled{
-      background:rgba(11,11,26,0.98);
-      box-shadow:0 15px 50px rgba(0,0,0,0.8);
-    }
-    nav{
-      max-width:1400px;
-      margin:auto;
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:0 2rem;
-    }
-    .logo{
-      font-size:2.7rem;
-      font-weight:900;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      -webkit-text-fill-color:transparent;
-    }
-    .nav-links a{
-      color:var(--text);
-      text-decoration:none;
-      font-weight:600;
-      margin:0 2rem;
-      position:relative;
-    }
-    .nav-links a::after{
-      content:'';
-      position:absolute;
-      bottom:-12px;
-      left:0;
-      width:0;
-      height:4px;
-      background:var(--accent);
-      transition:0.5s;
-    }
-    .nav-links a:hover::after,
-    .nav-links a.active::after{width:100%;}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Janeshwaran R – Darkpath (Comic + Neon)</title>
+<meta name="description" content="Game Developer • 3D Artist • Dark Fantasy Author (Darkpath on Webnovel)" />
 
-    main{padding-top:100px;position:relative;z-index:1;}
-    section{
-      padding:10rem 2rem;
-      max-width:1400px;
-      margin:auto;
-      opacity:0;
-      transform:translateY(80px);
-    }
-    section.visible{
-      opacity:1;
-      transform:none;
-      transition:all 1.4s cubic-bezier(0.22,1,0.36,1);
-    }
-    h2{
-      font-size:4.5rem;
-      text-align:center;
-      margin-bottom:5rem;
-      color:var(--accent);
-      position:relative;
-    }
-    h2::after{
-      content:'';
-      position:absolute;
-      bottom:-20px;
-      left:50%;
-      transform:translateX(-50%);
-      width:150px;
-      height:6px;
-      background:var(--accent);
-      border-radius:3px;
-    }
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
-    /* Home */
-    #home{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;flex-direction:column;}
-    #home h1{
-      font-size:8.5rem;
-      font-weight:900;
-      background:linear-gradient(90deg,var(--accent),var(--accent2));
-      -webkit-background-clip:text;
-      background-clip:text;
-      -webkit-text-fill-color:transparent;
-      text-shadow:0 0 120px rgba(139,92,246,0.8);
-    }
-    .typewriter{
-      font-size:2.6rem;
-      color:var(--gray);
-      margin:2.5rem 0;
-      overflow:hidden;
-      border-right:6px solid var(--accent);
-      white-space:nowrap;
-      width:0;
-      animation:typing 4.5s steps(50) forwards,blink 1s infinite;
-    }
-    @keyframes typing{from{width:0}to{width:50ch}}
-    @keyframes blink{50%{border-color:transparent}}
+<style>
+  :root{
+    --bg-dark: #06060a;
+    --panel:#fff;
+    --ink:#000;
+    --neon:#8b5cf6;      /* purple neon */
+    --neon2:#ec4899;     /* pink accent */
+    --comic-yellow:#ffd24d;
+    --muted:#98a0b0;
+    --glass: rgba(255,255,255,0.06);
+  }
 
-    /* Grid & Cards */
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
-      gap:4rem;
-    }
-    .card{
-      background:var(--card);
-      border-radius:40px;
-      overflow:hidden;
-      box-shadow:0 30px 80px rgba(0,0,0,0.7);
-      cursor:pointer;
-      transition:all 0.8s cubic-bezier(0.175,0.885,0.32,1.275);
-    }
-    .card:hover{
-      transform:translateY(-60px) scale(1.08);
-      box-shadow:0 100px 200px rgba(139,92,246,0.6);
-    }
-    .card img{
-      width:100%;
-      height:520px;
-      object-fit:cover;
-      transition:transform 1.2s;
-    }
-    .card:hover img{transform:scale(1.2);}
-    .card-body{
-      padding:3.2rem;
-      background:linear-gradient(135deg,rgba(22,22,37,0.98),rgba(11,11,26,0.98));
-    }
-    .card h3{
-      font-size:2.3rem;
-      margin-bottom:1rem;
-      color:var(--accent);
-      text-shadow:0 0 35px var(--accent);
-    }
-    .synopsis{
-      margin-top:1.5rem;
-      color:var(--gray);
-      line-height:2;
-      max-height:0;
-      overflow:hidden;
-      transition:max-height 1.2s ease;
-    }
-    .synopsis.open{
-      max-height:5000px;
-      padding-top:2rem;
-    }
-    .read-more-btn{
-      display:inline-block;
-      margin:1.5rem 0;
-      padding:0.8rem 1.8rem;
-      background:var(--accent);
-      color:white;
-      border-radius:50px;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.4s;
-    }
-    .read-more-btn:hover{
-      background:var(--accent2);
-      transform:translateX(10px);
-    }
-    .btn{
-      display:inline-block;
-      margin-top:1.5rem;
-      padding:1.4rem 4rem;
-      background:linear-gradient(45deg,var(--accent),var(--accent2));
-      color:white;
-      border-radius:70px;
-      font-weight:bold;
-      text-align:center;
-      box-shadow:0 25px 70px rgba(139,92,246,0.8);
-      transition:0.6s;
-      text-decoration:none;
-    }
-    .btn:hover{
-      transform:translateY(-15px);
-      box-shadow:0 50px 120px rgba(139,92,246,1);
-    }
+  /* Reset */
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg-dark) center/cover no-repeat url('/mnt/data/caa96667-a266-406d-bf4b-7aeb815b5ba3.png');
+    color: #fff;
+    -webkit-font-smoothing:antialiased;
+    overflow-y:scroll;
+    cursor: none; /* custom cursor used */
+    padding-bottom: 80px;
+  }
 
-    @media(max-width:768px){
-      #home h1{font-size:5.5rem;}
-      .typewriter{font-size:1.9rem;}
-      .nav-links{display:none;}
-    }
-  </style>
+  /* subtle overlay to darken bg */
+  .bg-overlay{
+    position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg, rgba(4,4,8,0.6), rgba(4,4,8,0.85));
+    pointer-events:none;
+  }
+
+  /* Custom cursor */
+  #cursor{
+    position:fixed;left:0;top:0;width:46px;height:46px;border-radius:50%;pointer-events:none;z-index:9999;
+    border:3px solid var(--neon);transform:translate(-50%,-50%);mix-blend-mode:screen;
+    background:radial-gradient(circle at 30% 30%, rgba(139,92,246,0.25), transparent 45%);
+    transition:transform .12s ease, opacity .12s ease;
+  }
+
+  /* App layout */
+  header{position:sticky;top:12px;z-index:50;display:flex;justify-content:center}
+  nav{width:100%;max-width:1320px;display:flex;justify-content:space-between;align-items:center;padding:10px 22px;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));border-radius:14px;border:3px solid rgba(255,255,255,0.06);box-shadow:0 6px 24px rgba(0,0,0,0.6)}
+  .logo{font-family:'Bangers';font-size:26px;color:var(--comic-yellow);padding:6px 10px;border:4px solid #000;background:#fff8;box-shadow:6px 6px 0 #000}
+  .nav-links{display:flex;gap:12px;align-items:center}
+  .nav-links a{color:#fff;text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600;transition:all .18s}
+  .nav-links a:hover{background:rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(139,92,246,0.12)}
+
+  main{max-width:1320px;margin:28px auto;padding:8px 18px;}
+
+/* ==== COMIC PANEL STYLES ==== */
+  .panel{
+    background:var(--panel);color:var(--ink);
+    border:8px solid #000;
+    box-shadow: 18px 18px 0 #000;
+    padding:22px;
+    border-radius:6px;
+    transform-origin:center;
+    position:relative;
+    overflow:visible;
+  }
+
+  /* animated comic border lines (pseudo elements) */
+  .panel::before, .panel::after{
+    content:"";position:absolute;inset: -14px -14px auto auto; width:100%;height:100%;pointer-events:none;
+    border:10px solid transparent;border-top-color:#000;border-left-color:#000;transform:translate(8px,8px) rotate(0deg);
+    box-shadow:0 12px 0 rgba(0,0,0,0.95);
+    opacity:.85;transition:transform .45s cubic-bezier(.22,1,.36,1);
+  }
+  .panel::after{
+    inset:auto auto -14px -14px;border-bottom-color:#000;border-right-color:#000;transform:translate(-8px,-8px);
+  }
+  .panel.pop::before{ transform:translate(18px,18px) rotate(1deg) }
+  .panel.pop::after{ transform:translate(-18px,-18px) rotate(-1deg) }
+
+  /* Section headings (comic + neon) */
+  h2.section-title{font-family:'Bangers';font-size:40px;color:var(--neon);text-align:center;margin-bottom:18px;text-shadow:0 0 24px rgba(139,92,246,0.35)}
+
+  /* HERO */
+  .hero{display:flex;gap:28px;align-items:center;justify-content:space-between;margin-bottom:36px}
+  .hero-left{flex:1;min-width:320px}
+  .hero-right{width:420px;display:flex;align-items:center;justify-content:center}
+  .hero-title{font-family:'Bangers';font-size:64px;color:var(--neon);line-height:0.95;margin-bottom:8px;text-shadow:0 6px 40px rgba(139,92,246,0.35)}
+  .hero-sub{color:var(--muted);font-size:18px;margin-bottom:18px}
+  .cta-row{display:flex;gap:12px}
+  .btn-comic{
+    padding:14px 22px;border:8px solid #000;background:var(--neon);color:#fff;font-weight:900;box-shadow:10px 10px 0 #000;cursor:pointer;
+    font-family:'Bangers';font-size:16px;transform:skewX(-2deg)
+  }
+  .btn-comic.alt{background:var(--neon2)}
+
+  /* speech bubble sticker */
+  .sticker{
+    display:inline-block;padding:8px 12px;background:var(--comic-yellow);color:#000;font-weight:900;border:5px solid #000;border-radius:8px;
+    font-family:'Bangers';transform:rotate(-6deg);box-shadow:8px 8px 0 #000;margin-bottom:8px;
+  }
+  .speech{
+    position:absolute;right:-12px;top:-28px;background:var(--neon2);color:#fff;padding:10px 14px;border-radius:14px;font-weight:800;
+    transform:translateY(-20px) scale(.9);opacity:0;transition:all .28s;
+    font-family:'Comic Neue';
+    box-shadow:6px 6px 0 #000;
+  }
+  .panel:hover .speech{transform:translateY(0) scale(1);opacity:1}
+
+  /* GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:26px;margin-top:12px}
+
+  .card{background:linear-gradient(180deg,#fff,#f8f8f8);border-radius:6px;overflow:hidden;position:relative}
+  .card .thumb{height:240px;background:#111;display:block;width:100%;object-fit:cover;border-bottom:8px solid #000}
+  .card .body{padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.95), #fff)}
+  .card h3{font-family:'Bangers';margin-bottom:6px;color:var(--neon);font-size:20px}
+  .card p.meta{color:var(--muted);margin-bottom:12px}
+
+  /* Buttons group inside cards */
+  .card .card-actions{display:flex;gap:10px;margin-top:8px;flex-wrap:wrap}
+  .btn-outline{
+    padding:10px 14px;border:3px solid #000;background:transparent;color:var(--neon);font-weight:800;border-radius:8px;
+    cursor:pointer;font-family:'Bangers';font-size:14px;box-shadow:6px 6px 0 rgba(0,0,0,0.95);
+    transition:transform .12s, box-shadow .12s;
+  }
+  .btn-outline.small{padding:8px 12px;font-size:13px}
+  .btn-outline:hover{transform:translateY(-4px);box-shadow:10px 10px 0 rgba(0,0,0,0.95)}
+
+  /* synopsis area */
+  .synopsis{color:#222;background:#fff;padding:14px;border:4px solid #000;border-radius:6px;margin-top:10px;display:none}
+  .synopsis.open{display:block;animation:zoomIn .28s cubic-bezier(.22,1,.36,1)}
+  @keyframes zoomIn{from{transform:scale(.98);opacity:0}to{transform:none;opacity:1}}
+
+  /* speech-bubble hover for title */
+  .title-wrap{position:relative;display:inline-block}
+  .title-wrap .bubble{
+    position:absolute;left:0;top:-38px;background:var(--neon);color:#fff;padding:8px 12px;border-radius:14px;font-weight:800;font-family:'Comic Neue';
+    transform:translateY(6px) scale(.9);opacity:0;transition:all .22s;white-space:nowrap;box-shadow:6px 6px 0 #000;
+  }
+  .title-wrap:hover .bubble{transform:translateY(0) scale(1);opacity:1}
+
+  /* panel scroll transitions */
+  .panel-slide{opacity:0;transform:translateY(24px) scale(.985);transition:all .9s cubic-bezier(.22,1,.36,1)}
+  .panel-slide.inview{opacity:1;transform:none}
+
+  /* neon glow accents around page */
+  .neon-edge{position:fixed;inset:0;pointer-events:none;z-index:0;background:
+    radial-gradient(800px 400px at 8% 12%, rgba(139,92,246,0.06), transparent 10%),
+    radial-gradient(600px 300px at 88% 85%, rgba(236,72,153,0.04), transparent 10%);mix-blend-mode:screen;opacity:0.9}
+
+  /* responsive */
+  @media(max-width:960px){
+    .hero{flex-direction:column;align-items:flex-start}
+    .hero-right{width:100%;order:-1;margin-bottom:18px}
+    .hero-title{font-size:40px}
+    .panel{padding:16px}
+  }
+  @media(max-width:520px){
+    .hero-title{font-size:30px}
+    nav{padding:10px}
+    .logo{font-size:20px}
+  }
+
+</style>
 </head>
 <body>
 
-  <!-- Cosmic Background + WebGL -->
-  <canvas id="bg"></canvas>
-  <div id="cursor"></div>
+<div class="bg-overlay" aria-hidden="true"></div>
+<div class="neon-edge" aria-hidden="true"></div>
+<div id="cursor" aria-hidden="true"></div>
 
-  <header>
-    <nav>
-      <div class="logo">Janeshwaran R</div>
-      <div class="nav-links">
-        <a href="#home" class="active">Home</a>
-        <a href="#about">About</a>
-        <a href="#projects">Projects</a>
-        <a href="#novels">Novels</a>
-        <a href="#contact">Contact</a>
+<header>
+  <nav role="navigation" aria-label="Main Navigation">
+    <div class="logo">PORTFOLIO</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#novels">Novels</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HERO -->
+  <section id="home" class="panel panel-slide" style="display:block;margin-bottom:28px">
+    <div style="display:flex;gap:28px;align-items:center;justify-content:space-between;flex-wrap:wrap">
+      <div class="hero-left" style="min-width:320px">
+        <div class="sticker">BRINGING IDEAS TO LIFE!</div>
+        <h1 class="hero-title">GAME DESIGNER<br><span style="color:var(--neon2)">NARRATIVE DESIGNER</span></h1>
+        <p class="hero-sub">Game Developer • 3D Artist • Dark Fantasy Author — <strong style="font-family:'Bangers';color:var(--comic-yellow)">Darkpath</strong></p>
+
+        <div class="cta-row">
+          <button class="btn-comic" onclick="scrollTo('projects')">VIEW PROJECTS</button>
+          <button class="btn-comic alt" onclick="scrollTo('contact')">GET IN TOUCH</button>
+        </div>
       </div>
-    </nav>
-  </header>
 
-  <main>
-    <!-- HOME -->
-    <section id="home" class="visible">
-      <h1>Janeshwaran R</h1>
-      <p class="typewriter">I Forge Realities From Pure Darkness</p>
-      <p style="font-size:2.2rem;color:var(--gray);margin:3rem 0;">
-        Game Developer • 3D Artist • Dark Fantasy Author<br>
-        <strong style="color:var(--accent);">Pen Name: Darkpath</strong>
-      </p>
-      <div style="margin:6rem 0;font-size:4.5rem;display:flex;justify-content:center;gap:4rem;flex-wrap:wrap;">
-        <a href="https://www.artstation.com/janeshboito283" target="_blank" style="color:var(--gray);transition:0.5s;"><i class="fab fa-artstation"></i></a>
-        <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank" style="color:var(--gray);transition:0.5s;"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.webnovel.com/profile/4327938398" target="_blank" style="color:var(--gray);transition:0.5s;"><i class="fas fa-book-open"></i></a>
-        <a href="mailto:janeshwaranboito283@gmail.com" style="color:var(--gray);transition:0.5s;"><i class="fas fa-envelope"></i></a>
+      <div class="hero-right">
+        <div style="width:360px">
+          <img src="https://via.placeholder.com/420x300/222/fff?text=Art+Preview" alt="art" style="width:100%;border:8px solid #000;box-shadow:10px 10px 0 #000;border-radius:6px">
+          <div class="speech" aria-hidden="true">POW! NEW</div>
+        </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- NOVELS SECTION (Example - repeat for all 5) -->
-    <section id="novels">
-      <h2>My Novels <small style="color:#aaa;font-size:2.2rem;">by Darkpath</small></h2>
-      <div class="grid">
+  <!-- ABOUT -->
+  <section id="about" class="panel panel-slide" style="margin-bottom:28px">
+    <h2 class="section-title">About Me</h2>
+    <div style="display:grid;grid-template-columns:1fr 1.5fr;gap:22px;align-items:start">
+      <img src="https://via.placeholder.com/520x720/8b5cf6/fff?text=Your+Photo" alt="photo" style="width:100%;border:8px solid #000;box-shadow:8px 8px 0 #000;object-fit:cover">
+      <div>
+        <p style="color:#111;font-size:16px;line-height:1.6">
+          Creative and imaginative student with a passion for transforming fantasy ideas into reality through modeling,
+          script writing, and design. Known for a calm and thoughtful approach that fosters smooth collaboration.
+        </p>
 
-        <!-- Novel 1 -->
-        <div class="card">
-          <img src="https://files.catbox.moe/9q2r8j.png" alt="Gods Betrayed Me">
-          <div class="card-body">
-            <h3>Gods Betrayed Me So I Made Them As Sex Slaves</h3>
-            <p><em>Extreme Dark Revenge Fantasy</em></p>
-            <div class="synopsis">
-              David was betrayed by everyone he loved and left broken. Reborn in the divine realm, he vows to enslave the very gods who ignored his suffering...<br><br>
-              <strong>Author’s Thought:</strong> Inspired by Reverse Insanity — darker and more twisted than Gu Yue Fang Yuan.
-            </div>
-            <div class="read-more-btn">Read Full Synopsis</div>
-            <a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn">Read on Webnovel</a>
+        <div style="margin-top:14px">
+          <strong style="font-family:'Bangers';color:var(--neon)">Skills</strong>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
+            <span style="background:var(--glass);padding:8px 12px;border:4px solid #000;border-radius:12px;color:#fff">3D Modeling</span>
+            <span style="background:var(--glass);padding:8px 12px;border:4px solid #000;border-radius:12px;color:#fff">Scriptwriting</span>
+            <span style="background:var(--glass);padding:8px 12px;border:4px solid #000;border-radius:12px;color:#fff">Storytelling</span>
+            <span style="background:var(--glass);padding:8px 12px;border:4px solid #000;border-radius:12px;color:#fff">Programming</span>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <!-- Repeat the same card block for the other 4 novels with their images/links -->
-        <!-- I'll just show one more as example -->
-        <div class="card">
-          <img src="https://files.catbox.moe/l8u9w2.png" alt="The Hermits Haven">
-          <div class="card-body">
-            <h3>The Hermit's Haven</h3>
-            <p><em>Post-apocalyptic Psychological Thriller</em></p>
-            <div class="synopsis">
-              SOME SECRETS NEVER SLEEP<br><br>
-              John survives in a broken world, manipulates others into following him, and builds a city of control. But power corrupts absolutely.
-            </div>
-            <div class="read-more-btn">Read Full Synopsis</div>
-            <a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn">Read on Webnovel</a>
+  <!-- PROJECTS -->
+  <section id="projects" class="panel panel-slide" style="margin-bottom:28px">
+    <h2 class="section-title">Projects</h2>
+    <div class="grid">
+      <div class="card" tabindex="0">
+        <img class="thumb" src="https://via.placeholder.com/800x520/222/fff?text=Pixel+Warriors" alt="">
+        <div class="body">
+          <div class="title-wrap"><h3 style="display:inline-block" class="title">Pixel Warriors</h3>
+            <span class="bubble">Retro Brawler</span>
+          </div>
+          <p class="meta">Retro-style fighting game with unique character designs.</p>
+          <div class="card-actions">
+            <button class="btn-outline" onclick="openProject('Pixel Warriors')">View Project</button>
+            <button class="btn-outline small" onclick="openProject('Pixel Warriors')">Details</button>
           </div>
         </div>
-
-        <!-- Add the other 3 cards the same way -->
-
       </div>
-    </section>
 
-    <!-- Keep your other sections (about, projects, contact) exactly as before -->
-    <!-- (I didn't paste them all to save space, but they remain unchanged) -->
+      <div class="card" tabindex="0">
+        <img class="thumb" src="https://via.placeholder.com/800x520/222/fff?text=Rocket+Thruster" alt="">
+        <div class="body">
+          <div class="title-wrap"><h3 style="display:inline-block" class="title">Rocket Thruster</h3>
+            <span class="bubble">Physics</span>
+          </div>
+          <p class="meta">Physics-based rocket control game with precise landing mechanics.</p>
+          <div class="card-actions">
+            <button class="btn-outline" onclick="openProject('Rocket Thruster')">View Project</button>
+            <button class="btn-outline small" onclick="openProject('Rocket Thruster')">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  </main>
+  <!-- NOVELS -->
+  <section id="novels" class="panel panel-slide" style="margin-bottom:28px">
+    <h2 class="section-title">My Novels <small style="display:block;color:var(--muted);font-size:14px;margin-top:6px">by Darkpath</small></h2>
 
-  <script>
-    // === WebGL Background (same as before) ===
-    const canvas = document.getElementById('bg');
-    const gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
-    canvas.width = innerWidth; canvas.height = innerHeight;
+    <div class="grid">
+      <!-- Novel 1 -->
+      <div class="card" id="novel-1">
+        <img class="thumb" src="https://files.catbox.moe/9q2r8j.png" alt="">
+        <div class="body">
+          <div class="title-wrap"><h3 class="title">Gods Betrayed Me So I Made Them As Sex Slaves</h3>
+            <span class="bubble">PUBLISHED</span>
+          </div>
+          <p class="meta"><em>Extreme Dark Revenge Fantasy</em></p>
 
-    const vs = `attribute vec2 position;varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,0,1);}`;
-    const fs = `
-      precision highp float;
-      uniform float time;
-      uniform vec2 mouse;
-      varying vec2 vUv;
-      void main(){
-        vec2 p = vUv - mouse;
-        float wave = sin(length(p)*25.0 - time*6.0)*0.04;
-        vec3 color = mix(vec3(0.3,0.1,0.8),vec3(1.0,0.3,1.0),sin(time+length(p)*12.0));
-        gl_FragColor = vec4(color + wave, 0.75);
-      }`;
+          <div class="card-actions">
+            <button class="btn-outline" data-toggle="syn-1">Read Full Synopsis</button>
+            <a href="https://www.webnovel.com/book/31871358200404405" target="_blank" class="btn-outline" rel="noopener">Read on Webnovel</a>
+          </div>
 
-    const program = gl.createProgram();
-    [vs, fs].forEach((source, type) => {
-      const shader = gl.createShader(type === 0 ? gl.VERTEX_SHADER : gl.FRAGMENT_SHADER);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      gl.attachShader(program, shader);
-    });
-    gl.linkProgram(program); gl.useProgram(program);
+          <div id="syn-1" class="synopsis" aria-hidden="true">
+            David was betrayed by everyone he loved and left broken. Reborn in the divine realm, he vows to enslave the very gods who ignored his suffering...
+            <br><br><strong>Author’s Thought:</strong> Inspired by Reverse Insanity — darker and more twisted than Gu Yue Fang Yuan.
+          </div>
+        </div>
+      </div>
 
-    const buffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1,3,-1,-1,3]), gl.STATIC_DRAW);
-    const pos = gl.getAttribLocation(program, "position");
-    gl.enableVertexAttribArray(pos);
-    gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 0, 0);
+      <!-- Novel 2 -->
+      <div class="card" id="novel-2">
+        <img class="thumb" src="https://files.catbox.moe/l8u9w2.png" alt="">
+        <div class="body">
+          <div class="title-wrap"><h3 class="title">The Hermit's Haven</h3><span class="bubble">PUBLISHED</span></div>
+          <p class="meta"><em>Post-apocalyptic Psychological Thriller</em></p>
+          <div class="card-actions">
+            <button class="btn-outline" data-toggle="syn-2">Read Full Synopsis</button>
+            <a href="https://www.webnovel.com/book/29761771700037905" target="_blank" class="btn-outline" rel="noopener">Read on Webnovel</a>
+          </div>
+          <div id="syn-2" class="synopsis" aria-hidden="true">
+            SOME SECRETS NEVER SLEEP. John survives in a broken world, manipulates others into following him, and builds a city of control.
+          </div>
+        </div>
+      </div>
 
-    const timeLoc = gl.getUniformLocation(program, "time");
-    const mouseLoc = gl.getUniformLocation(program, "mouse");
+      <!-- Novel 3 -->
+      <div class="card" id="novel-3">
+        <img class="thumb" src="https://files.catbox.moe/vf6h3x.png" alt="">
+        <div class="body">
+          <div class="title-wrap"><h3 class="title">The Wish of Malice</h3><span class="bubble">PUBLISHED</span></div>
+          <p class="meta"><em>A Pact of Selfish Desire • Villain Protagonist</em></p>
+          <div class="card-actions">
+            <button class="btn-outline" data-toggle="syn-3">Read Full Synopsis</button>
+            <a href="https://www.webnovel.com/book/29761690700035805" target="_blank" class="btn-outline" rel="noopener">Read on Webnovel</a>
+          </div>
+          <div id="syn-3" class="synopsis" aria-hidden="true">
+            Robert will protect his family and best friend at any cost — even if it means destroying the universe. The gods will kneel or perish.
+          </div>
+        </div>
+      </div>
 
-    function render(t) {
-      gl.uniform1f(timeLoc, t * 0.001);
-      gl.uniform2f(mouseLoc, 0.5, 0.5);
-      gl.drawArrays(gl.TRIANGLES, 0, 3);
-      requestAnimationFrame(render);
+      <!-- Novel 4 -->
+      <div class="card" id="novel-4">
+        <img class="thumb" src="https://files.catbox.moe/9i5v2k.png" alt="">
+        <div class="body">
+          <div class="title-wrap"><h3 class="title">Formula Jet Racing</h3><span class="bubble">PUBLISHED</span></div>
+          <p class="meta"><em>Skyborne Rivals • High-Octane Action</em></p>
+          <div class="card-actions">
+            <button class="btn-outline" data-toggle="syn-4">Read Full Synopsis</button>
+            <a href="https://www.webnovel.com/book/32853058600730605" target="_blank" class="btn-outline" rel="noopener">Read on Webnovel</a>
+          </div>
+          <div id="syn-4" class="synopsis" aria-hidden="true">
+            Jets screaming at 400 mph. Maverick vs James. Every race is a fight to the death for the World Championship.
+          </div>
+        </div>
+      </div>
+
+      <!-- Novel 5 -->
+      <div class="card" id="novel-5">
+        <img class="thumb" src="https://files.catbox.moe/3t4p7m.png" alt="">
+        <div class="body">
+          <div class="title-wrap"><h3 class="title">I Was Summoned By a God But I Tricked The God To Become a God</h3><span class="bubble">PUBLISHED</span></div>
+          <p class="meta"><em>Dark Isekai • Ruthless Manipulation</em></p>
+          <div class="card-actions">
+            <button class="btn-outline" data-toggle="syn-5">Read Full Synopsis</button>
+            <a href="https://www.webnovel.com/book/29962599308510305" target="_blank" class="btn-outline" rel="noopener">Read on Webnovel</a>
+          </div>
+          <div id="syn-5" class="synopsis" aria-hidden="true">
+            Joshua outsmarts the gods who summoned him, builds a harem, and ascends to godhood through betrayal and forbidden magic.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="panel panel-slide">
+    <h2 class="section-title">Contact</h2>
+    <div style="display:flex;gap:18px;flex-wrap:wrap">
+      <div style="background:var(--glass);padding:16px;border:6px solid #000;border-radius:8px;min-width:220px">
+        <i class="fas fa-phone" style="color:var(--neon);margin-right:8px"></i>
+        <strong>+91 6379989918</strong>
+      </div>
+      <div style="background:var(--glass);padding:16px;border:6px solid #000;border-radius:8px;min-width:220px">
+        <i class="fas fa-envelope" style="color:var(--neon);margin-right:8px"></i>
+        <a href="mailto:janeshwaranboito283@gmail.com" style="color:#fff;text-decoration:none">janeshwaranboito283@gmail.com</a>
+      </div>
+      <div style="background:var(--glass);padding:16px;border:6px solid #000;border-radius:8px;min-width:220px">
+        <i class="fab fa-artstation" style="color:var(--neon);margin-right:8px"></i>
+        <a href="https://www.artstation.com/janeshboito283" target="_blank" style="color:#fff;text-decoration:none">ArtStation</a>
+      </div>
+      <div style="background:var(--glass);padding:16px;border:6px solid #000;border-radius:8px;min-width:220px">
+        <i class="fab fa-linkedin" style="color:var(--neon);margin-right:8px"></i>
+        <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank" style="color:#fff;text-decoration:none">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // custom cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  // enlarge cursor on interactive hover
+  document.addEventListener('mouseover', e => {
+    if (e.target.closest('a') || e.target.closest('button') || e.target.closest('.card')) {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1.35)';
+    } else {
+      cursor.style.transform = 'translate(-50%,-50%) scale(1)';
     }
-    requestAnimationFrame(render);
+  });
 
-    // Custom Cursor
-    document.addEventListener('mousemove', e => {
-      document.getElementById('cursor').style.left = e.clientX + 'px';
-      document.getElementById('cursor').style.top = e.clientY + 'px';
+  // panel inview animation (slide + pop border)
+  const panels = document.querySelectorAll('.panel-slide');
+  const panelObserver = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.classList.add('inview');
+        // add subtle pop to panel border
+        en.target.classList.add('pop');
+        setTimeout(()=> en.target.classList.remove('pop'), 900);
+      }
     });
+  }, {threshold: 0.18});
+  panels.forEach(p => panelObserver.observe(p));
 
-    // 3D Tilt on Cards
-    document.querySelectorAll('.card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = (e.clientX - rect.left) / rect.width - 0.5;
-        const y = (e.clientY - rect.top) / rect.height - 0.5;
-        card.style.transform = `perspective(1000px) rotateY(${x*35}deg) rotateX(${-y*35}deg) translateZ(80px)`;
-      });
-      card.addEventListener('mouseleave', () => card.style.transform = '');
+  // synopsis toggle buttons
+  document.querySelectorAll('[data-toggle]').forEach(btn => {
+    const id = btn.getAttribute('data-toggle');
+    const target = document.getElementById(id);
+    btn.addEventListener('click', () => {
+      if (!target) return;
+      const opened = target.classList.toggle('open');
+      target.setAttribute('aria-hidden', opened ? 'false' : 'true');
+      btn.textContent = opened ? 'Hide Synopsis' : 'Read Full Synopsis';
+      // add pop effect to parent panel
+      const parentPanel = btn.closest('.panel') || btn.closest('.card') || btn.closest('section');
+      if (parentPanel) {
+        parentPanel.classList.add('pop');
+        setTimeout(()=> parentPanel.classList.remove('pop'), 600);
+      }
     });
+  });
 
-    // Scroll Reveal
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('section').forEach(s => observer.observe(s));
-
-    // Header scroll effect
-    window.addEventListener('scroll', () => {
-      document.querySelector('header').classList.toggle('scrolled', scrollY > 100);
+  // small tilt on cards (light)
+  document.querySelectorAll('.card').forEach(card => {
+    let raf, cx=0, cy=0, tx=0, ty=0;
+    card.addEventListener('mousemove', e=>{
+      const r = card.getBoundingClientRect();
+      tx = ((e.clientX - r.left)/r.width - 0.5);
+      ty = ((e.clientY - r.top)/r.height - 0.5);
+      if (!raf) loop();
     });
+    card.addEventListener('mouseleave', ()=>{ tx=0;ty=0; });
+    function loop(){
+      cx += (tx - cx) * 0.12;
+      cy += (ty - cy) * 0.12;
+      card.style.transform = `perspective(900px) rotateY(${cx*6}deg) rotateX(${ -cy*6}deg)`;
+      raf = requestAnimationFrame(loop);
+      if (Math.abs(tx-cx) < 0.002 && Math.abs(ty-cy) < 0.002){ cancelAnimationFrame(raf); raf=null; }
+    }
+  });
 
-    // Synopsis Toggle (Fixed & Improved)
-    document.querySelectorAll('.read-more-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const synopsis = btn.previousElementSibling;
-        const isOpen = synopsis.classList.toggle('open');
-        btn.textContent = isOpen ? 'Collapse Synopsis' : 'Read Full Synopsis';
-      });
-    });
+  // title hover speech-bubble (already CSS driven)
 
-    // Resize canvas
-    window.addEventListener('resize', () => {
-      canvas.width = innerWidth;
-      canvas.height = innerHeight;
+  // helper functions
+  function openProject(name){
+    alert('Open project: ' + name);
+  }
+  function scrollTo(id){
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // accessibility: enable keyboard trigger on cards
+  document.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('keydown', e=>{
+      if (e.key === 'Enter' || e.key === ' ') {
+        const btn = c.querySelector('.btn-outline');
+        if (btn) btn.click();
+      }
     });
-  </script>
+  });
+</script>
+
 </body>
 </html>
