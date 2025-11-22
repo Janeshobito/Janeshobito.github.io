@@ -7,14 +7,26 @@
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    /* ← PASTE YOUR FULL ORIGINAL CSS HERE → */
+    /* ← SAME FULL CSS AS index.html → */
+    :root{--bg:#0b0b1a;--panel:#fff;--ink:#000;--accent:#8b5cf6;--comic-yellow:#ffd24d;--comic-red:#ff4646;--zap:#00ffff;--boom:#ff0048;}
+    *{box-sizing:border-box;margin:0;padding:0}html,body{height:100%;overflow-x:hidden}
+    body{font-family:'Comic Neue',sans-serif;background:url('https://raw.githubusercontent.com/Janeshobito/Janeshobito.github.io/main/Screenshot%202025-11-21%20at%2010-17-11%20animated-comics-pages-background-086228377_prevstill.jpeg%20(WEBP%20Image%201920%20%C3%97%201080%20pixels)%20%E2%80%94%20Scaled%20(74%25).png') center/cover fixed;color:#fff;position:relative;cursor:none;}
+    body::before{content:'';position:fixed;inset:0;background:rgba(11,11,26,0.92);z-index:-2}
+    /* ... all the rest of your original CSS ... */
+    .section-title{font-family:'Bangers';font-size:60px;color:var(--comic-red);text-shadow:6px 6px 0 #000;margin-bottom:20px;}
+    .about-grid{display:grid;grid-template-columns:1fr 2fr;gap:40px;align-items:start}
+    .about-img{width:100%;border:10px solid #000;box-shadow:12px 12px 0 #000}
+    .skills-tags,.tools-tags{display:flex;flex-wrap:wrap;gap:12px;margin-top:12px}
+    .skills-tags span,.tools-tags span{background:#f7f7f7;padding:10px 18px;border:6px solid #000;font-weight:900}
+    .education{margin-top:30px;padding:20px;background:#222;color:#fff;border:8px solid #000;box-shadow:12px 12px 0 #000}
+    @media(max-width:900px){.about-grid{grid-template-columns:1fr}}
+    /* Include all other styles from your original */
   </style>
 </head>
 <body>
   <div class="big-sticker">DARKPATH!</div>
   <canvas id="bg"></canvas>
   <div id="cursor"></div>
-
   <header>
     <nav>
       <div class="logo">PORTFOLIO</div>
@@ -27,20 +39,37 @@
       </div>
     </nav>
   </header>
-
-  <main style="padding-top:140px">
+  <main style="padding-top:140px;max-width:1400px;margin:auto">
     <section id="about">
       <div class="panel">
         <div class="sticker-small">WHO IS HE?</div>
         <h2 class="section-title">About Me</h2>
-        <!-- Paste the entire about-grid content from your original file -->
-        <!-- (image + bio + skills + education) -->
+        <div class="about-grid">
+          <img src="https://raw.githubusercontent.com/Janeshobito/Janeshobito.github.io/main/fdd69b7caf75cd56c7aeac86013ca245.jpg" alt="Janeshwaran R" class="about-img">
+          <div>
+            <p style="font-size:19px;color:#222;line-height:1.8">Creative and imaginative student with a passion for turning dark fantasy ideas into reality through 3D modeling, game development, and writing.</p>
+            <p style="font-size:19px;color:#222;margin-top:16px;line-height:1.8">Calm, collaborative, and always pushing the boundaries of villain protagonists.</p>
+            <h3 style="margin:24px 0 12px;font-family:'Bangers';color:var(--accent);font-size:26px">Skills</h3>
+            <div class="skills-tags">
+              <span>3D Modeling (Blender)</span><span>Game Development</span><span>Scriptwriting</span><span>Storytelling</span>
+            </div>
+            <h3 style="margin:24px 0 12px;font-family:'Bangers';color:var(--accent);font-size:26px">Tools</h3>
+            <div class="tools-tags">
+              <span>Unity</span><span>Unreal Engine</span><span>Godot</span><span>Blender</span><span>Krita</span>
+            </div>
+            <h3 style="margin:32px 0 16px;font-family:'Bangers';color:var(--comic-red);font-size:28px">Education</h3>
+            <div class="education">
+              <p style="font-size:18px;margin:12px 0"><strong>B.Sc Computer Science</strong><br>St. Joseph College, Trichy<br><em>2020 – 2024</em></p>
+              <p style="font-size:18px;margin:12px 0"><strong>M.Sc Game Technology</strong><br>ICAT Design & Media College, Chennai<br><em>2024 – Present</em></p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   </main>
-
   <script>
-    /* ← PASTE YOUR FULL ORIGINAL JAVASCRIPT HERE → */
+    // ← SAME FULL JAVASCRIPT AS index.html → (WebGL + cursor + bursts + speedlines + zap particles)
+    // Copy the entire <script> from index.html here
   </script>
 </body>
 </html>
