@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Projects — Janeshwaran R</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    :root{--bg:#0a0a0b;--accent:#e53935;--glow:rgba(229,57,53,0.4)}
+    *{margin:0;padding:0;box-sizing:border-box}
+    html,body{height:100%;background:var(--bg);color:#fff;font-family:Montserrat,sans-serif;overflow-x:hidden}
+    html{scroll-behavior:smooth}
+    
+    #cursor{position:fixed;width:36px;height:36px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:.12s;backdrop-filter:invert(1);mix-blend-mode:difference}
+    #cursor.hover{transform:translate(-50%,-50%) scale(2.2);background:var(--accent)}
+    #trail{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9998;opacity:0.6}
+
+    .blobs{position:fixed;inset:0;overflow:hidden;z-index:-1}
+    .blob{position:absolute;border-radius:50%;filter:blur(130px);opacity:0.25;animation:drift 30s infinite linear}
+    .blob:nth-child(1){width:800px;height:800px;background:#e53935;top:-20%;left:-15%}
+    .blob:nth-child(2){width:600px;height:600px;background:#8b5cf6;bottom:-10%;right:-10%}
+    .blob:nth-child(3){width:700px;height:700px;background:#00e5ff;top:40%;left:30%}
+    @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(200px,180px) rotate(180deg)}}
+
+    .nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:16px;padding:12px 30px;background:rgba(10,10,11,0.9);border-radius:50px;border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(20px)}
+    .pill{color:#bbb;text-decoration:none;padding:8px 18px;border-radius:30px;font-size:14px;transition:0.4s}
+    .pill:hover{color:#fff;background:rgba(255,255,255,0.1)}
+
+    .section-title{font-family:Anton;font-size:58px;text-align:center;margin:120px 0 80px;color:var(--accent);letter-spacing:2px}
+    .section-subtitle{font-size:20px;color:#aaa;text-align:center;margin-bottom:60px}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:40px;max-width:1400px;margin:auto;padding:0 20px 100px}
+    .card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;transition:0.6s;backdrop-filter:blur(10px)}
+    .card:hover{transform:translateY(-20px) scale(1.04);box-shadow:0 40px 100px var(--glow)}
+    .card img{width:100%;height:320px;object-fit:cover;transition:0.6s}
+    .card:hover img{transform:scale(1.1)}
+    .card h3{font-family:Anton;font-size:28px;margin:16px 20px}
+    .card p{color:#ccc;margin:0 20px 20px;font-size:15px;line-height:1.6}
+    .btn{display:block;margin:20px auto;width:85%;padding:14px;background:var(--accent);color:#fff;border-radius:50px;font-weight:700;text-decoration:none;transition:0.4s}
+    .btn:hover{background:#c62828;transform:scale(1.05)}
+    .fade-in{opacity:0;transform:translateY(60px);transition:1.2s}.fade-in.show{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <div id="cursor"></div>
+  <div id="trail"></div>
+  <div class="blobs"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
+  <nav class="nav">
+    <a href="index.html" class="pill">HOME</a>
+    <a href="index.html#about" class="pill">ABOUT</a>
+    <a href="projects.html" class="pill">PROJECTS</a>
+    <a href="novels.html" class="pill">NOVELS</a>
+    <a href="index.html#contact" class="pill">CONTACT</a>
+  </nav>
+
+  <!-- SECTION 1: PLAYABLE GAMES -->
+  <div class="fade-in">
+    <h2 class="section-title">GAME PROJECTS</h2>
+    <p class="section-subtitle">Fully playable games built from scratch</p>
+    
+    <div class="grid">
+      <div class="card" data-tilt>
+        <img src="https://github.com/Janeshobito/Janeshobito.github.io/blob/main/Screenshot%202025-11-22%20at%2012-50-52%20(3)%20Janeshwaran%20R%20LinkedIn.png?raw=true" alt="The Last Choice">
+        <h3>THE LAST CHOICE</h3>
+        <p>Dark narrative-driven adventure where every decision echoes forever.</p>
+        <a href="https://janeshwaran2829.itch.io/the-last-choice" target="_blank" class="btn">PLAY ON ITCH.IO</a>
+      </div>
+      <div class="card" data-tilt>
+        <img src="https://github.com/Janeshobito/Janeshobito.github.io/blob/main/Screenshot%202025-11-22%20134919.png?raw=true" alt="DREAM">
+        <h3>DREAM</h3>
+        <p>Surreal psychological horror platformer.</p>
+        <a href="https://janeshwaran2829.itch.io/dream" target="_blank" class="btn">PLAY ON ITCH.IO</a>
+      </div>
+      <div class="card" data-tilt>
+        <img src="https://github.com/Janeshobito/Janeshobito.github.io/blob/main/unnamed.jpg?raw=true" alt="Rocket">
+        <h3>ROCKET THRUSTER LANDING</h3>
+        <p>Physics-based rocket landing challenge.</p>
+        <a href="#" class="btn">JUST PLAY</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: GAME BREAKDOWNS -->
+  <div class="fade-in">
+    <h2 class="section-title">GAME BREAKDOWNS</h2>
+    <p class="section-subtitle">In-depth analysis of mechanics, narrative, and design</p>
+    
+    <div class="grid">
+      <div class="card" data-tilt>
+        <img src="https://github.com/Janeshobito/Janeshobito.github.io/blob/main/Bully.png?raw=true" alt="Bully">
+        <h3>BULLY — Game Breakdown</h3>
+        <p>Deep dive into mechanics, narrative structure, and world-building of Rockstar's classic.</p>
+        <a href="https://janeshwaran2829.itch.io/bully-game-breakdown" target="_blank" class="btn">VIEW BREAKDOWN</a>
+      </div>
+      <div class="card" data-tilt>
+        <img src="https://github.com/Janeshobito/Janeshobito.github.io/blob/main/cover.png?raw=true" alt="Prototype">
+        <h3>Prototype Breakdown</h3>
+        <p>Early-stage development insights and design decisions.</p>
+        <a href="https://janeshwaran2829.itch.io/prototype-breakdown" target="_blank" class="btn">VIEW BREAKDOWN</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const trail = document.getElementById('trail');
+    let mx = 0, my = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    function animate() {
+      cx += (mx - cx) * 0.15; cy += (my - cy) * 0.15;
+      cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+      trail.style.left = mx + 'px'; trail.style.top = my + 'px';
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    document.querySelectorAll('a, .btn, .card').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    document.querySelectorAll('[data-tilt]').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotY = (x - centerX) / 12;
+        const rotX = (centerY - y) / 12;
+        card.style.transform = `perspective(1200px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale(1.05)`;
+      });
+      card.addEventListener('mouseleave', () => card.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) scale(1)');
+    });
+
+    const observer = new IntersectionObserver(e => e.forEach(en => en.isIntersecting && en.target.classList.add('show')), { threshold: 0.15 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
