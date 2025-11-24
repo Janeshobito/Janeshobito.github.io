@@ -7,58 +7,80 @@
   <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-    :root{--bg:#0a0a0b;--accent:#e53935;--purple:#8b5cf6;--glow:rgba(229,57,53,0.4)}
+    :root{--bg:#0a0a0b;--accent:#e53935;--purple:#8b5cf6;--cyan:#00e5ff}
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%;background:var(--bg);color:#fff;font-family:Montserrat,sans-serif;overflow-x:hidden}
     html{scroll-behavior:smooth}
-    /* Cursor + Trail */
-    #cursor{position:fixed;width:36px;height:36px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:.12s;backdrop-filter:invert(1);mix-blend-mode:difference}
-    #cursor.hover{transform:translate(-50%,-50%) scale(2.2);background:var(--accent)}
-    #trail{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9998;opacity:0.6}
-    /* Blobs */
+
+    /* Cursor */
+    #cursor{position:fixed;width:38px;height:38px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:all .15s;backdrop-filter:invert(1);mix-blend-mode:difference}
+    #cursor.hover{transform:translate(-50%,-50%) scale(2.5);background:var(--accent);border-color:transparent}
+    #trail{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9998;opacity:0.7;filter:blur(4px)}
+
+    /* Floating Blobs */
     .blobs{position:fixed;inset:0;overflow:hidden;z-index:-1}
-    .blob{position:absolute;border-radius:50%;filter:blur(130px);opacity:0.25;animation:drift 30s infinite linear}
-    .blob:nth-child(1){width:800px;height:800px;background:#e53935;top:-20%;left:-15%;animation-duration:35s}
-    .blob:nth-child(2){width:600px;height:600px;background:#8b5cf6;bottom:-10%;right:-10%;animation-duration:45s}
-    .blob:nth-child(3){width:700px;height:700px;background:#00e5ff;top:40%;left:30%;animation-duration:40s}
-    @keyframes drift{0%,100%{transform:translate(0,0)}50%{transform:translate(200px,180px) rotate(180deg)}}
+    .blob{position:absolute;border-radius:50%;filter:blur(140px);opacity:0.22;animation:drift 40s infinite linear}
+    .blob:nth-child(1){width:900px;height:900px;background:var(--accent);top:-25%;left:-20%;animation-duration:45s}
+    .blob:nth-child(2){width:700px;height:700px;background:var(--purple);bottom:-15%;right:-10%;animation-duration:55s}
+    .blob:nth-child(3){width:800px;height:800px;background:var(--cyan);top:30%;left:40%;animation-duration:50s}
+    @keyframes drift{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(250px,200px) rotate(180deg)}}
+
     /* Hero */
     .hero{height:100vh;position:relative;overflow:hidden}
-    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.6}
+    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.65}
     .hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 20px}
-    .title-big{font-family:Anton,sans-serif;font-size:160px;line-height:0.9;letter-spacing:3px;opacity:0;transform:translateY(80px);animation:titleRise 2s ease-out forwards}
+    .meta{font-size:18px;letter-spacing:5px;font-weight:600;color:#ccc;opacity:0;animation:fadeIn 1s ease-out 1s forwards}
+    .title-big{font-family:Anton,sans-serif;font-size:clamp(80px,12vw,180px);line-height:0.88;letter-spacing:4px;
+      background:linear-gradient(90deg,#fff,#e53935,#8b5cf6,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;
+      opacity:0;transform:translateY(80px);animation:titleRise 2s ease-out forwards}
+    .title-big span{font-size:0.45em;position:relative;top:24px;left:8px;opacity:0.9}
+    @keyframes fadeIn{to{opacity:1}}
     @keyframes titleRise{to{opacity:1;transform:translateY(0)}}
-    .title-big span{font-size:0.45em;position:relative;top:20px;left:6px;opacity:0.9}
-    .meta{margin-bottom:20px;letter-spacing:2px;font-weight:600;color:#bbb}
+
     /* Nav */
-    .nav{position:fixed;top:20px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:16px;padding:12px 30px;background:rgba(10,10,11,0.9);border-radius:50px;border:1px solid rgba(255,255,255,0.1);backdrop-filter:blur(20px)}
-    .pill{color:#bbb;text-decoration:none;padding:8px 18px;border-radius:30px;font-size:14px;transition:0.4s}
-    .pill:hover{color:#fff;background:rgba(255,255,255,0.1);border:1px solid var(--accent)}
-    section{padding:140px 20px;max-width:1400px;margin:auto;text-align:center}
-    h2{font-family:Anton;font-size:64px;margin-bottom:60px}
-    .fade-in{opacity:0;transform:translateY(60px);transition:opacity 1.2s ease-out,transform 1.2s ease-out}
+    .nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:18px;padding:16px 36px;
+      background:rgba(10,10,11,0.94);border-radius:60px;border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(24px);
+      box-shadow:0 10px 40px rgba(0,0,0,0.6);transition:all .4s cubic-bezier(0.175,0.885,0.32,1.275)}
+    .nav:hover{transform:translateX(-50%) translateY(-10px) scale(1.05)}
+    .pill{color:#ccc;text-decoration:none;padding:10px 24px;border-radius:40px;font-size:15px;font-weight:600;transition:all .4s}
+    .pill:hover{color:#fff;background:rgba(229,57,53,0.15);border:1px solid var(--accent)}
+
+    /* Sections */
+    section{padding:160px 20px;max-width:1400px;margin:auto;text-align:center}
+    h2{font-family:Anton;font-size:clamp(50px,8vw,90px);margin-bottom:70px;
+      background:linear-gradient(120deg,#e53935,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent;
+      opacity:0;transform:translateY(50px)}
+    h2.show{opacity:1;transform:none;transition:all 1.2s cubic-bezier(0.215,0.61,0.355,1)}
+
+    .text-reveal{overflow:hidden;display:inline-block}
+    .text-reveal span{display:inline-block;transform:translateY(120%);opacity:0;transition:transform 1s cubic-bezier(0.215,0.61,0.355,1),opacity 1s}
+    .text-reveal.show span{transform:none;opacity:1}
+
+    .fade-in{opacity:0;transform:translateY(80px);transition:opacity 1.4s ease-out,transform 1.4s ease-out}
     .fade-in.show{opacity:1;transform:none}
-    .intro-block{max-width:1000px;margin:0 auto 80px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:50px 40px;backdrop-filter:blur(12px)}
-    .intro-block h3{font-family:Anton;font-size:36px;color:var(--accent);margin:40px 0 20px}
-    .intro-block p{font-size:17px;line-height:1.9;color:#ddd;margin-bottom:32px}
-    .big-btn{display:inline-block;padding:18px 48px;background:var(--accent);color:#fff;border-radius:50px;font-size:18px;font-weight:800;text-decoration:none;transition:0.4s}
-    .big-btn:hover{background:#c62828;transform:scale(1.08)}
-    /* About */
-    .about-grid{display:grid;grid-template-columns:1fr 2fr;gap:60px;align-items:start;max-width:1100px;margin:auto}
-    .about-img{border-radius:16px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+
+    .intro-block{max-width:1000px;margin:0 auto 100px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
+      border-radius:24px;padding:60px 50px;backdrop-filter:blur(14px);transition:transform .6s}
+    .intro-block:hover{transform:translateY(-12px) scale(1.02)}
+
+    .big-btn{display:inline-block;padding:20px 56px;background:var(--accent);color:#fff;border-radius:60px;
+      font-size:19px;font-weight:800;text-decoration:none;position:relative;overflow:hidden;transition:all .5s}
+    .big-btn::before{content:'';position:absolute;inset:0;background:#c62828;transform:translateY(100%);transition:transform .5s;z-index:-1}
+    .big-btn:hover::before{transform:translateY(0)}
+
+    .about-grid{display:grid;grid-template-columns:1fr 2fr;gap:70px;align-items:start;max-width:1200px;margin:auto}
+    .about-img{border-radius:20px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.7);transition:transform .8s}
+    .about-img:hover{transform:scale(1.04)}
+
     .tag{background:rgba(255,255,255,0.08);padding:10px 20px;border-radius:50px;border:1px solid rgba(255,255,255,0.15);font-size:14px}
-    /* Contact */
-    .contact-wrapper{max-width:900px;margin:0 auto}
-    .social-icons{margin:60px 0;display:flex;gap:40px;justify-content:center;flex-wrap:wrap}
-    .social-icons a{font-size:46px;color:#999;transition:0.5s}
-    .social-icons a:hover{color:var(--accent);transform:scale(1.4) translateY(-10px)}
-    .contact-info{font-size:19px;line-height:2.2;color:#ccc;display:flex;flex-direction:column;align-items:center;gap:12px}
-    .contact-info a{color:var(--accent);text-decoration:none}
+
+    .social-icons a{font-size:46px;color:#999;transition:all .6s cubic-bezier(0.175,0.885,0.32,1.275)}
+    .social-icons a:hover{color:var(--accent);transform:scale(1.5) translateY(-16px)!important;filter:drop-shadow(0 0 20px var(--accent))}
+
     @media(max-width:900px){
-      .title-big{font-size:96px}
       .about-grid{grid-template-columns:1fr}
       .intro-block{padding:40px 24px}
-      .intro-block h3{font-size:30px}
+      section{padding:120px 20px}
     }
   </style>
 </head>
@@ -66,27 +88,31 @@
   <div id="cursor"></div>
   <div id="trail"></div>
   <div class="blobs"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
+
   <!-- Hero -->
-  <section class="hero fade-in">
-    <video autoplay loop muted playsinline src="https://raw.githubusercontent.com/Janeshobito/Janeshobito.github.io/main/myFolder/video0001-0300.mp4" poster="assets/poster.jpg"></video>
+  <section class="hero">
+    <video autoplay loop muted playsinline src="https://raw.githubusercontent.com/Janeshobito/Janeshobito.github.io/main/myFolder/video0001-0300.mp4"></video>
     <div class="hero-content">
       <div class="meta">Gamedesigner • Narrative Designer • 3D Artist • Webnovel Author</div>
       <h1 class="title-big">JANESHWARAN<span>R</span></h1>
-      <p style="font-size:22px;opacity:0.9;letter-spacing:2px">Portfolio 2025</p>
+      <p style="font-size:24px;opacity:0.9;letter-spacing:3px;margin-top:16px;opacity:0;animation:fadeIn 1s ease-out 2s forwards">
+        Portfolio <span style="color:var(--accent)">2025</span>
+      </p>
     </div>
   </section>
+
   <!-- Nav -->
   <nav class="nav">
-    <a href="index.html" class="pill">HOME</a>
     <a href="#about" class="pill">ABOUT</a>
     <a href="projects.html" class="pill">PROJECTS</a>
     <a href="novels.html" class="pill">NOVELS</a>
     <a href="#contact" class="pill">CONTACT</a>
   </nav>
-  <!-- ABOUT ME - FULLY FIXED -->
-  <section id="about" class="fade-in">
-    <h2>ABOUT ME</h2>
-    <div class="about-grid">
+
+  <!-- ABOUT ME - FULLY RESTORED -->
+  <section id="about">
+    <h2 class="text-reveal"><span>ABOUT ME</span></h2>
+    <div class="about-grid fade-in">
       <img src="https://raw.githubusercontent.com/Janeshobito/Janeshobito.github.io/main/fdd69b7caf75cd56c7aeac86013ca245.jpg" alt="Janeshwaran R" class="about-img">
       <div style="text-align:left">
         <p style="font-size:18px;line-height:1.9;color:#ddd">
@@ -95,6 +121,7 @@
         <p style="margin-top:20px;font-size:18px;color:#ccc">
           Calm, collaborative, and obsessed with detail — I turn twisted ideas into polished realities.
         </p>
+
         <h3 style="margin:40px 0 16px;font-size:24px;color:var(--purple)">Skills</h3>
         <div style="display:flex;flex-wrap:wrap;gap:12px">
           <span class="tag">3D Modeling (Blender)</span>
@@ -104,6 +131,7 @@
           <span class="tag">World Building</span>
           <span class="tag">Storytelling</span>
         </div>
+
         <h3 style="margin:40px 0 16px;font-size:24px;color:var(--purple)">Tools</h3>
         <div style="display:flex;flex-wrap:wrap;gap:12px">
           <span class="tag">Unity</span>
@@ -113,7 +141,8 @@
           <span class="tag">Krita</span>
           <span class="tag">Photoshop</span>
         </div>
-        <h3 style="margin:40px 0 16px;font-size:24px">Education</h3>
+
+        <h3 style="margin:40px 0 16px;font-size:24px;color:var(--purple)">Education</h3>
         <div style="background:rgba(0,0,0,0.4);padding:24px;border-radius:16px">
           <p><strong>B.Sc Computer Science</strong> — St. Joseph College, Trichy (2020–2024)</p>
           <p style="margin-top:16px"><strong>M.Sc Game Technology</strong> — ICAT Design & Media College, Chennai (2024–Present)</p>
@@ -121,67 +150,83 @@
       </div>
     </div>
   </section>
-  <!-- PROJECTS INTRO -->
-  <section class="fade-in">
-    <h2>PROJECTS</h2>
-    <div class="intro-block">
-      <h3>3D Artist | Blender</h3>
-      <p>Aspiring 3D artist specializing in stylized character modeling and cinematic scene design using Blender. Experienced in expressive posing, advanced lighting, and cinematic camera composition. Continuously improving storytelling, mood, and detail across recent works, demonstrating rapid growth and mastery in 3D art.</p>
+
+  <!-- PROJECTS - FULLY RESTORED -->
+  <section>
+    <h2 class="text-reveal"><span>PROJECTS</span></h2>
+    <div class="intro-block fade-in">
+      <h3 style="font-family:Anton;font-size:36px;color:var(--accent);margin:40px 0 20px">3D Artist | Blender</h3>
+      <p style="font-size:17px;line-height:1.9;color:#ddd;margin-bottom:32px">
+        Aspiring 3D artist specializing in stylized character modeling and cinematic scene design using Blender. Experienced in expressive posing, advanced lighting, and cinematic camera composition. Continuously improving storytelling, mood, and detail across recent works, demonstrating rapid growth and mastery in 3D art.
+      </p>
      
-      <h3>Game Developer & Designer | Unity (2D & Basic 3D)</h3>
-      <p>Creative game developer and designer with experience in building engaging 2D and 3D games using Unity. Designed and implemented gameplay mechanics, level design, and UI integration. Projects include an infinite side-scrolling obstacle jumper with scoring system and pixel-style visuals, and a basic 3D rocket ship game inspired by Mars: Mars, with fuel-based flight and platform landing mechanics. Skilled in scripting, prototyping, and scene management, with a keen eye for game design and player experience.</p>
+      <h3 style="font-family:Anton;font-size:36px;color:var(--accent);margin:40px 0 20px">Game Developer & Designer | Unity (2D & Basic 3D)</h3>
+      <p style="font-size:17px;line-height:1.9;color:#ddd;margin-bottom:32px">
+        Creative game developer and designer with experience in building engaging 2D and 3D games using Unity. Designed and implemented gameplay mechanics, level design, and UI integration. Projects include an infinite side-scrolling obstacle jumper with scoring system and pixel-style visuals, and a basic 3D rocket ship game inspired by Mars: Mars, with fuel-based flight and platform landing mechanics. Skilled in scripting, prototyping, and scene management, with a keen eye for game design and player experience.
+      </p>
      
       <a href="projects.html" class="big-btn">VIEW ALL PROJECTS</a>
     </div>
   </section>
-  <!-- NOVELS INTRO -->
-  <section class="fade-in">
-    <h2>NOVELS — by Darkpath</h2>
-    <div class="intro-block">
-      <h3>Author | Novels</h3>
-      <p>I am Mr. Darkpath, an author passionate about creating unique, immersive, and thought-provoking stories. I craft compelling narratives that explore human emotion, adventure, and fantastical worlds, aiming to captivate readers from start to finish. My writing blends creativity with narrative structure, offering stories that linger in the minds of readers long after the last page.</p>
+
+  <!-- NOVELS - FULLY RESTORED -->
+  <section>
+    <h2 class="text-reveal"><span>NOVELS — by Darkpath</span></h2>
+    <div class="intro-block fade-in">
+      <h3 style="font-family:Anton;font-size:36px;color:var(--purple);margin:40px 0 20px">Author | Novels</h3>
+      <p style="font-size:17px;line-height:1.9;color:#ddd;margin-bottom:32px">
+        I am Mr. Darkpath, an author passionate about creating unique, immersive, and thought-provoking stories. I craft compelling narratives that explore human emotion, adventure, and fantastical worlds, aiming to captivate readers from start to finish. My writing blends creativity with narrative structure, offering stories that linger in the minds of readers long after the last page.
+      </p>
      
       <a href="novels.html" class="big-btn">VIEW ALL NOVELS</a>
     </div>
   </section>
-  <!-- CONTACT - FULLY FIXED -->
-  <section id="contact" class="fade-in">
-    <h2>CONTACT</h2>
-    <p style="font-size:20px;color:#ccc;max-width:800px;margin:0 auto 40px">
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="text-reveal"><span>LET'S CREATE SOMETHING DARK</span></h2>
+    <p style="font-size:21px;color:#bbb;max-width:800px;margin:0 auto 60px">
       Available for game dev collaborations, 3D commissions, narrative design, or just to talk dark fantasy.
     </p>
-    <div class="contact-wrapper">
-      <div class="social-icons">
-        <a href="https://www.artstation.com/janeshobito283" target="_blank"><i class="fab fa-artstation"></i></a>
-        <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.webnovel.com/profile/4327938398" target="_blank"><i class="fas fa-book-open"></i></a>
-        <a href="mailto:janeshwaranboito283@gmail.com"><i class="fas fa-envelope"></i></a>
-      </div>
-      <div class="contact-info">
-        <div><a href="mailto:janeshwaranboito283@gmail.com">janeshwaranboito283@gmail.com</a></div>
-        <div><a href="tel:+916379989918">+91 63799 89918</a></div>
-        <div>Chennai, Tamil Nadu, India</div>
-      </div>
+    <div class="social-icons fade-in" style="display:flex;gap:50px;justify-content:center;margin-top:60px">
+      <a href="https://www.artstation.com/janeshobito283" target="_blank"><i class="fab fa-artstation"></i></a>
+      <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.webnovel.com/profile/4327938398" target="_blank"><i class="fas fa-book-open"></i></a>
+      <a href="mailto:janeshwaranboito283@gmail.com"><i class="fas fa-envelope"></i></a>
+    </div>
+    <div style="margin-top:50px;color:#ccc;font-size:18px">
+      <p><a href="mailto:janeshwaranboito283@gmail.com" style="color:var(--accent);text-decoration:none">janeshwaranboito283@gmail.com</a></p>
+      <p>+91 63799 89918 • Chennai, Tamil Nadu, India</p>
     </div>
   </section>
+
   <script>
     const cursor = document.getElementById('cursor');
     const trail = document.getElementById('trail');
     let mx = 0, my = 0, cx = 0, cy = 0;
     document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
     function animate() {
-      cx += (mx - cx) * 0.15; cy += (my - cy) * 0.15;
+      cx += (mx - cx) * 0.16; cy += (my - cy) * 0.16;
       cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
       trail.style.left = mx + 'px'; trail.style.top = my + 'px';
       requestAnimationFrame(animate);
     }
     animate();
-    document.querySelectorAll('a, .big-btn').forEach(el => {
+
+    document.querySelectorAll('a, .big-btn, img').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
-    const observer = new IntersectionObserver(e => e.forEach(en => en.isIntersecting && en.target.classList.add('show')), { threshold: 0.15 });
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('h2, .fade-in, .intro-block, .about-grid').forEach(el => observer.observe(el));
   </script>
 </body>
 </html>
