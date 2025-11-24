@@ -81,6 +81,21 @@ NOTE: This is a single-file implementation (HTML / CSS / JS). Replace the MP4 so
     .dots{position:absolute;left:50%;transform:translateX(-50%);bottom:110px;display:flex;gap:10px}
     .dot{width:12px;height:12px;border-radius:99px;background:rgba(255,255,255,0.14)}
     .dot.active{background:var(--accent)}
+    /* smooth scrolling */
+    html{scroll-behavior:smooth}
+
+    /* floating nav */
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:50;
+      backdrop-filter:blur(10px);
+      background:rgba(15,15,16,0.55);
+    }
+
+    /* fade-in animations */
+    .fade-in{opacity:0;transform:translateY(20px);transition:all .8s ease}
+    .fade-in.show{opacity:1;transform:translateY(0)}
   </style>
 </head>
 <body>
@@ -88,7 +103,12 @@ NOTE: This is a single-file implementation (HTML / CSS / JS). Replace the MP4 so
     <nav class="nav">
       <div class="logo">CINE<span>DAILY</span></div>
       <div class="nav-right">
-        <div class="pill">TOP CASTS</div>
+        <a class="pill" href="#home">HOME</a>
+        <a class="pill" href="#about">ABOUT</a>
+        <a class="pill" href="#projects">PROJECTS</a>
+        <a class="pill" href="#novels">NOVELS</a>
+        <a class="pill" href="#contact">CONTACT</a>
+      </div>
         <div class="pill">PRODUCTION</div>
         <div class="pill">BOX OFFICE</div>
         <div style="width:40px;height:40px;border-radius:999px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center">🔍</div>
@@ -136,7 +156,28 @@ NOTE: This is a single-file implementation (HTML / CSS / JS). Replace the MP4 so
 
     </section>
 
-  </main>
+    </main>
+
+  <!-- Sections -->
+  <section id="about" class="fade-in" style="padding:80px 20px;max-width:1200px;margin:auto;color:white;">
+    <h2 style="font-size:42px;font-family:Anton;margin-bottom:20px;">ABOUT</h2>
+    <p style="color:#ccc;max-width:800px;">Write about yourself or your site here.</p>
+  </section>
+
+  <section id="projects" class="fade-in" style="padding:80px 20px;max-width:1200px;margin:auto;color:white;">
+    <h2 style="font-size:42px;font-family:Anton;margin-bottom:20px;">PROJECTS</h2>
+    <p style="color:#ccc;max-width:800px;">Showcase your works or development projects here.</p>
+  </section>
+
+  <section id="novels" class="fade-in" style="padding:80px 20px;max-width:1200px;margin:auto;color:white;">
+    <h2 style="font-size:42px;font-family:Anton;margin-bottom:20px;">NOVELS</h2>
+    <p style="color:#ccc;max-width:800px;">List your novel collection or reading content here.</p>
+  </section>
+
+  <section id="contact" class="fade-in" style="padding:80px 20px;max-width:1200px;margin:auto;color:white;">
+    <h2 style="font-size:42px;font-family:Anton;margin-bottom:20px;">CONTACT</h2>
+    <p style="color:#ccc;max-width:800px;">Contact information or contact form can be added here.</p>
+  </section>
 
   <script>
     // Minimal interactive behavior
@@ -158,6 +199,19 @@ NOTE: This is a single-file implementation (HTML / CSS / JS). Replace the MP4 so
         dots[idx].classList.add('active');
       },3000);
     })();
+  </script>
+  <script>
+    // reveal on scroll animation
+    const els=[...document.querySelectorAll('.fade-in')];
+    function reveal(){
+      const trigger=window.innerHeight*0.85;
+      els.forEach(el=>{
+        const top=el.getBoundingClientRect().top;
+        if(top<trigger) el.classList.add('show');
+      });
+    }
+    window.addEventListener('scroll',reveal);
+    window.addEventListener('load',reveal);
   </script>
 </body>
 </html>
