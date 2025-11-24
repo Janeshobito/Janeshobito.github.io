@@ -18,7 +18,7 @@ window.addEventListener('scroll', () => {
   document.querySelector('header').classList.toggle('scrolled', scrollY > 50);
 });
 
-// Modal functionality
+// Modal
 const modalBg = document.getElementById('modal-bg');
 const modalImg = document.getElementById('modal-img');
 const modalTitle = document.getElementById('modal-title');
@@ -37,7 +37,7 @@ modalBg.addEventListener('click', e => {
   if(e.target === modalBg) modalBg.classList.remove('active');
 });
 
-// Simple particle background
+// Particle background
 const canvas = document.getElementById('bg');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
