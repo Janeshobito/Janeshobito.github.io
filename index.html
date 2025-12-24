@@ -1,220 +1,75 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Janeshwaran R — Portfolio 2025</title>
-  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-    :root{--bg:#0a0a0b;--accent:#e53935;--purple:#8b5cf6;--cyan:#00e5ff}
-    *{margin:0;padding:0;box-sizing:border-box}
-    html,body{height:100%;background:var(--bg);color:#fff;font-family:Montserrat,sans-serif;overflow-x:hidden}
-    html{scroll-behavior:smooth}
-    /* Cursor */
-    #cursor{position:fixed;width:38px;height:38px;border:2px solid var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:all .15s;backdrop-filter:invert(1);mix-blend-mode:difference}
-    #cursor.hover{transform:translate(-50%,-50%) scale(2.5);background:var(--accent);border-color:transparent}
-    #trail{position:fixed;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9998;opacity:0.7;filter:blur(4px)}
-    /* Floating Blobs */
-    .blobs{position:fixed;inset:0;overflow:hidden;z-index:-1}
-    .blob{position:absolute;border-radius:50%;filter:blur(140px);opacity:0.22;animation:drift 40s infinite linear}
-    .blob:nth-child(1){width:900px;height:900px;background:var(--accent);top:-25%;left:-20%;animation-duration:45s}
-    .blob:nth-child(2){width:700px;height:700px;background:var(--purple);bottom:-15%;right:-10%;animation-duration:55s}
-    .blob:nth-child(3){width:800px;height:800px;background:var(--cyan);top:30%;left:40%;animation-duration:50s}
-    @keyframes drift{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(250px,200px) rotate(180deg)}}
-    /* Hero */
-    .hero{height:100vh;position:relative;overflow:hidden}
-    .hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.65}
-    .hero-content{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:0 20px}
-    .meta{font-size:18px;letter-spacing:5px;font-weight:600;color:#ccc;opacity:0;animation:fadeIn 1s ease-out 1s forwards}
-    .title-big{font-family:Anton,sans-serif;font-size:clamp(80px,12vw,180px);line-height:0.88;letter-spacing:4px;
-      background:linear-gradient(90deg,#fff,#e53935,#8b5cf6,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;
-      opacity:0;transform:translateY(80px);animation:titleRise 2s ease-out forwards}
-    .title-big span{font-size:0.45em;position:relative;top:24px;left:8px;opacity:0.9}
-    @keyframes fadeIn{to{opacity:1}}
-    @keyframes titleRise{to{opacity:1;transform:translateY(0)}}
-    /* Nav */
-    .nav{position:fixed;top:24px;left:50%;transform:translateX(-50%);z-index:100;display:flex;gap:18px;padding:16px 36px;
-      background:rgba(10,10,11,0.94);border-radius:60px;border:1px solid rgba(255,255,255,0.12);backdrop-filter:blur(24px);
-      box-shadow:0 10px 40px rgba(0,0,0,0.6);transition:all .4s cubic-bezier(0.175,0.885,0.32,1.275)}
-    .nav:hover{transform:translateX(-50%) translateY(-10px) scale(1.05)}
-    .pill{color:#ccc;text-decoration:none;padding:10px 24px;border-radius:40px;font-size:15px;font-weight:600;transition:all .4s}
-    .pill:hover{color:#fff;background:rgba(229,57,53,0.15);border:1px solid var(--accent)}
-    /* Sections */
-    section{padding:160px 20px;max-width:1400px;margin:auto;text-align:center;position:relative}
-    h2{font-family:Anton;font-size:clamp(50px,8vw,90px);margin-bottom:70px;
-      background:linear-gradient(120deg,#e53935,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent;
-      opacity:0;transform:translateY(50px)}
-    h2.show{opacity:1;transform:none;transition:all 1.2s cubic-bezier(0.215,0.61,0.355,1)}
-    .text-reveal{overflow:hidden;display:inline-block}
-    .text-reveal span{display:inline-block;transform:translateY(120%);opacity:0;transition:transform 1s cubic-bezier(0.215,0.61,0.355,1),opacity 1s}
-    .text-reveal.show span{transform:none;opacity:1}
-    .fade-in{opacity:0;transform:translateY(80px);transition:opacity 1.4s ease-out,transform 1.4s ease-out}
-    .fade-in.show{opacity:1;transform:none}
-    .intro-block{max-width:1000px;margin:0 auto 100px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);
-      border-radius:24px;padding:60px 50px;backdrop-filter:blur(14px);transition:transform .6s;position:relative;z-index:2}
-    .intro-block:hover{transform:translateY(-12px) scale(1.02)}
-    .big-btn{display:inline-block;padding:20px 56px;background:var(--accent);color:#fff;border-radius:60px;
-      font-size:19px;font-weight:800;text-decoration:none;position:relative;overflow:hidden;transition:all .5s;z-index:2}
-    .big-btn::before{content:'';position:absolute;inset:0;background:#c62828;transform:translateY(100%);transition:transform .5s;z-index:-1}
-    .big-btn:hover::before{transform:translateY(0)}
-    .about-grid{display:grid;grid-template-columns:1fr 2fr;gap:70px;align-items:start;max-width:1200px;margin:auto;position:relative;z-index:2}
-    .about-img{border-radius:20px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.7);transition:transform .8s}
-    .about-img:hover{transform:scale(1.04)}
-    .tag{background:rgba(255,255,255,0.08);padding:10px 20px;border-radius:50px;border:1px solid rgba(255,255,255,0.15);font-size:14px}
-    .social-icons a{font-size:46px;color:#999;transition:all .6s cubic-bezier(0.175,0.885,0.32,1.275)}
-    .social-icons a:hover{color:var(--accent);transform:scale(1.5) translateY(-16px)!important;filter:drop-shadow(0 0 20px var(--accent))}
-    @media(max-width:900px){
-      .about-grid{grid-template-columns:1fr}
-      .intro-block{padding:40px 24px}
-      section{padding:120px 20px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body{
+            background-color: #D2D2D2;
+            background-image:
+            repeating-linear-gradient(
+                to right, transparent 0 100px,
+                #25283b22 100px 101px
+            ),
+            repeating-linear-gradient(
+                to bottom, transparent 0 100px,
+                #25283b22 100px 101px
+            );
+        }
+        
+        body::before{
+            position: absolute;
+            width: min(1400px, 90vw);
+            top: 10%;
+            left: 50%;
+            height: 90%;
+            transform: translateX(-50%);
+            content: '';
+            background-image: url(images/bg.png);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position: top center;
+            pointer-events: none;
+        }
+    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="cursor"></div>
-  <div id="trail"></div>
-  <div class="blobs"><div class="blob"></div><div class="blob"></div><div class="blob"></div></div>
 
-  <!-- Hero -->
-  <section class="hero">
-    <video autoplay loop muted playsinline src="https://raw.githubusercontent.com/Janeshobito/Janeshobito.github.io/main/myFolder/video0001-0300.mp4"></video>
-    <div class="hero-content">
-      <div class="meta">Gamedesigner • Narrative Designer • 3D Artist • Webnovel Author</div>
-      <h1 class="title-big">JANESHWARAN<span>R</span></h1>
-      <p style="font-size:24px;opacity:0.9;letter-spacing:3px;margin-top:16px;opacity:0;animation:fadeIn 1s ease-out 2s forwards">
-        Portfolio <span style="color:var(--accent)">2025</span>
-      </p>
-    </div>
-  </section>
-
-  <!-- Nav -->
-  <nav class="nav">
-    <a href="#about" class="pill">ABOUT</a>
-    <a href="projects.html" class="pill">PROJECTS</a>
-    <a href="novels.html" class="pill">NOVELS</a>
-    <a href="#contact" class="pill">CONTACT</a>
-  </nav>
-
-  <!-- ABOUT ME -->
-  <section id="about" style="position:relative;overflow:hidden;background:var(--bg);">
-    <video autoplay loop muted playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.52;z-index:0;" src="https://files.catbox.moe/aky7yi.mp4"></video>
-    <div style="position:absolute;inset:0;background:rgba(10,10,11,0.84);z-index:1;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg, transparent 0%, var(--bg) 90%);z-index:1;"></div>
-    <div style="position:relative;z-index:2;">
-      <h2 class="text-reveal"><span>ABOUT ME</span></h2>
-      <div class="about-grid fade-in">
-        <img src="https://raw.githubusercontent.com/Janeshobito/Janeshobito.github.io/main/fdd69b7caf75cd56c7aeac86013ca245.jpg" alt="Janeshwaran R" class="about-img">
-        <div style="text-align:left">
-          <p style="font-size:18px;line-height:1.9;color:#ddd">
-            Creative and imaginative student with a deep passion for crafting dark fantasy worlds through game development, 3D art, and storytelling. Known for pushing the boundaries of villain protagonists and immersive narrative experiences.
-          </p>
-          <p style="margin-top:20px;font-size:18px;color:#ccc">
-            Calm, collaborative, and obsessed with detail — I turn twisted ideas into polished realities.
-          </p>
-          <h3 style="margin:40px 0 16px;font-size:24px;color:var(--purple)">Skills</h3>
-          <div style="display:flex;flex-wrap:wrap;gap:12px">
-            <span class="tag">3D Modeling (Blender)</span><span class="tag">Game Development</span><span class="tag">Narrative Design</span>
-            <span class="tag">Scriptwriting</span><span class="tag">World Building</span><span class="tag">Storytelling</span>
-          </div>
-          <h3 style="margin:40px 0 16px;font-size:24px;color:var(--purple)">Tools</h3>
-          <div style="display:flex;flex-wrap:wrap;gap:12px">
-            <span class="tag">Unity</span><span class="tag">Unreal Engine</span><span class="tag">Godot</span>
-            <span class="tag">Blender</span><span class="tag">Krita</span><span class="tag">Photoshop</span>
-          </div>
-          <h3 style="margin:40px 0 16px;font-size:24px;color:var(--purple)">Education</h3>
-          <div style="background:rgba(0,0,0,0.4);padding:24px;border-radius:16px">
-            <p><strong>B.Sc Computer Science</strong> — St. Joseph College, Trichy (2020–2024)</p>
-            <p style="margin-top:16px"><strong>M.Sc Game Technology</strong> — ICAT Design & Media College, Chennai (2024–Present)</p>
-          </div>
+    <div class="banner">
+        <div class="slider" style="--quantity: 10">
+            <div class="item" style="--position: 1"><img src="images/dragon_1.jpg" alt=""></div>
+            <div class="item" style="--position: 2"><img src="images/dragon_2.jpg" alt=""></div>
+            <div class="item" style="--position: 3"><img src="images/dragon_3.jpg" alt=""></div>
+            <div class="item" style="--position: 4"><img src="images/dragon_4.jpg" alt=""></div>
+            <div class="item" style="--position: 5"><img src="images/dragon_5.jpg" alt=""></div>
+            <div class="item" style="--position: 6"><img src="images/dragon_6.jpg" alt=""></div>
+            <div class="item" style="--position: 7"><img src="images/dragon_7.jpg" alt=""></div>
+            <div class="item" style="--position: 8"><img src="images/dragon_8.jpg" alt=""></div>
+            <div class="item" style="--position: 9"><img src="images/dragon_9.jpg" alt=""></div>
+            <div class="item" style="--position: 10"><img src="images/dragon_10.jpg" alt=""></div>
         </div>
-      </div>
+        <div class="content">
+            <h1 data-content="CSS ONLY">
+                CSS ONLY
+            </h1>
+            <div class="author">
+                <h2>LUN DEV</h2>
+                <p><b>Web Design</b></p>
+                <p>
+                    Subscribe to the channel to watch many interesting videos
+                </p>
+            </div>
+            <div class="model"></div>
+        </div>
     </div>
-  </section>
-
-  <!-- PROJECTS -->
-  <section style="position:relative;overflow:hidden;background:var(--bg);">
-    <video autoplay loop muted playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.55;z-index:0;" src="https://files.catbox.moe/o6icxy.mp4"></video>
-    <div style="position:absolute;inset:0;background:rgba(10,10,11,0.80);z-index:1;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg, transparent 0%, var(--bg) 100%);z-index:1;"></div>
-    <div style="position:relative;z-index:2;">
-      <h2 class="text-reveal"><span>PROJECTS</span></h2>
-      <div class="intro-block fade-in">
-        <h3 style="font-family:Anton;font-size:36px;color:var(--accent);margin:40px 0 20px">3D Artist | Blender</h3>
-        <p style="font-size:17px;line-height:1.9;color:#ddd;margin-bottom:32px">
-          Aspiring 3D artist specializing in stylized character modeling and cinematic scene design using Blender. Experienced in expressive posing, advanced lighting, and cinematic camera composition.
-        </p>
-        <h3 style="font-family:Anton;font-size:36px;color:var(--accent);margin:40px 0 20px">Game Developer & Designer | Unity (2D & Basic 3D)</h3>
-        <p style="font-size:17px;line-height:1.9;color:#ddd;margin-bottom:32px">
-          Creative game developer and designer with experience in building engaging 2D and 3D games using Unity. Skilled in scripting, prototyping, and scene management.
-        </p>
-        <a href="projects.html" class="big-btn">VIEW ALL PROJECTS</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- NOVELS - LATEST BACKGROUND -->
-  <section style="position:relative;overflow:hidden;background:var(--bg);">
-    <video autoplay loop muted playsinline 
-           style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.50;z-index:0;" 
-           src="https://files.catbox.moe/sl8158.mp4"></video>
-    <div style="position:absolute;inset:0;background:rgba(10,10,11,0.82);z-index:1;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg, rgba(139,92,246,0.15) 0%, var(--bg) 100%);z-index:1;"></div>
-    <div style="position:relative;z-index:2;">
-      <h2 class="text-reveal"><span>NOVELS — by Darkpath</span></h2>
-      <div class="intro-block fade-in">
-        <h3 style="font-family:Anton;font-size:36px;color:var(--purple);margin:40px 0 20px">Author | Novels</h3>
-        <p style="font-size:17px;line-height:1.9;color:#ddd;margin-bottom:32px">
-          I am Mr. Darkpath, an author passionate about creating unique, immersive, and thought-provoking stories. I craft compelling narratives that explore human emotion, adventure, and fantastical worlds, aiming to captivate readers from start to finish.
-        </p>
-        <a href="novels.html" class="big-btn">VIEW ALL NOVELS</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" style="position:relative;overflow:hidden;background:var(--bg);">
-    <video autoplay loop muted playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;opacity:0.48;z-index:0;" src="https://github.com/Janeshobito/Janeshobito.github.io/blob/main/myFolder/campfire-watermarked_w7o6vg.mp4?raw=true"></video>
-    <div style="position:absolute;inset:0;background:rgba(10,10,11,0.82);z-index:1;"></div>
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg, transparent 0%, var(--bg) 100%);z-index:1;"></div>
-    <div style="position:relative;z-index:2;">
-      <h2 class="text-reveal"><span>LET'S CREATE SOMETHING DARK</span></h2>
-      <p style="font-size:21px;color:#bbb;max-width:800px;margin:0 auto 60px">
-        Available for game dev collaborations, 3D commissions, narrative design, or just to talk dark fantasy.
-      </p>
-      <div class="social-icons fade-in" style="display:flex;gap:50px;justify-content:center;margin-top:60px">
-        <a href="https://www.artstation.com/janeshobito283" target="_blank"><i class="fab fa-artstation"></i></a>
-        <a href="https://www.linkedin.com/in/janeshwaran-r-a33729285/" target="_blank"><i class="fab fa-linkedin"></i></a>
-        <a href="https://www.webnovel.com/profile/4327938398" target="_blank"><i class="fas fa-book-open"></i></a>
-        <a href="mailto:janeshwaranboito283@gmail.com"><i class="fas fa-envelope"></i></a>
-      </div>
-      <div style="margin-top:50px;color:#ccc;font-size:18px">
-        <p><a href="mailto:janeshwaranboito283@gmail.com" style="color:var(--accent);text-decoration:none">janeshwaranboito283@gmail.com</a></p>
-        <p>+91 63799 89918 • Chennai, Tamil Nadu, India</p>
-      </div>
-    </div>
-  </section>
-
-  <script>
-    const cursor = document.getElementById('cursor');
-    const trail = document.getElementById('trail');
-    let mx = 0, my = 0, cx = 0, cy = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animate() {
-      cx += (mx - cx) * 0.16; cy += (my - cy) * 0.16;
-      cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
-      trail.style.left = mx + 'px'; trail.style.top = my + 'px';
-      requestAnimationFrame(animate);
-    }
-    animate();
-    document.querySelectorAll('a, .big-btn, img').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-    });
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
-    }, { threshold: 0.15 });
-    document.querySelectorAll('h2, .fade-in, .intro-block, .about-grid').forEach(el => observer.observe(el));
-  </script>
+    
 </body>
 </html>
